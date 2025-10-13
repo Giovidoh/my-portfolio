@@ -10,11 +10,11 @@ const Header = () => {
         <div className="relative h-70 w-70 overflow-hidden rounded-full">
           <Image src={me} alt="my photo" fill className="object-cover" />
         </div>
-        <p>
+        <p className="text-center">
           Hi, I'm Cir-Giovanni. I'm a software engineer. I can help you bring your applications
           ideas to live.
         </p>
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col items-center gap-4 sm:flex-row">
           <BaseButton>Téléchargez mon CV</BaseButton>
           <BaseButton>Contactez-moi</BaseButton>
         </div>
