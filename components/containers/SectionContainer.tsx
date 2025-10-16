@@ -10,7 +10,7 @@ const SectionContainer: FC<SectionContainerProps> = ({ children, className }) =>
   return (
     <section
       className={cn(
-        'container mx-auto flex w-full flex-col items-center gap-5 px-[clamp(1.25rem,_-0.114rem+6.82vw,_5rem)]',
+        'container mx-auto flex w-full flex-col items-center gap-5 px-[clamp(1.25rem,_-0.114rem+6.82vw,_5rem)] py-[clamp(1.25rem,_0.795rem_+_2.27vw,_2.5rem)]',
         className,
       )}
     >
