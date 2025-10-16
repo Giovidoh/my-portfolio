@@ -1,13 +1,26 @@
+import { cn } from '@/lib/utils';
 import { SkillType } from '@/types';
 import { FC } from 'react';
 
 interface SkillChipProps {
   skill: SkillType;
+  size?: 'sm' | 'md' | 'lg';
 }
 
-const SkillChip: FC<SkillChipProps> = ({ skill }) => {
+const SkillChip: FC<SkillChipProps> = ({ skill, size = 'md' }) => {
+  let style: string = '';
+  if (size === 'sm') {
+    style +=
+      'text-sm [&_svg]:size-4 shadow-md px-[clamp(0.5rem,_0.409rem_+_0.45vw,_0.75rem)] py-[5px]';
+  }
+
   return (
-    <div className="flex items-center gap-2 rounded-full border px-[clamp(0.75rem,_0.659rem_+_0.45vw,_1rem)] py-[10px] shadow-lg">
+    <div
+      className={cn(
+        `flex items-center gap-2 rounded-full border px-[clamp(0.75rem,_0.659rem_+_0.45vw,_1rem)] py-[10px] shadow-lg`,
+        style,
+      )}
+    >
       {skill.Icon && <skill.Icon className="size-7" />}
       <span>{skill.name}</span>
     </div>
