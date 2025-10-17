@@ -19,12 +19,12 @@ const ProjectsSection = () => {
       liveLink: 'https://github.com/Giovidoh/my-portfolio',
       skills: [
         {
-          Icon: NextjsIcon,
-          name: 'NEXT.JS',
+          icon: NextjsIcon,
+          title: 'NEXT.JS',
         },
         {
-          Icon: TailwindIcon,
-          name: 'tailwindcss',
+          icon: TailwindIcon,
+          title: 'tailwindcss',
         },
       ],
     },
@@ -40,12 +40,12 @@ const ProjectsSection = () => {
       liveLink: 'https://github.com/Giovidoh/my-portfolio',
       skills: [
         {
-          Icon: NextjsIcon,
-          name: 'NEXT.JS',
+          icon: NextjsIcon,
+          title: 'NEXT.JS',
         },
         {
-          Icon: TailwindIcon,
-          name: 'tailwindcss',
+          icon: TailwindIcon,
+          title: 'tailwindcss',
         },
       ],
     },

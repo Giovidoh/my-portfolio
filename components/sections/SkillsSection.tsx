@@ -1,21 +1,11 @@
 import SectionContainer from '@/components/containers/SectionContainer';
 import SkillChip from '@/components/chips/SkillChip';
-import NextjsIcon from '@/public/assets/icons/nextjs.svg';
-import TailwindIcon from '@/public/assets/icons/tailwind.svg';
-import { SkillType } from '@/types';
 import { Fragment } from 'react';
+import { sanityFetch } from '@/sanity/lib/live';
+import { SKILLS_QUERY } from '@/sanity/lib/queries';
 
-const SkillsSection = () => {
-  const skills: Array<SkillType> = [
-    {
-      Icon: NextjsIcon,
-      name: 'NEXT.JS',
-    },
-    {
-      Icon: TailwindIcon,
-      name: 'tailwindcss',
-    },
-  ];
+const SkillsSection = async () => {
+  const { data: skills } = await sanityFetch({ query: SKILLS_QUERY });
 
   return (
     <SectionContainer>

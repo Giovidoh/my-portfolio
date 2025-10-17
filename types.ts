@@ -2,8 +2,8 @@ import { StaticImageData } from 'next/image';
 import { FC, SVGProps } from 'react';
 
 export type SkillType = {
-  Icon?: FC<SVGProps<SVGElement>>;
-  name: string;
+  icon?: FC<SVGProps<SVGElement>>;
+  title: string;
 };
 
 export type ProjectType = {

@@ -177,3 +177,34 @@ export type AllSanitySchemaTypes =
   | Slug
   | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
+// Source: sanity/lib/queries.ts
+// Variable: SKILLS_QUERY
+// Query: *[_type == "skill" ]
+export type SKILLS_QUERYResult = Array<{
+  _id: string;
+  _type: 'skill';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  icon?: {
+    asset?: {
+      _ref: string;
+      _type: 'reference';
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: 'image';
+  };
+  title?: string;
+}>;
+
+// Query TypeMap
+import '@sanity/client';
+declare module '@sanity/client' {
+  interface SanityQueries {
+    '*[_type == "skill" ]': SKILLS_QUERYResult;
+  }
+}

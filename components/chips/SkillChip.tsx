@@ -1,9 +1,9 @@
 import { cn } from '@/lib/utils';
-import { SkillType } from '@/types';
+import { Skill } from '@/sanity/types';
 import { FC } from 'react';
 
 interface SkillChipProps {
-  skill: SkillType;
+  skill: Skill;
   size?: 'sm' | 'md' | 'lg';
 }
 
@@ -21,8 +21,8 @@ const SkillChip: FC<SkillChipProps> = ({ skill, size = 'md' }) => {
         style,
       )}
     >
-      {skill.Icon && <skill.Icon className="size-7" />}
-      <span>{skill.name}</span>
+      {/* {skill.icon && <skill.icon className="size-7" />} */}
+      <span>{skill.title}</span>
     </div>
   );
 };
