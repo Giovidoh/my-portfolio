@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import me from '@/public/assets/images/me.jpg';
 import { ProjectType } from '@/types';
-import { FC } from 'react';
+import { FC, useId } from 'react';
 import GithubIcon from '@/public/assets/icons/github.svg';
 import Link from 'next/link';
 import SkillChip from '../chips/SkillChip';
@@ -11,6 +11,8 @@ interface ProjectCardProps {
 }
 
 const ProjectCard: FC<ProjectCardProps> = ({ project }) => {
+  const id = useId();
+  
   return (
     <article className="flex h-full w-full flex-col gap-3 rounded-2xl border p-[clamp(0.25rem,_0.159rem_+_0.45vw,_0.5rem)] pb-3">
       <div className="relative h-[300px] w-full overflow-hidden rounded-xl">
@@ -33,7 +35,7 @@ const ProjectCard: FC<ProjectCardProps> = ({ project }) => {
       </div>
       <div className="flex flex-wrap items-center gap-2 border-t pt-[clamp(0.25rem,_0.159rem_+_0.45vw,_0.5rem)]">
         {project.skills.map((skill, index) => (
-          <div className="w-fit">
+          <div key={`${id}-${index}`} className="w-fit">
             <SkillChip skill={skill} size="sm" />
           </div>
         ))}

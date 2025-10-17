@@ -15,8 +15,8 @@ const Header = () => {
           ideas to live.
         </p>
         <div className="flex flex-col items-center gap-4 sm:flex-row">
-          <BaseButton>Téléchargez mon CV</BaseButton>
-          <BaseButton>Contactez-moi</BaseButton>
+          <BaseButton>Download my Resume</BaseButton>
+          <BaseButton>Get in touch</BaseButton>
         </div>
       </div>
     </header>

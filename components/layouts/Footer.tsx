@@ -8,8 +8,8 @@ const Footer = () => {
         <div className="flex w-full justify-between gap-5 max-sm:flex-col max-sm:items-center">
           <div>Cir-Giovanni IDOH</div>
           <div className="flex flex-col items-end gap-4 max-sm:items-center">
-            <BaseButton>Téléchargez mon CV</BaseButton>
-            <BaseButton>Contactez-moi</BaseButton>
+            <BaseButton>Download my Resume</BaseButton>
+            <BaseButton>Get in touch</BaseButton>
           </div>
         </div>
       </SectionContainer>
