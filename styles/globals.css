@@ -1,10 +1,10 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-display: "Inter", "sans-serif";
+  --font-display: 'Inter', 'sans-serif';
   --color-primary-500: oklch(0.84 0.18 117.33);
   --spacing: 0.25rem;
   --color-sidebar-ring: var(--sidebar-ring);
@@ -115,9 +115,14 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
+  }
+
+  h2 {
+    @apply text-[clamp(1.125rem,_0.989rem_+_0.68vw,_1.5rem)] font-medium;
   }
 }
