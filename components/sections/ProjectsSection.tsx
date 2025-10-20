@@ -1,55 +1,10 @@
-import me from '@/public/assets/images/me.jpg';
 import ProjectCard from '@/components/cards/ProjectCard';
-import { ProjectType } from '@/types';
 import SectionContainer from '@/components/containers/SectionContainer';
-import NextjsIcon from '@/public/assets/icons/nextjs.svg';
-import TailwindIcon from '@/public/assets/icons/tailwind.svg';
+import { sanityFetch } from '@/sanity/lib/live';
+import { PROJECTS_QUERY } from '@/sanity/lib/queries';
 
-const ProjectsSection = () => {
-  const projects: Array<ProjectType> = [
-    {
-      name: 'My Portfolio',
-      description:
-        'This is my portfolio Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repellat a, facilis earum totam soluta dolorum voluptatum minima nobis! Id repudiandae nobis illo officiis hic ut delectus. Porro velit iure tempora!',
-      img: {
-        src: me,
-        alt: 'My portfolio image',
-      },
-      githubLink: 'https://github.com/Giovidoh/my-portfolio',
-      liveLink: 'https://github.com/Giovidoh/my-portfolio',
-      skills: [
-        {
-          icon: NextjsIcon,
-          title: 'NEXT.JS',
-        },
-        {
-          icon: TailwindIcon,
-          title: 'tailwindcss',
-        },
-      ],
-    },
-    {
-      name: 'My Portfolio',
-      description:
-        'This is my portfolio Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repellat a, facilis earum totam soluta dolorum voluptatum minima nobis! Id repudiandae nobis illo officiis hic ut delectus. Porro velit iure tempora!',
-      img: {
-        src: me,
-        alt: 'My portfolio image',
-      },
-      githubLink: 'https://github.com/Giovidoh/my-portfolio',
-      liveLink: 'https://github.com/Giovidoh/my-portfolio',
-      skills: [
-        {
-          icon: NextjsIcon,
-          title: 'NEXT.JS',
-        },
-        {
-          icon: TailwindIcon,
-          title: 'tailwindcss',
-        },
-      ],
-    },
-  ];
+const ProjectsSection = async () => {
+  const { data: projects } = await sanityFetch({ query: PROJECTS_QUERY });
 
   return (
     <SectionContainer>

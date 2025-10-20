@@ -21,6 +21,28 @@ export type Project = {
   _rev: string;
   title?: string;
   description?: string;
+  mainImage?: {
+    asset?: {
+      _ref: string;
+      _type: 'reference';
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: 'image';
+  };
+  githubLink?: string;
+  liveLink?: string;
+  skills?: Array<{
+    _ref: string;
+    _type: 'reference';
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: 'skill';
+  }>;
 };
 
 export type Skill = {
@@ -202,11 +224,59 @@ export type SKILLS_QUERYResult = Array<{
   };
   title?: string;
 }>;
+// Variable: PROJECTS_QUERY
+// Query: *[_type == "project" ]{..., "skills": skills[]-> }
+export type PROJECTS_QUERYResult = Array<{
+  _id: string;
+  _type: 'project';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  description?: string;
+  mainImage?: {
+    asset?: {
+      _ref: string;
+      _type: 'reference';
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: 'image';
+  };
+  githubLink?: string;
+  liveLink?: string;
+  skills: Array<{
+    _id: string;
+    _type: 'skill';
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
+    icon?: {
+      asset?: {
+        _ref: string;
+        _type: 'reference';
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: 'image';
+    };
+    title?: string;
+  }> | null;
+}>;
 
 // Query TypeMap
 import '@sanity/client';
 declare module '@sanity/client' {
   interface SanityQueries {
     '*[_type == "skill" ]': SKILLS_QUERYResult;
+    '*[_type == "project" ]{..., "skills": skills[]-> }': PROJECTS_QUERYResult;
   }
 }
