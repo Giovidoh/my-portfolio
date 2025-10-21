@@ -319,8 +319,8 @@ export type PROJECTS_QUERYResult = Array<{
   }> | null;
 }>;
 // Variable: PROFILE_QUERY
-// Query: *[_type == "profile" ]
-export type PROFILE_QUERYResult = Array<{
+// Query: *[_type == "profile" ][0]
+export type PROFILE_QUERYResult = {
   _id: string;
   _type: 'profile';
   _createdAt: string;
@@ -348,10 +348,10 @@ export type PROFILE_QUERYResult = Array<{
     url?: string;
     _key: string;
   }>;
-}>;
+} | null;
 // Variable: SECTIONS_CONFIG_QUERY
-// Query: *[_type == "sectionsConfig" ]
-export type SECTIONS_CONFIG_QUERYResult = Array<{
+// Query: *[_type == "sectionsConfig" ][0]
+export type SECTIONS_CONFIG_QUERYResult = {
   _id: string;
   _type: 'sectionsConfig';
   _createdAt: string;
@@ -364,7 +364,7 @@ export type SECTIONS_CONFIG_QUERYResult = Array<{
   projectsSection?: {
     heading?: string;
   };
-}>;
+} | null;
 
 // Query TypeMap
 import '@sanity/client';
@@ -372,7 +372,7 @@ declare module '@sanity/client' {
   interface SanityQueries {
     '*[_type == "skill" ]': SKILLS_QUERYResult;
     '*[_type == "project" ]{..., "skills": skills[]-> }': PROJECTS_QUERYResult;
-    '*[_type == "profile" ]': PROFILE_QUERYResult;
-    '*[_type == "sectionsConfig" ]': SECTIONS_CONFIG_QUERYResult;
+    '*[_type == "profile" ][0]': PROFILE_QUERYResult;
+    '*[_type == "sectionsConfig" ][0]': SECTIONS_CONFIG_QUERYResult;
   }
 }
