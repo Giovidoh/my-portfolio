@@ -4,7 +4,7 @@ import { FC, useId } from 'react';
 import GithubIcon from '@/public/assets/icons/github.svg';
 import Link from 'next/link';
 import SkillChip from '../chips/SkillChip';
-import { Project } from '@/sanity/types';
+import { Project, Skill } from '@/sanity/types';
 import { urlFor } from '@/sanity/lib/image';
 
 interface ProjectCardProps {
@@ -47,7 +47,7 @@ const ProjectCard: FC<ProjectCardProps> = ({ project }) => {
         {project?.skills &&
           project?.skills.map((skill, index) => (
             <div key={`${id}-${index}`} className="w-fit">
-              <SkillChip skill={skill} size="sm" />
+              <SkillChip skill={skill as unknown as Skill} size="sm" />
             </div>
           ))}
       </div>
