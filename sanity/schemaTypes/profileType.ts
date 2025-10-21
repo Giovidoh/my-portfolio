@@ -1,8 +1,8 @@
 import { defineArrayMember, defineField, defineType } from 'sanity';
 
-export const projectType = defineType({
-  name: 'project',
-  title: 'Projects',
+export const profileType = defineType({
+  name: 'profile',
+  title: 'Profile',
   type: 'document',
   fields: [
     defineField({
@@ -10,11 +10,19 @@ export const projectType = defineType({
       type: 'string',
     }),
     defineField({
-      name: 'description',
+      name: 'greeting',
+      type: 'string',
+    }),
+    defineField({
+      name: 'fullName',
+      type: 'string',
+    }),
+    defineField({
+      name: 'bio',
       type: 'text',
     }),
     defineField({
-      name: 'mainImage',
+      name: 'profileImage',
       type: 'image',
       fields: [
         defineField({
@@ -31,20 +39,21 @@ export const projectType = defineType({
       ],
     }),
     defineField({
-      name: 'githubLink',
-      type: 'url',
-    }),
-    defineField({
-      name: 'liveLink',
-      type: 'url',
-    }),
-    defineField({
-      name: 'skills',
+      name: 'callToActions',
       type: 'array',
       of: [
         defineArrayMember({
-          type: 'reference',
-          to: { type: 'skill' },
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'label',
+              type: 'string',
+            }),
+            defineField({
+              name: 'url',
+              type: 'url',
+            }),
+          ],
         }),
       ],
     }),

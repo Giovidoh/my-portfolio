@@ -1,7 +1,9 @@
 import { type SchemaTypeDefinition } from 'sanity'
-import { skillType } from './SkillType'
-import { ProjectType } from './ProjectType'
+import { skillType } from './skillType'
+import { projectType } from './projectType'
+import { profileType } from './profileType'
+import { sectionsConfigType } from './sectionsConfigType'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [skillType, ProjectType],
+  types: [skillType, projectType, profileType, sectionsConfigType],
 }

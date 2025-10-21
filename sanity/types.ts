@@ -13,6 +13,51 @@
  */
 
 // Source: schema.json
+export type SectionsConfig = {
+  _id: string;
+  _type: 'sectionsConfig';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  skillsSection?: {
+    heading?: string;
+  };
+  projectsSection?: {
+    heading?: string;
+  };
+};
+
+export type Profile = {
+  _id: string;
+  _type: 'profile';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  greeting?: string;
+  fullName?: string;
+  bio?: string;
+  profileImage?: {
+    asset?: {
+      _ref: string;
+      _type: 'reference';
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: 'image';
+  };
+  callToActions?: Array<{
+    label?: string;
+    url?: string;
+    _key: string;
+  }>;
+};
+
 export type Project = {
   _id: string;
   _type: 'project';
@@ -186,6 +231,8 @@ export type SanityAssetSourceData = {
 };
 
 export type AllSanitySchemaTypes =
+  | SectionsConfig
+  | Profile
   | Project
   | Skill
   | SanityImagePaletteSwatch
@@ -271,6 +318,53 @@ export type PROJECTS_QUERYResult = Array<{
     title?: string;
   }> | null;
 }>;
+// Variable: PROFILE_QUERY
+// Query: *[_type == "profile" ]
+export type PROFILE_QUERYResult = Array<{
+  _id: string;
+  _type: 'profile';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  greeting?: string;
+  fullName?: string;
+  bio?: string;
+  profileImage?: {
+    asset?: {
+      _ref: string;
+      _type: 'reference';
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: 'image';
+  };
+  callToActions?: Array<{
+    label?: string;
+    url?: string;
+    _key: string;
+  }>;
+}>;
+// Variable: SECTIONS_CONFIG_QUERY
+// Query: *[_type == "sectionsConfig" ]
+export type SECTIONS_CONFIG_QUERYResult = Array<{
+  _id: string;
+  _type: 'sectionsConfig';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  skillsSection?: {
+    heading?: string;
+  };
+  projectsSection?: {
+    heading?: string;
+  };
+}>;
 
 // Query TypeMap
 import '@sanity/client';
@@ -278,5 +372,7 @@ declare module '@sanity/client' {
   interface SanityQueries {
     '*[_type == "skill" ]': SKILLS_QUERYResult;
     '*[_type == "project" ]{..., "skills": skills[]-> }': PROJECTS_QUERYResult;
+    '*[_type == "profile" ]': PROFILE_QUERYResult;
+    '*[_type == "sectionsConfig" ]': SECTIONS_CONFIG_QUERYResult;
   }
 }
