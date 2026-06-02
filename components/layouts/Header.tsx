@@ -8,16 +8,16 @@ import { urlFor } from '@/sanity/lib/image';
 const Header = async () => {
   const profile = await selectedProfile();
 
+  const profileImageUrl = profile?.profileImage?.asset
+    ? urlFor(profile.profileImage).auto('format').url()
+    : me;
+
   return (
     <header className="h-screen min-h-[500px] p-4">
       <div className="flex h-full w-full flex-col items-center justify-center gap-4">
         <div className="relative h-70 w-70 overflow-hidden rounded-full">
           <Image
-            src={
-              urlFor(profile?.profileImage || '')
-                .auto('format')
-                .url() || me
-            }
+            src={profileImageUrl}
             alt={profile?.profileImage?.alt || 'my photo'}
             fill
             className="object-cover"

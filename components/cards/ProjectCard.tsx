@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import me from '@/public/assets/images/me.jpg';
-import { FC, useId } from 'react';
+import { FC } from 'react';
 import GithubIcon from '@/public/assets/icons/github.svg';
 import Link from 'next/link';
 import SkillChip from '../chips/SkillChip';
@@ -12,17 +12,15 @@ interface ProjectCardProps {
 }
 
 const ProjectCard: FC<ProjectCardProps> = ({ project }) => {
-  const id = useId();
+  const mainImageUrl = project?.mainImage?.asset
+    ? urlFor(project.mainImage).auto('format').url()
+    : me;
 
   return (
     <article className="flex h-full w-full flex-col gap-3 rounded-2xl border p-[clamp(0.25rem,_0.159rem_+_0.45vw,_0.5rem)] pb-3">
       <div className="relative h-[300px] w-full overflow-hidden rounded-xl">
         <Image
-          src={
-            urlFor(project?.mainImage || '')
-              .auto('format')
-              .url() || me
-          }
+          src={mainImageUrl}
           alt={project?.mainImage?.alt || ''}
           fill
           className="object-cover"
@@ -45,11 +43,14 @@ const ProjectCard: FC<ProjectCardProps> = ({ project }) => {
       </div>
       <div className="flex flex-wrap items-center gap-2 border-t pt-[clamp(0.25rem,_0.159rem_+_0.45vw,_0.5rem)]">
         {project?.skills &&
-          project?.skills.map((skill, index) => (
-            <div key={`${id}-${index}`} className="w-fit">
-              <SkillChip skill={skill as unknown as Skill} size="sm" />
-            </div>
-          ))}
+          project?.skills.map((skill) => {
+            const resolvedSkill = skill as unknown as Skill;
+            return (
+              <div key={resolvedSkill._id} className="w-fit">
+                <SkillChip skill={resolvedSkill} size="sm" />
+              </div>
+            );
+          })}
       </div>
     </article>
   );

@@ -3,11 +3,9 @@ import SectionContainer from '@/components/containers/SectionContainer';
 import { sanityFetch } from '@/sanity/lib/live';
 import { PROJECTS_QUERY } from '@/sanity/lib/queries';
 import { Project } from '@/sanity/types';
-import { useId } from 'react';
 import { selectedSectionsConfig } from '@/hooks/useSectionsConfig';
 
 const ProjectsSection = async () => {
-  const id = useId();
   const { data: projects } = await sanityFetch({ query: PROJECTS_QUERY });
   const sectionsConfig = await selectedSectionsConfig();
 
@@ -15,8 +13,8 @@ const ProjectsSection = async () => {
     <SectionContainer>
       <h2>{sectionsConfig?.projectsSection?.heading || 'Projects'}</h2>
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {projects.map((project: Project, index: number) => (
-          <div key={`${id}-${index}`}>
+        {projects.map((project: Project) => (
+          <div key={project._id}>
             <ProjectCard project={project} />
           </div>
         ))}
