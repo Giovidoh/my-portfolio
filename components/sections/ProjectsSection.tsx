@@ -2,11 +2,11 @@ import ProjectCard from '@/components/cards/ProjectCard';
 import SectionContainer from '@/components/containers/SectionContainer';
 import { sanityFetch } from '@/sanity/lib/live';
 import { PROJECTS_QUERY } from '@/sanity/lib/queries';
-import { selectedSectionsConfig } from '@/hooks/useSectionsConfig';
+import { getSectionsConfig } from '@/sanity/lib/getSectionsConfig';
 
 const ProjectsSection = async () => {
   const { data: projects } = await sanityFetch({ query: PROJECTS_QUERY });
-  const sectionsConfig = await selectedSectionsConfig();
+  const sectionsConfig = await getSectionsConfig();
 
   return (
     <SectionContainer>

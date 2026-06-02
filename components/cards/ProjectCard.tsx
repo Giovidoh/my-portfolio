@@ -2,6 +2,7 @@ import Image from 'next/image';
 import me from '@/public/assets/images/me.jpg';
 import { FC } from 'react';
 import GithubIcon from '@/public/assets/icons/github.svg';
+import { ExternalLink } from 'lucide-react';
 import Link from 'next/link';
 import SkillChip from '../chips/SkillChip';
 import { PROJECTS_QUERY_RESULT } from '@/sanity/types';
@@ -31,14 +32,27 @@ const ProjectCard: FC<ProjectCardProps> = ({ project }) => {
       <div className="flex flex-col gap-3 px-2">
         <div className="flex w-full flex-col gap-3">
           <h3 className="text-lg font-medium">{project.title}</h3>
-          {project.githubLink && (
-            <Link
-              href={project.githubLink}
-              target="_blank"
-              className="flex w-fit items-center gap-2"
-            >
-              <GithubIcon className="size-5" /> Github
-            </Link>
+          {(project.githubLink || project.liveLink) && (
+            <div className="flex flex-wrap items-center gap-4">
+              {project.githubLink && (
+                <Link
+                  href={project.githubLink}
+                  target="_blank"
+                  className="flex w-fit items-center gap-2"
+                >
+                  <GithubIcon className="size-5" /> Github
+                </Link>
+              )}
+              {project.liveLink && (
+                <Link
+                  href={project.liveLink}
+                  target="_blank"
+                  className="flex w-fit items-center gap-2"
+                >
+                  <ExternalLink className="size-5" /> Live
+                </Link>
+              )}
+            </div>
           )}
           <p className="line-clamp-3">{project.description}</p>
         </div>

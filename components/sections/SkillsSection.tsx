@@ -3,11 +3,11 @@ import SkillChip from '@/components/chips/SkillChip';
 import { sanityFetch } from '@/sanity/lib/live';
 import { SKILLS_QUERY } from '@/sanity/lib/queries';
 import { Skill } from '@/sanity/types';
-import { selectedSectionsConfig } from '@/hooks/useSectionsConfig';
+import { getSectionsConfig } from '@/sanity/lib/getSectionsConfig';
 
 const SkillsSection = async () => {
   const { data: skills } = await sanityFetch({ query: SKILLS_QUERY });
-  const sectionsConfig = await selectedSectionsConfig();
+  const sectionsConfig = await getSectionsConfig();
 
   return (
     <SectionContainer>

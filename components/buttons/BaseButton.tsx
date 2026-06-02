@@ -2,7 +2,7 @@ import { Button, buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { VariantProps } from 'class-variance-authority';
 import Link from 'next/link';
-import { FC, ReactNode } from 'react';
+import { FC, MouseEventHandler, ReactNode } from 'react';
 
 interface BaseButtonProps extends VariantProps<typeof buttonVariants> {
   variantStyle?: 'primary' | 'secondary' | 'outline' | 'ghost';
@@ -11,7 +11,7 @@ interface BaseButtonProps extends VariantProps<typeof buttonVariants> {
   children?: ReactNode;
   isLink?: boolean;
   href?: string;
-  onClick?: (e: any) => void;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
 }

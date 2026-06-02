@@ -1,9 +1,9 @@
 import BaseButton from '@/components/buttons/BaseButton';
 import SectionContainer from '@/components/containers/SectionContainer';
-import { selectedProfile } from '@/hooks/useProfile';
+import { getProfile } from '@/sanity/lib/getProfile';
 
 const Footer = async () => {
-  const profile = await selectedProfile();
+  const profile = await getProfile();
 
   return (
     <footer className="border-t">

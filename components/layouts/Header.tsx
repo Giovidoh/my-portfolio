@@ -2,11 +2,11 @@ import Image from 'next/image';
 import me from '@/public/assets/images/me.jpg';
 import React from 'react';
 import BaseButton from '@/components/buttons/BaseButton';
-import { selectedProfile } from '@/hooks/useProfile';
+import { getProfile } from '@/sanity/lib/getProfile';
 import { urlFor } from '@/sanity/lib/image';
 
 const Header = async () => {
-  const profile = await selectedProfile();
+  const profile = await getProfile();
 
   const profileImageUrl = profile?.profileImage?.asset
     ? urlFor(profile.profileImage).auto('format').url()
@@ -23,9 +23,9 @@ const Header = async () => {
             className="object-cover"
           />
         </div>
-        <p className="text-center">
+        <h1 className="text-center text-base font-normal">
           {profile?.greeting} {profile?.fullName}. {profile?.bio}
-        </p>
+        </h1>
         <div className="flex flex-col items-center gap-4 sm:flex-row">
           {profile?.callToActions?.map((callToAction) => (
             <BaseButton key={callToAction._key} isLink={true} href={callToAction.url || ''}>

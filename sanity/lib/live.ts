@@ -6,4 +6,7 @@ import { client } from './client'
 
 export const { sanityFetch, SanityLive } = defineLive({
   client,
+  // Public portfolio: only published content is fetched, no draft-preview tokens.
+  serverToken: false,
+  browserToken: false,
 });
