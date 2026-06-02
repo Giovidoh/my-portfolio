@@ -12,7 +12,9 @@
  * ---------------------------------------------------------------------------------
  */
 
-// Source: schema.json
+export declare const internalGroqTypeReferenceTo: unique symbol;
+
+// Source: sanity/extract.json
 export type SectionsConfig = {
   _id: string;
   _type: 'sectionsConfig';
@@ -246,11 +248,11 @@ export type AllSanitySchemaTypes =
   | Geopoint
   | Slug
   | SanityAssetSourceData;
-export declare const internalGroqTypeReferenceTo: unique symbol;
+
 // Source: sanity/lib/queries.ts
 // Variable: SKILLS_QUERY
 // Query: *[_type == "skill" ]
-export type SKILLS_QUERYResult = Array<{
+export type SKILLS_QUERY_RESULT = Array<{
   _id: string;
   _type: 'skill';
   _createdAt: string;
@@ -271,9 +273,11 @@ export type SKILLS_QUERYResult = Array<{
   };
   title?: string;
 }>;
+
+// Source: sanity/lib/queries.ts
 // Variable: PROJECTS_QUERY
 // Query: *[_type == "project" ]{..., "skills": skills[]-> }
-export type PROJECTS_QUERYResult = Array<{
+export type PROJECTS_QUERY_RESULT = Array<{
   _id: string;
   _type: 'project';
   _createdAt: string;
@@ -318,9 +322,11 @@ export type PROJECTS_QUERYResult = Array<{
     title?: string;
   }> | null;
 }>;
+
+// Source: sanity/lib/queries.ts
 // Variable: PROFILE_QUERY
 // Query: *[_type == "profile" ][0]
-export type PROFILE_QUERYResult = {
+export type PROFILE_QUERY_RESULT = {
   _id: string;
   _type: 'profile';
   _createdAt: string;
@@ -349,9 +355,11 @@ export type PROFILE_QUERYResult = {
     _key: string;
   }>;
 } | null;
+
+// Source: sanity/lib/queries.ts
 // Variable: SECTIONS_CONFIG_QUERY
 // Query: *[_type == "sectionsConfig" ][0]
-export type SECTIONS_CONFIG_QUERYResult = {
+export type SECTIONS_CONFIG_QUERY_RESULT = {
   _id: string;
   _type: 'sectionsConfig';
   _createdAt: string;
@@ -370,9 +378,9 @@ export type SECTIONS_CONFIG_QUERYResult = {
 import '@sanity/client';
 declare module '@sanity/client' {
   interface SanityQueries {
-    '*[_type == "skill" ]': SKILLS_QUERYResult;
-    '*[_type == "project" ]{..., "skills": skills[]-> }': PROJECTS_QUERYResult;
-    '*[_type == "profile" ][0]': PROFILE_QUERYResult;
-    '*[_type == "sectionsConfig" ][0]': SECTIONS_CONFIG_QUERYResult;
+    '*[_type == "skill" ]': SKILLS_QUERY_RESULT;
+    '*[_type == "project" ]{..., "skills": skills[]-> }': PROJECTS_QUERY_RESULT;
+    '*[_type == "profile" ][0]': PROFILE_QUERY_RESULT;
+    '*[_type == "sectionsConfig" ][0]': SECTIONS_CONFIG_QUERY_RESULT;
   }
 }

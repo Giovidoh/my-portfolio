@@ -4,11 +4,13 @@ import { FC } from 'react';
 import GithubIcon from '@/public/assets/icons/github.svg';
 import Link from 'next/link';
 import SkillChip from '../chips/SkillChip';
-import { Project, Skill } from '@/sanity/types';
+import { PROJECTS_QUERY_RESULT } from '@/sanity/types';
 import { urlFor } from '@/sanity/lib/image';
 
+type ProjectCardProject = PROJECTS_QUERY_RESULT[number];
+
 interface ProjectCardProps {
-  project: Project;
+  project: ProjectCardProject;
 }
 
 const ProjectCard: FC<ProjectCardProps> = ({ project }) => {
@@ -43,14 +45,11 @@ const ProjectCard: FC<ProjectCardProps> = ({ project }) => {
       </div>
       <div className="flex flex-wrap items-center gap-2 border-t pt-[clamp(0.25rem,_0.159rem_+_0.45vw,_0.5rem)]">
         {project?.skills &&
-          project?.skills.map((skill) => {
-            const resolvedSkill = skill as unknown as Skill;
-            return (
-              <div key={resolvedSkill._id} className="w-fit">
-                <SkillChip skill={resolvedSkill} size="sm" />
-              </div>
-            );
-          })}
+          project.skills.map((skill) => (
+            <div key={skill._id} className="w-fit">
+              <SkillChip skill={skill} size="sm" />
+            </div>
+          ))}
       </div>
     </article>
   );
