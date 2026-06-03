@@ -6,7 +6,7 @@ thème via `data-theme` · Lenis (smooth scroll) + Motion · light primaire + da
 Réf. design extraite : `%TEMP%\portfolio-design\my-portfolio\` (README, chats, project/).
 
 ## In Progress
-- (prochaine : **Phase R7 — i18n data-driven**)
+- [~] **Phase R7 — i18n data-driven** — blocker `schema:extract` **levé** (sanity 5.30.0) ; reste le gros chantier : langues gérées dans Sanity, routing `[locale]`, champs internationalisés, sélecteur FR/EN
 
 ## To Do
 - [ ] **Phase R7 — i18n data-driven** : type `language` Sanity (actif/inactif), routing `[locale]`, champs internationalisés, sélecteur FR/EN dans la nav, `<html lang>` dynamique
@@ -29,4 +29,4 @@ Réf. design extraite : `%TEMP%\portfolio-design\my-portfolio\` (README, chats, 
 - Preview live projet : iframe vers `/demo` (les sites tiers bloquent souvent l'embed) ; en R8, embarquer le vrai `liveLink` quand permis, sinon fallback.
 
 ## Blocked
-- [!] `pnpm schema:extract` — bug upstream sanity 5.28 (`getWorkspace`). À **re-tester** avant R8 (modif de structure → régénération de types nécessaire).
+- (rien) — `schema:extract` **débloqué** le 2026-06-03 : `sanity` 5.30.0 corrige le bug `getWorkspace`. Flux `pnpm schema:extract` → `pnpm typegen` opérationnel (l'`extract.json` était périmé : 15 → 17 types).
