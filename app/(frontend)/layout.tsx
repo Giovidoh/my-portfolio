@@ -1,18 +1,8 @@
-import type { Metadata } from 'next';
 import { SanityLive } from '@/sanity/lib/live';
-import Header from '@/components/layouts/Header';
-import Main from '@/components/layouts/Main';
+import Nav from '@/components/layouts/Nav';
 import Footer from '@/components/layouts/Footer';
-import ThemeToggle from '@/components/theme/ThemeToggle';
-import { getProfile } from '@/sanity/lib/getProfile';
-
-export async function generateMetadata(): Promise<Metadata> {
-  const profile = await getProfile();
-  return {
-    title: profile?.fullName ? `${profile.fullName} — Portfolio` : 'Portfolio',
-    description: profile?.bio || undefined,
-  };
-}
+import SmoothScroll from '@/components/providers/SmoothScroll';
+import ScrollReveals from '@/components/motion/ScrollReveals';
 
 export default function FrontendLayout({
   children,
@@ -21,9 +11,10 @@ export default function FrontendLayout({
 }>) {
   return (
     <>
-      <ThemeToggle />
-      <Header />
-      <Main>{children}</Main>
+      <SmoothScroll />
+      <ScrollReveals />
+      <Nav />
+      {children}
       <Footer />
       <SanityLive />
     </>

@@ -1,21 +1,25 @@
 'use client';
 
-import { Moon, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
+import { Moon, Sun } from '@/components/ui/icons';
 
+/**
+ * Dark/light toggle. Icon visibility is driven by the `[data-theme]` attribute
+ * in CSS (.theme-toggle .sun / .moon), so there is no hydration guard needed.
+ */
 const ThemeToggle = () => {
   const { resolvedTheme, setTheme } = useTheme();
 
   return (
     <button
       type="button"
-      aria-label="Basculer le thème clair/sombre"
+      className="icon-btn theme-toggle"
+      aria-label="Toggle dark mode"
+      title="Toggle theme"
       onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
-      className="fixed top-4 right-4 z-50 flex h-10 w-10 items-center justify-center rounded-full border bg-background text-foreground shadow-md transition hover:bg-accent"
     >
-      {/* Icon visibility is driven by the `.dark` class (no JS, no hydration guard). */}
-      <Sun className="hidden size-5 dark:block" />
-      <Moon className="size-5 dark:hidden" />
+      <Moon className="moon" />
+      <Sun className="sun" />
     </button>
   );
 };

@@ -1,26 +1,35 @@
-import BaseButton from '@/components/buttons/BaseButton';
-import SectionContainer from '@/components/containers/SectionContainer';
-import { getProfile } from '@/sanity/lib/getProfile';
+import Link from 'next/link';
 
-const Footer = async () => {
-  const profile = await getProfile();
-
-  return (
-    <footer className="border-t">
-      <SectionContainer className="pt-20 pb-40">
-        <div className="flex w-full justify-between gap-5 max-sm:flex-col max-sm:items-center">
-          <div>{profile?.fullName}</div>
-          <div className="flex flex-col items-end gap-4 max-sm:items-center">
-            {profile?.callToActions?.map((callToAction) => (
-              <BaseButton key={callToAction._key} isLink={true} href={callToAction.url || ''}>
-                {callToAction.label}
-              </BaseButton>
-            ))}
-          </div>
-        </div>
-      </SectionContainer>
-    </footer>
-  );
-};
+const Footer = () => (
+  <footer className="footer wrap">
+    <div className="footer__grid">
+      <div>
+        <p className="footer__big">Let&apos;s make the web a little better.</p>
+      </div>
+      <div className="footer__col">
+        <h5>Navigate</h5>
+        <Link href="/#work">Work</Link>
+        <Link href="/#about">About</Link>
+        <Link href="/#experience">Experience</Link>
+        <Link href="/contact">Contact</Link>
+      </div>
+      <div className="footer__col">
+        <h5>Elsewhere</h5>
+        <a href="https://github.com" target="_blank" rel="noopener">
+          GitHub
+        </a>
+        <a href="https://linkedin.com" target="_blank" rel="noopener">
+          LinkedIn
+        </a>
+        <a href="mailto:hello@cgidoh.dev">Email</a>
+        <Link href="/cv">Download CV</Link>
+      </div>
+    </div>
+    <div className="footer__bar">
+      <small>© 2026 Cir-Giovanni Idoh — Built with care.</small>
+      <small>Space Grotesk · IBM Plex Sans</small>
+    </div>
+  </footer>
+);
 
 export default Footer;

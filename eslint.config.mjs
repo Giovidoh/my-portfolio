@@ -10,6 +10,8 @@ const eslintConfig = defineConfig([
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unused-vars': 'off',
       'react/no-unescaped-entities': 'off',
+      // Skill chips use theme-tinted simple-icons from a CDN, swapped by CSS — plain <img> is intended.
+      '@next/next/no-img-element': 'off',
     },
   },
   globalIgnores(['.next/**', 'out/**', 'build/**', 'next-env.d.ts']),
