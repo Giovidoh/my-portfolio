@@ -1,9 +1,11 @@
 import { defineQuery } from 'next-sanity';
 
-export const SKILLS_QUERY = defineQuery(`*[_type == "skill" ]`);
+// NOTE: These collection queries are rewritten locale-aware (GROQ `coalesce`) when
+// the sections are wired to Sanity in step 3 (R8). Kept here so typegen has stable
+// query handles to type.
 
-export const PROJECTS_QUERY = defineQuery(`*[_type == "project" ]{..., "skills": skills[]-> }`);
+export const SKILLS_QUERY = defineQuery(`*[_type == "skill"] | order(order asc)`);
 
-export const PROFILE_QUERY = defineQuery(`*[_type == "profile" ][0]`);
-
-export const SECTIONS_CONFIG_QUERY = defineQuery(`*[_type == "sectionsConfig" ][0]`);
+export const PROJECTS_QUERY = defineQuery(
+  `*[_type == "project"] | order(order asc){ ..., "skills": skills[]-> }`,
+);

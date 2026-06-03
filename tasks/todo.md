@@ -6,11 +6,11 @@ thème via `data-theme` · Lenis (smooth scroll) + Motion · light primaire + da
 Réf. design extraite : `%TEMP%\portfolio-design\my-portfolio\` (README, chats, project/).
 
 ## In Progress
-- [~] **Phase R7 — i18n data-driven** — blocker `schema:extract` **levé** (sanity 5.30.0) ; reste le gros chantier : langues gérées dans Sanity, routing `[locale]`, champs internationalisés, sélecteur FR/EN
+- [~] **Chantier i18n+contenu — Étape 3 : routing `[locale]`** : passage `/fr`·`/en`, redirection racine, `<html lang>` dynamique, **sélecteur FR/EN** dans la nav, helpers de locale
 
 ## To Do
-- [ ] **Phase R7 — i18n data-driven** : type `language` Sanity (actif/inactif), routing `[locale]`, champs internationalisés, sélecteur FR/EN dans la nav, `<html lang>` dynamique
-- [ ] **Phase R8 — Expansion schéma Sanity + câblage** : hero (status/role/lede/photo), about (+ what-I-do), skills (catégories + logos clair/sombre), experience, testimonials, projet (featured/slug/case-study/galerie/liveLink), siteSettings (SEO/labels/social), **CV file (PDF)** → bouton « Download CV » pointe vers le PDF Sanity ; tout éditable sans code.
+- [ ] **Étape 4 — Câblage Sanity** : chaque section/page lit Sanity (GROQ `coalesce` locale-aware) → le placeholder disparaît ; « Download CV » → `cvFile` Sanity ; preview live = `liveLink` si `allowEmbed`, sinon fallback
+- [ ] **Bootstrap contenu** : créer les docs `language` (en défaut + fr), les singletons `siteSettings`/`homePage`/`contactPage`, puis projets/skills/catégories/expériences/témoignages, et remplir les traductions dans `/studio`
 
 ## Done
 - [x] Phases 1-4 antérieures (déblocage, migration Next 16.2 / React 19.2, qualité, dark mode + theme provider)
@@ -21,12 +21,15 @@ Réf. design extraite : `%TEMP%\portfolio-design\my-portfolio\` (README, chats, 
 - [x] **R4 — Page projet** `/projets/[slug]` : case study + **preview live iframe** (`/demo`) + **fallback no-link** (ex. `verdant`) + generateStaticParams. Build + rendu OK.
 - [x] **R5 — Page** `/contact` : formulaire validé (client) + bannières succès/erreur + **dropdown custom** (`CustomSelect`) + méthodes alt + **server action Resend** (`app/actions/contact.ts`). Build + rendu OK.
 - [x] **R6 — CV** `/cv` : page imprimable (Print/Save PDF). Build + rendu OK.
+- [x] **Chantier i18n — Étape 1 (Fondation langues)** : type `language` (actif/défaut/ordre) + plugin `internationalized-array` (langues chargées du dataset, `string`/`text`).
+- [x] **Chantier i18n — Étape 2 (Modèle de contenu)** : singletons `siteSettings`/`homePage`/`contactPage` ; collections `experience`/`testimonial`/`skillCategory` ; `project`/`skill` étendus (slug, featured, case-study, galerie, `allowEmbed`, catégorie, `iconDark`) ; tous les textes traduisibles via `internationalizedArrayString/Text` ; helpers `i18n.ts`/`helpers.ts` ; `structure.ts` (singletons) ; suppression `profile`/`sectionsConfig` (code mort). **extract ✅ · typegen ✅ (28 types) · build ✅ (13 routes) · lint ✅**.
 
 ## Notes / dette
 - **Action requise (toi)** : pour activer l'envoi du formulaire, mettre `RESEND_API_KEY` + `CONTACT_TO_EMAIL` dans `.env.local` (cf. `.env.example`). Sans ça → bannière « non configuré ».
-- Contenu des pages = **placeholder du design** ; câblage Sanity = R8.
-- « Download CV » pointe vers la page imprimable `/cv` ; le **PDF uploadé via Sanity** arrive en R8.
-- Preview live projet : iframe vers `/demo` (les sites tiers bloquent souvent l'embed) ; en R8, embarquer le vrai `liveLink` quand permis, sinon fallback.
+- Contenu des pages = **placeholder du design** ; câblage Sanity = étape 4.
+- « Download CV » pointe vers la page imprimable `/cv` ; le **PDF uploadé via Sanity** (`cvFile`) arrive à l'étape 4.
+- Preview live projet : iframe vers `/demo` (les sites tiers bloquent souvent l'embed) ; à l'étape 4, embarquer le vrai `liveLink` quand `allowEmbed`, sinon fallback.
+- **Modèle (étape 2)** : textes traduisibles = `internationalizedArrayString/Text` (helpers `sanity/schemaTypes/i18n.ts`). Catégories de skills = data (`skillCategory`), comme les langues. Singletons via `structure.ts` (documentId fixe) + `document.newDocumentOptions` (pas de doublon).
 
 ## Blocked
 - (rien) — `schema:extract` **débloqué** le 2026-06-03 : `sanity` 5.30.0 corrige le bug `getWorkspace`. Flux `pnpm schema:extract` → `pnpm typegen` opérationnel (l'`extract.json` était périmé : 15 → 17 types).

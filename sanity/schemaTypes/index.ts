@@ -1,10 +1,28 @@
 import { type SchemaTypeDefinition } from 'sanity'
-import { skillType } from './skillType'
+
+import { siteSettingsType } from './siteSettingsType'
+import { homePageType } from './homePageType'
+import { contactPageType } from './contactPageType'
 import { projectType } from './projectType'
-import { profileType } from './profileType'
-import { sectionsConfigType } from './sectionsConfigType'
+import { skillType } from './skillType'
+import { skillCategoryType } from './skillCategoryType'
+import { experienceType } from './experienceType'
+import { testimonialType } from './testimonialType'
 import { languageType } from './languageType'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [languageType, skillType, projectType, profileType, sectionsConfigType],
+  types: [
+    // Singletons (pages)
+    siteSettingsType,
+    homePageType,
+    contactPageType,
+    // Collections
+    projectType,
+    skillType,
+    skillCategoryType,
+    experienceType,
+    testimonialType,
+    // System
+    languageType,
+  ],
 }

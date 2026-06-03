@@ -33,4 +33,15 @@ export default defineConfig({
       fieldTypes: ['string', 'text'],
     }),
   ],
+  document: {
+    // Singletons are reached through the custom structure; hide them from the
+    // global "new document" menu so no duplicates can be created.
+    newDocumentOptions: (prev, {creationContext}) => {
+      const singletons = ['siteSettings', 'homePage', 'contactPage']
+      if (creationContext.type === 'global') {
+        return prev.filter((tpl) => !singletons.includes(tpl.templateId))
+      }
+      return prev
+    },
+  },
 })

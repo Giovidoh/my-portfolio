@@ -1,32 +1,54 @@
 import { defineField, defineType } from 'sanity';
+import { altField } from './helpers';
 
+/**
+ * A single skill / tool. The icon can be an uploaded image (light + optional dark
+ * variant) or, as a fallback, a Simple Icons slug rendered from their CDN.
+ */
 export const skillType = defineType({
   name: 'skill',
   title: 'Skills',
   type: 'document',
   fields: [
     defineField({
-      name: 'icon',
-      type: 'image',
-      fields: [
-        defineField({
-          name: 'alt',
-          type: 'string',
-          title: 'Alternative text',
-          validation: (rule) =>
-            rule.custom((value, context) => {
-              const parent = context?.parent as { asset?: { _ref?: string } };
-
-              return !value && parent?.asset?._ref
-                ? 'Alt text is required when an image is present'
-                : true;
-            }),
-        }),
-      ],
+      name: 'title',
+      title: 'Name',
+      type: 'string',
+      validation: (rule) => rule.required(),
+      description: 'Brand name (not translated), e.g. "React".',
     }),
     defineField({
-      name: 'title',
-      type: 'string',
+      name: 'category',
+      title: 'Category',
+      type: 'reference',
+      to: { type: 'skillCategory' },
     }),
+    defineField({
+      name: 'icon',
+      title: 'Icon',
+      type: 'image',
+      description: 'Logo for light mode (dark-inked).',
+      fields: [altField()],
+    }),
+    defineField({
+      name: 'iconDark',
+      title: 'Icon (dark mode)',
+      type: 'image',
+      description: 'Optional light-inked variant shown in dark mode.',
+      fields: [altField()],
+    }),
+    defineField({
+      name: 'simpleIconSlug',
+      title: 'Simple Icons slug',
+      type: 'string',
+      description: 'Fallback CDN icon when no image is uploaded, e.g. "nextdotjs" (cdn.simpleicons.org).',
+    }),
+    defineField({ name: 'url', title: 'URL', type: 'url' }),
+    defineField({ name: 'order', title: 'Order', type: 'number', initialValue: 0 }),
   ],
+  orderings: [{ title: 'Order', name: 'orderAsc', by: [{ field: 'order', direction: 'asc' }] }],
+  preview: {
+    select: { title: 'title', media: 'icon' },
+    prepare: ({ title, media }) => ({ title: title ?? 'Skill', media }),
+  },
 });

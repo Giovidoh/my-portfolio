@@ -15,19 +15,17 @@
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
 // Source: sanity/extract.json
-export type SectionsConfig = {
+export type Language = {
   _id: string;
-  _type: 'sectionsConfig';
+  _type: 'language';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  id?: string;
   title?: string;
-  skillsSection?: {
-    heading?: string;
-  };
-  projectsSection?: {
-    heading?: string;
-  };
+  isActive?: boolean;
+  isDefault?: boolean;
+  order?: number;
 };
 
 export type SanityImageAssetReference = {
@@ -37,17 +35,16 @@ export type SanityImageAssetReference = {
   [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
 };
 
-export type Profile = {
+export type Testimonial = {
   _id: string;
-  _type: 'profile';
+  _type: 'testimonial';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title?: string;
-  greeting?: string;
-  fullName?: string;
-  bio?: string;
-  profileImage?: {
+  quote?: InternationalizedArrayText;
+  author?: string;
+  authorRole?: InternationalizedArrayString;
+  avatar?: {
     asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
@@ -55,11 +52,7 @@ export type Profile = {
     alt?: string;
     _type: 'image';
   };
-  callToActions?: Array<{
-    label?: string;
-    url?: string;
-    _key: string;
-  }>;
+  order?: number;
 };
 
 export type SanityImageCrop = {
@@ -78,6 +71,81 @@ export type SanityImageHotspot = {
   width?: number;
 };
 
+export type InternationalizedArrayString = Array<
+  {
+    _key: string;
+  } & InternationalizedArrayStringValue
+>;
+
+export type InternationalizedArrayText = Array<
+  {
+    _key: string;
+  } & InternationalizedArrayTextValue
+>;
+
+export type Experience = {
+  _id: string;
+  _type: 'experience';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  company?: string;
+  companyUrl?: string;
+  short?: InternationalizedArrayString;
+  role?: InternationalizedArrayString;
+  period?: InternationalizedArrayString;
+  description?: InternationalizedArrayText;
+  stack?: Array<string>;
+  order?: number;
+};
+
+export type SkillCategoryReference = {
+  _ref: string;
+  _type: 'reference';
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: 'skillCategory';
+};
+
+export type Skill = {
+  _id: string;
+  _type: 'skill';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  category?: SkillCategoryReference;
+  icon?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: 'image';
+  };
+  iconDark?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: 'image';
+  };
+  simpleIconSlug?: string;
+  url?: string;
+  order?: number;
+};
+
+export type SkillCategory = {
+  _id: string;
+  _type: 'skillCategory';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: InternationalizedArrayString;
+  key?: string;
+  order?: number;
+};
+
 export type SkillReference = {
   _ref: string;
   _type: 'reference';
@@ -92,7 +160,32 @@ export type Project = {
   _updatedAt: string;
   _rev: string;
   title?: string;
-  description?: string;
+  slug?: Slug;
+  order?: number;
+  featured?: boolean;
+  badge?: InternationalizedArrayString;
+  description?: InternationalizedArrayText;
+  tags?: Array<string>;
+  caseType?: InternationalizedArrayString;
+  year?: string;
+  sub?: InternationalizedArrayText;
+  facts?: {
+    role?: InternationalizedArrayString;
+    timeline?: InternationalizedArrayString;
+    stack?: string;
+    team?: InternationalizedArrayString;
+  };
+  caseStudy?: {
+    problem?: InternationalizedArrayText;
+    role?: InternationalizedArrayText;
+    solution?: InternationalizedArrayText;
+    outcome?: InternationalizedArrayText;
+    metrics?: Array<{
+      value?: string;
+      label?: InternationalizedArrayString;
+      _key: string;
+    }>;
+  };
   mainImage?: {
     asset?: SanityImageAssetReference;
     media?: unknown;
@@ -101,8 +194,19 @@ export type Project = {
     alt?: string;
     _type: 'image';
   };
+  gallery?: Array<{
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    caption?: InternationalizedArrayString;
+    _type: 'image';
+    _key: string;
+  }>;
   githubLink?: string;
   liveLink?: string;
+  allowEmbed?: boolean;
   skills?: Array<
     {
       _key: string;
@@ -110,34 +214,162 @@ export type Project = {
   >;
 };
 
-export type Skill = {
+export type Slug = {
+  _type: 'slug';
+  current?: string;
+  source?: string;
+};
+
+export type ContactPage = {
   _id: string;
-  _type: 'skill';
+  _type: 'contactPage';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  icon?: {
+  eyebrow?: InternationalizedArrayString;
+  heading?: InternationalizedArrayString;
+  pitch?: InternationalizedArrayText;
+  subjects?: Array<{
+    value?: string;
+    label?: InternationalizedArrayString;
+    _key: string;
+  }>;
+  nameLabel?: InternationalizedArrayString;
+  emailLabel?: InternationalizedArrayString;
+  subjectLabel?: InternationalizedArrayString;
+  messageLabel?: InternationalizedArrayString;
+  sendLabel?: InternationalizedArrayString;
+  sendingLabel?: InternationalizedArrayString;
+  successTitle?: InternationalizedArrayString;
+  successBody?: InternationalizedArrayText;
+  errorBody?: InternationalizedArrayText;
+  methodsHeading?: InternationalizedArrayString;
+  methodsNote?: InternationalizedArrayText;
+};
+
+export type HomePage = {
+  _id: string;
+  _type: 'homePage';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  hero?: {
+    status?: InternationalizedArrayString;
+    firstName?: string;
+    lastName?: string;
+    roleLabel?: InternationalizedArrayString;
+    roleStack?: string;
+    lede?: InternationalizedArrayText;
+    badge?: InternationalizedArrayString;
+    photo?: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: 'image';
+    };
+    ctaPrimary?: {
+      label?: InternationalizedArrayString;
+      href?: string;
+    };
+    ctaSecondary?: {
+      label?: InternationalizedArrayString;
+      href?: string;
+    };
+    marquee?: Array<string>;
+  };
+  about?: {
+    eyebrow?: InternationalizedArrayString;
+    lead?: InternationalizedArrayText;
+    body?: InternationalizedArrayText;
+    whatIDo?: Array<{
+      title?: InternationalizedArrayString;
+      description?: InternationalizedArrayText;
+      _key: string;
+    }>;
+  };
+  workSection?: {
+    eyebrow?: InternationalizedArrayString;
+    heading?: InternationalizedArrayString;
+  };
+  skillsSection?: {
+    eyebrow?: InternationalizedArrayString;
+    heading?: InternationalizedArrayString;
+    allLabel?: InternationalizedArrayString;
+  };
+  experienceSection?: {
+    eyebrow?: InternationalizedArrayString;
+    heading?: InternationalizedArrayString;
+  };
+  testimonialsSection?: {
+    eyebrow?: InternationalizedArrayString;
+    heading?: InternationalizedArrayString;
+  };
+  contactCta?: {
+    eyebrow?: InternationalizedArrayString;
+    heading?: InternationalizedArrayString;
+    body?: InternationalizedArrayText;
+    ctaLabel?: InternationalizedArrayString;
+  };
+};
+
+export type SanityFileAssetReference = {
+  _ref: string;
+  _type: 'reference';
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: 'sanity.fileAsset';
+};
+
+export type SiteSettings = {
+  _id: string;
+  _type: 'siteSettings';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  brandName?: string;
+  logo?: {
     asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    alt?: string;
     _type: 'image';
   };
-  title?: string;
-};
-
-export type Language = {
-  _id: string;
-  _type: 'language';
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  id?: string;
-  title?: string;
-  isActive?: boolean;
-  isDefault?: boolean;
-  order?: number;
+  availabilityText?: InternationalizedArrayString;
+  metaTitle?: InternationalizedArrayString;
+  metaDescription?: InternationalizedArrayText;
+  ogImage?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: 'image';
+  };
+  email?: string;
+  githubUrl?: string;
+  linkedinUrl?: string;
+  xUrl?: string;
+  cvFile?: {
+    asset?: SanityFileAssetReference;
+    media?: unknown;
+    _type: 'file';
+  };
+  cvLabel?: InternationalizedArrayString;
+  navItems?: Array<{
+    label?: InternationalizedArrayString;
+    target?: string;
+    _key: string;
+  }>;
+  footerTagline?: InternationalizedArrayText;
+  copyright?: InternationalizedArrayString;
+  uiDownloadCv?: InternationalizedArrayString;
+  uiViewProject?: InternationalizedArrayString;
+  uiLiveDemo?: InternationalizedArrayString;
+  uiLivePreview?: InternationalizedArrayString;
+  uiBack?: InternationalizedArrayString;
+  uiNextProject?: InternationalizedArrayString;
+  uiViewWork?: InternationalizedArrayString;
+  uiGetInTouch?: InternationalizedArrayString;
 };
 
 export type InternationalizedArrayTextValue = {
@@ -151,18 +383,6 @@ export type InternationalizedArrayStringValue = {
   value?: string;
   language?: string;
 };
-
-export type InternationalizedArrayText = Array<
-  {
-    _key: string;
-  } & InternationalizedArrayTextValue
->;
-
-export type InternationalizedArrayString = Array<
-  {
-    _key: string;
-  } & InternationalizedArrayStringValue
->;
 
 export type SanityImagePaletteSwatch = {
   _type: 'sanity.imagePaletteSwatch';
@@ -261,26 +481,27 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type Slug = {
-  _type: 'slug';
-  current?: string;
-  source?: string;
-};
-
 export type AllSanitySchemaTypes =
-  | SectionsConfig
+  | Language
   | SanityImageAssetReference
-  | Profile
+  | Testimonial
   | SanityImageCrop
   | SanityImageHotspot
+  | InternationalizedArrayString
+  | InternationalizedArrayText
+  | Experience
+  | SkillCategoryReference
+  | Skill
+  | SkillCategory
   | SkillReference
   | Project
-  | Skill
-  | Language
+  | Slug
+  | ContactPage
+  | HomePage
+  | SanityFileAssetReference
+  | SiteSettings
   | InternationalizedArrayTextValue
   | InternationalizedArrayStringValue
-  | InternationalizedArrayText
-  | InternationalizedArrayString
   | SanityImagePaletteSwatch
   | SanityImagePalette
   | SanityImageDimensions
@@ -288,18 +509,19 @@ export type AllSanitySchemaTypes =
   | SanityFileAsset
   | SanityAssetSourceData
   | SanityImageAsset
-  | Geopoint
-  | Slug;
+  | Geopoint;
 
 // Source: sanity/lib/queries.ts
 // Variable: SKILLS_QUERY
-// Query: *[_type == "skill" ]
+// Query: *[_type == "skill"] | order(order asc)
 export type SKILLS_QUERY_RESULT = Array<{
   _id: string;
   _type: 'skill';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  title?: string;
+  category?: SkillCategoryReference;
   icon?: {
     asset?: SanityImageAssetReference;
     media?: unknown;
@@ -308,12 +530,22 @@ export type SKILLS_QUERY_RESULT = Array<{
     alt?: string;
     _type: 'image';
   };
-  title?: string;
+  iconDark?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: 'image';
+  };
+  simpleIconSlug?: string;
+  url?: string;
+  order?: number;
 }>;
 
 // Source: sanity/lib/queries.ts
 // Variable: PROJECTS_QUERY
-// Query: *[_type == "project" ]{..., "skills": skills[]-> }
+// Query: *[_type == "project"] | order(order asc){ ..., "skills": skills[]-> }
 export type PROJECTS_QUERY_RESULT = Array<{
   _id: string;
   _type: 'project';
@@ -321,7 +553,32 @@ export type PROJECTS_QUERY_RESULT = Array<{
   _updatedAt: string;
   _rev: string;
   title?: string;
-  description?: string;
+  slug?: Slug;
+  order?: number;
+  featured?: boolean;
+  badge?: InternationalizedArrayString;
+  description?: InternationalizedArrayText;
+  tags?: Array<string>;
+  caseType?: InternationalizedArrayString;
+  year?: string;
+  sub?: InternationalizedArrayText;
+  facts?: {
+    role?: InternationalizedArrayString;
+    timeline?: InternationalizedArrayString;
+    stack?: string;
+    team?: InternationalizedArrayString;
+  };
+  caseStudy?: {
+    problem?: InternationalizedArrayText;
+    role?: InternationalizedArrayText;
+    solution?: InternationalizedArrayText;
+    outcome?: InternationalizedArrayText;
+    metrics?: Array<{
+      value?: string;
+      label?: InternationalizedArrayString;
+      _key: string;
+    }>;
+  };
   mainImage?: {
     asset?: SanityImageAssetReference;
     media?: unknown;
@@ -330,14 +587,27 @@ export type PROJECTS_QUERY_RESULT = Array<{
     alt?: string;
     _type: 'image';
   };
+  gallery?: Array<{
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    caption?: InternationalizedArrayString;
+    _type: 'image';
+    _key: string;
+  }>;
   githubLink?: string;
   liveLink?: string;
+  allowEmbed?: boolean;
   skills: Array<{
     _id: string;
     _type: 'skill';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
+    title?: string;
+    category?: SkillCategoryReference;
     icon?: {
       asset?: SanityImageAssetReference;
       media?: unknown;
@@ -346,63 +616,25 @@ export type PROJECTS_QUERY_RESULT = Array<{
       alt?: string;
       _type: 'image';
     };
-    title?: string;
+    iconDark?: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: 'image';
+    };
+    simpleIconSlug?: string;
+    url?: string;
+    order?: number;
   }> | null;
 }>;
-
-// Source: sanity/lib/queries.ts
-// Variable: PROFILE_QUERY
-// Query: *[_type == "profile" ][0]
-export type PROFILE_QUERY_RESULT = {
-  _id: string;
-  _type: 'profile';
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: string;
-  greeting?: string;
-  fullName?: string;
-  bio?: string;
-  profileImage?: {
-    asset?: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: 'image';
-  };
-  callToActions?: Array<{
-    label?: string;
-    url?: string;
-    _key: string;
-  }>;
-} | null;
-
-// Source: sanity/lib/queries.ts
-// Variable: SECTIONS_CONFIG_QUERY
-// Query: *[_type == "sectionsConfig" ][0]
-export type SECTIONS_CONFIG_QUERY_RESULT = {
-  _id: string;
-  _type: 'sectionsConfig';
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: string;
-  skillsSection?: {
-    heading?: string;
-  };
-  projectsSection?: {
-    heading?: string;
-  };
-} | null;
 
 // Query TypeMap
 import '@sanity/client';
 declare module '@sanity/client' {
   interface SanityQueries {
-    '*[_type == "skill" ]': SKILLS_QUERY_RESULT;
-    '*[_type == "project" ]{..., "skills": skills[]-> }': PROJECTS_QUERY_RESULT;
-    '*[_type == "profile" ][0]': PROFILE_QUERY_RESULT;
-    '*[_type == "sectionsConfig" ][0]': SECTIONS_CONFIG_QUERY_RESULT;
+    '*[_type == "skill"] | order(order asc)': SKILLS_QUERY_RESULT;
+    '*[_type == "project"] | order(order asc){ ..., "skills": skills[]-> }': PROJECTS_QUERY_RESULT;
   }
 }
