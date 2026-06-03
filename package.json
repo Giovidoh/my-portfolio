@@ -31,6 +31,7 @@
     "react-dom": "^19.2.0",
     "resend": "^6.12.4",
     "sanity": "^5.30.0",
+    "sanity-plugin-internationalized-array": "^5.1.3",
     "styled-components": "^6.1.19",
     "tailwind-merge": "^2.6.0",
     "tw-animate-css": "^1.2.5"

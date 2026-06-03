@@ -127,6 +127,43 @@ export type Skill = {
   title?: string;
 };
 
+export type Language = {
+  _id: string;
+  _type: 'language';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  id?: string;
+  title?: string;
+  isActive?: boolean;
+  isDefault?: boolean;
+  order?: number;
+};
+
+export type InternationalizedArrayTextValue = {
+  _type: 'internationalizedArrayTextValue';
+  value?: string;
+  language?: string;
+};
+
+export type InternationalizedArrayStringValue = {
+  _type: 'internationalizedArrayStringValue';
+  value?: string;
+  language?: string;
+};
+
+export type InternationalizedArrayText = Array<
+  {
+    _key: string;
+  } & InternationalizedArrayTextValue
+>;
+
+export type InternationalizedArrayString = Array<
+  {
+    _key: string;
+  } & InternationalizedArrayStringValue
+>;
+
 export type SanityImagePaletteSwatch = {
   _type: 'sanity.imagePaletteSwatch';
   background?: string;
@@ -239,6 +276,11 @@ export type AllSanitySchemaTypes =
   | SkillReference
   | Project
   | Skill
+  | Language
+  | InternationalizedArrayTextValue
+  | InternationalizedArrayStringValue
+  | InternationalizedArrayText
+  | InternationalizedArrayString
   | SanityImagePaletteSwatch
   | SanityImagePalette
   | SanityImageDimensions
