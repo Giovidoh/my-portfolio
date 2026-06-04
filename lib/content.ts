@@ -1,4 +1,5 @@
 import { sanityFetch } from '@/sanity/lib/live';
+import { client } from '@/sanity/lib/client';
 import {
   HOME_QUERY,
   SITE_SETTINGS_QUERY,
@@ -24,7 +25,16 @@ export const getContactPage = async () => (await sanityFetch({ query: CONTACT_PA
 export const getProjects = async () => (await sanityFetch({ query: PROJECTS_QUERY })).data;
 export const getProjectBySlug = async (slug: string) =>
   (await sanityFetch({ query: PROJECT_QUERY, params: { slug } })).data;
-export const getProjectSlugs = async () => (await sanityFetch({ query: PROJECT_SLUGS_QUERY })).data;
+// Plain client (not live) — used in generateStaticParams, which runs at build
+// time outside a request context. Degrades to [] so the build never throws.
+export const getProjectSlugs = async (): Promise<string[]> => {
+  try {
+    const rows = await client.fetch(PROJECT_SLUGS_QUERY);
+    return (rows ?? []).map((r) => r.slug).filter((s): s is string => Boolean(s));
+  } catch {
+    return [];
+  }
+};
 
 export const getSkills = async () => (await sanityFetch({ query: SKILLS_QUERY })).data;
 export const getSkillCategories = async () =>
