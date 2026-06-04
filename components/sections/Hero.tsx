@@ -10,7 +10,7 @@ const MARQUEE = [
   'Design Systems',
 ];
 
-const Hero = () => (
+const Hero = ({ locale }: { locale: string }) => (
   <header className="hero wrap">
     <div className="hero__grid">
       <div className="hero__intro">
@@ -36,7 +36,7 @@ const Hero = () => (
           last pixel. Equal parts engineer and craftsman.
         </p>
         <div className="hero__cta">
-          <ButtonLink variant="primary" href="/contact">
+          <ButtonLink variant="primary" href={`/${locale}/contact`}>
             Get in touch
             <ArrowRight className="arr" />
           </ButtonLink>

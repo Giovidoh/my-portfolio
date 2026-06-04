@@ -6,16 +6,17 @@ import Experience from '@/components/sections/Experience';
 import Testimonials from '@/components/sections/Testimonials';
 import ContactCta from '@/components/sections/ContactCta';
 
-export default function Home() {
+export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
   return (
     <main id="top">
-      <Hero />
-      <Work />
+      <Hero locale={locale} />
+      <Work locale={locale} />
       <About />
       <Skills />
       <Experience />
       <Testimonials />
-      <ContactCta />
+      <ContactCta locale={locale} />
     </main>
   );
 }

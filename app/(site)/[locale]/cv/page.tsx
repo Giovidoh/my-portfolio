@@ -27,13 +27,14 @@ const css = `
 @media (max-width:600px){ .cv__job { grid-template-columns:1fr; gap:4px; } }
 `;
 
-export default function CvPage() {
+export default async function CvPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: css }} />
       <nav className="nav scrolled noprint" aria-label="Primary">
         <div className="nav__inner">
-          <Link className="logo" href="/" aria-label="Home">
+          <Link className="logo" href={`/${locale}`} aria-label="Home">
             <span className="logo__mark">CG</span>
             <span>
               IDOH<span className="accent-dot">.</span>
@@ -42,7 +43,7 @@ export default function CvPage() {
           <div className="nav__tools">
             <ThemeToggle />
             <PrintButton />
-            <Link className="btn btn-ghost btn-sm" href="/">
+            <Link className="btn btn-ghost btn-sm" href={`/${locale}`}>
               Back
             </Link>
           </div>

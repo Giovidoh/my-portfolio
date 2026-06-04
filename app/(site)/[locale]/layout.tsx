@@ -1,26 +1,10 @@
 import type { Metadata } from 'next';
-import { Space_Grotesk, IBM_Plex_Sans, Space_Mono } from 'next/font/google';
+import { notFound } from 'next/navigation';
 import '@/styles/globals.css';
+import { fontVars } from '@/lib/fonts';
 import ThemeProvider from '@/components/theme/ThemeProvider';
-
-const display = Space_Grotesk({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-space-grotesk',
-  display: 'swap',
-});
-const body = IBM_Plex_Sans({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-ibm-plex-sans',
-  display: 'swap',
-});
-const mono = Space_Mono({
-  subsets: ['latin'],
-  weight: ['400', '700'],
-  variable: '--font-space-mono',
-  display: 'swap',
-});
+import { SanityLive } from '@/sanity/lib/live';
+import { getLocales } from '@/lib/i18n';
 
 export const metadata: Metadata = {
   title: 'Cir-Giovanni IDOH — Full-Stack Developer',
@@ -28,17 +12,24 @@ export const metadata: Metadata = {
     'Cir-Giovanni IDOH — full-stack web developer building fast, accessible, design-forward products.',
 };
 
-export default function RootLayout({
+export async function generateStaticParams() {
+  const locales = await getLocales();
+  return locales.map((locale) => ({ locale }));
+}
+
+export default async function LocaleLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
+  params: Promise<{ locale: string }>;
 }>) {
+  const { locale } = await params;
+  const locales = await getLocales();
+  if (!locales.includes(locale)) notFound();
+
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className={`${display.variable} ${body.variable} ${mono.variable}`}
-    >
+    <html lang={locale} suppressHydrationWarning className={fontVars}>
       <body className="antialiased">
         <ThemeProvider
           attribute="data-theme"
@@ -47,6 +38,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
+          <SanityLive />
         </ThemeProvider>
       </body>
     </html>

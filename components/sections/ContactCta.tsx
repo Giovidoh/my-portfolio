@@ -1,7 +1,7 @@
 import ButtonLink from '@/components/ui/ButtonLink';
 import { ArrowRight } from '@/components/ui/icons';
 
-const ContactCta = () => (
+const ContactCta = ({ locale }: { locale: string }) => (
   <section className="section wrap" id="contact">
     <div className="cta-band reveal">
       <div className="glow" />
@@ -19,7 +19,7 @@ const ContactCta = () => (
         className="hero__cta"
         style={{ justifyContent: 'center', animation: 'none', opacity: 1 }}
       >
-        <ButtonLink variant="primary" href="/contact">
+        <ButtonLink variant="primary" href={`/${locale}/contact`}>
           Get in touch
           <ArrowRight className="arr" />
         </ButtonLink>

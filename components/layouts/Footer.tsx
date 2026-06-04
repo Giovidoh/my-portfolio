@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-const Footer = () => (
+const Footer = ({ locale }: { locale: string }) => (
   <footer className="footer wrap">
     <div className="footer__grid">
       <div>
@@ -8,10 +8,10 @@ const Footer = () => (
       </div>
       <div className="footer__col">
         <h5>Navigate</h5>
-        <Link href="/#work">Work</Link>
-        <Link href="/#about">About</Link>
-        <Link href="/#experience">Experience</Link>
-        <Link href="/contact">Contact</Link>
+        <Link href={`/${locale}#work`}>Work</Link>
+        <Link href={`/${locale}#about`}>About</Link>
+        <Link href={`/${locale}#experience`}>Experience</Link>
+        <Link href={`/${locale}/contact`}>Contact</Link>
       </div>
       <div className="footer__col">
         <h5>Elsewhere</h5>
@@ -22,7 +22,7 @@ const Footer = () => (
           LinkedIn
         </a>
         <a href="mailto:hello@cgidoh.dev">Email</a>
-        <Link href="/cv">Download CV</Link>
+        <Link href={`/${locale}/cv`}>Download CV</Link>
       </div>
     </div>
     <div className="footer__bar">

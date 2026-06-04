@@ -6,6 +6,8 @@ import { usePathname } from 'next/navigation';
 import ThemeToggle from '@/components/theme/ThemeToggle';
 import ButtonLink from '@/components/ui/ButtonLink';
 import { MenuIcon, CloseIcon } from '@/components/ui/icons';
+import LanguageSwitcher from '@/components/layouts/LanguageSwitcher';
+import type { Language } from '@/lib/i18n';
 
 const LINKS = [
   { id: 'work', label: 'Work' },
@@ -23,15 +25,15 @@ const Logo = ({ href, onClick }: { href: string; onClick?: () => void }) => (
   </Link>
 );
 
-const Nav = () => {
+const Nav = ({ locale, languages }: { locale: string; languages: Language[] }) => {
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
-  const onHome = pathname === '/';
+  const onHome = pathname === `/${locale}`;
 
-  // Anchor links resolve to the home page when we're on a subpage.
-  const sectionHref = (id: string) => (onHome ? `#${id}` : `/#${id}`);
+  // Anchor links resolve to the localized home page when we're on a subpage.
+  const sectionHref = (id: string) => (onHome ? `#${id}` : `/${locale}#${id}`);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -91,11 +93,12 @@ const Nav = () => {
             ))}
           </div>
           <div className="nav__tools">
+            <LanguageSwitcher languages={languages} locale={locale} />
             <ThemeToggle />
-            <ButtonLink variant="ghost" size="sm" href="/cv">
+            <ButtonLink variant="ghost" size="sm" href={`/${locale}/cv`}>
               Download CV
             </ButtonLink>
-            <ButtonLink variant="primary" size="sm" href="/contact">
+            <ButtonLink variant="primary" size="sm" href={`/${locale}/contact`}>
               Contact
             </ButtonLink>
             <button className="icon-btn burger" aria-label="Open menu" onClick={() => setOpen(true)}>
@@ -120,10 +123,10 @@ const Nav = () => {
           ))}
         </nav>
         <div className="drawer__foot">
-          <ButtonLink variant="primary" href="/contact" onClick={() => setOpen(false)}>
+          <ButtonLink variant="primary" href={`/${locale}/contact`} onClick={() => setOpen(false)}>
             Get in touch
           </ButtonLink>
-          <ButtonLink variant="ghost" href="/cv" onClick={() => setOpen(false)}>
+          <ButtonLink variant="ghost" href={`/${locale}/cv`} onClick={() => setOpen(false)}>
             Download CV
           </ButtonLink>
         </div>

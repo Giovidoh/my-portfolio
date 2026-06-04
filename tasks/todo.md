@@ -6,10 +6,9 @@ thème via `data-theme` · Lenis (smooth scroll) + Motion · light primaire + da
 Réf. design extraite : `%TEMP%\portfolio-design\my-portfolio\` (README, chats, project/).
 
 ## In Progress
-- [~] **Chantier i18n+contenu — Étape 3 : routing `[locale]`** : passage `/fr`·`/en`, redirection racine, `<html lang>` dynamique, **sélecteur FR/EN** dans la nav, helpers de locale
+- [~] **Chantier i18n+contenu — Étape 4 : câblage Sanity** : chaque section/page lit Sanity (GROQ `coalesce` / `pickLocale`) → le placeholder disparaît ; « Download CV » → `cvFile` Sanity ; preview live = `liveLink` si `allowEmbed`, sinon fallback
 
 ## To Do
-- [ ] **Étape 4 — Câblage Sanity** : chaque section/page lit Sanity (GROQ `coalesce` locale-aware) → le placeholder disparaît ; « Download CV » → `cvFile` Sanity ; preview live = `liveLink` si `allowEmbed`, sinon fallback
 - [ ] **Bootstrap contenu** : créer les docs `language` (en défaut + fr), les singletons `siteSettings`/`homePage`/`contactPage`, puis projets/skills/catégories/expériences/témoignages, et remplir les traductions dans `/studio`
 
 ## Done
@@ -22,6 +21,7 @@ Réf. design extraite : `%TEMP%\portfolio-design\my-portfolio\` (README, chats, 
 - [x] **R5 — Page** `/contact` : formulaire validé (client) + bannières succès/erreur + **dropdown custom** (`CustomSelect`) + méthodes alt + **server action Resend** (`app/actions/contact.ts`). Build + rendu OK.
 - [x] **R6 — CV** `/cv` : page imprimable (Print/Save PDF). Build + rendu OK.
 - [x] **Chantier i18n — Étape 1 (Fondation langues)** : type `language` (actif/défaut/ordre) + plugin `internationalized-array` (langues chargées du dataset, `string`/`text`).
+- [x] **Chantier i18n — Étape 3 (Routing `[locale]`)** : groupes de routes `(site)/[locale]` (+ sous-groupe `(chrome)` pour Nav/Footer/scroll) et `(utility)` (Studio/démo) = **2 root layouts**, `<html lang>` dynamique ; pages déplacées (`.NET File.Move` pour gérer `()[]`) ; `proxy.ts` redirige `/`→langue défaut ; tous les liens internes locale-aware ; **sélecteur de langue** (caché si <2 langues) ; locales = data Sanity (`getLanguages`) avec fallback `en` (le site ne 404 jamais faute de doc). typegen/build (`/en/*` + `/demo` + `/studio`)/lint OK.
 - [x] **Chantier i18n — Étape 2 (Modèle de contenu)** : singletons `siteSettings`/`homePage`/`contactPage` ; collections `experience`/`testimonial`/`skillCategory` ; `project`/`skill` étendus (slug, featured, case-study, galerie, `allowEmbed`, catégorie, `iconDark`) ; tous les textes traduisibles via `internationalizedArrayString/Text` ; helpers `i18n.ts`/`helpers.ts` ; `structure.ts` (singletons) ; suppression `profile`/`sectionsConfig` (code mort). **extract ✅ · typegen ✅ (28 types) · build ✅ (13 routes) · lint ✅**.
 
 ## Notes / dette

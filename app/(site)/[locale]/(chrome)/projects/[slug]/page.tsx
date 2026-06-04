@@ -12,7 +12,7 @@ export function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
   const p = getProject(slug);
@@ -26,8 +26,12 @@ const RAIL = [
   { id: 'outcome', label: '04 — Outcome' },
 ];
 
-export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
+export default async function ProjectPage({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}) {
+  const { locale, slug } = await params;
   const project = getProject(slug);
   if (!project) notFound();
   const next = nextProject(slug);
@@ -37,7 +41,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       <div className="subnav-pad" />
 
       <header className="case-hero wrap section" style={{ paddingBottom: 0 }}>
-        <Link className="back-link" href="/#work">
+        <Link className="back-link" href={`/${locale}#work`}>
           <svg
             viewBox="0 0 24 24"
             fill="none"
@@ -196,7 +200,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                     This was internal client work under NDA. The write-up and gallery below capture
                     the build — happy to walk through it live.
                   </p>
-                  <ButtonLink variant="ghost" size="sm" href="/contact">
+                  <ButtonLink variant="ghost" size="sm" href={`/${locale}/contact`}>
                     Request a walkthrough
                   </ButtonLink>
                 </div>
@@ -318,12 +322,12 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         <div className="next-proj">
           <div>
             <span className="eyebrow">Next project</span>
-            <Link href={`/projects/${next.slug}`} style={{ marginTop: 10 }}>
+            <Link href={`/${locale}/projects/${next.slug}`} style={{ marginTop: 10 }}>
               <span className="lab">{next.title}</span>
               <ArrowRight width={46} height={46} />
             </Link>
           </div>
-          <ButtonLink variant="ghost" href="/#work">
+          <ButtonLink variant="ghost" href={`/${locale}#work`}>
             Back to all work
           </ButtonLink>
         </div>

@@ -3,7 +3,7 @@ import ButtonLink from '@/components/ui/ButtonLink';
 import { ArrowOut, GithubMark, LiveIcon } from '@/components/ui/icons';
 import { PROJECTS } from '@/lib/projects';
 
-const Work = () => (
+const Work = ({ locale }: { locale: string }) => (
   <section className="section wrap" id="work">
     <div className="section-head reveal">
       <div>
@@ -22,7 +22,7 @@ const Work = () => (
           data-d={p.delay}
         >
           <Link
-            href={`/projects/${p.slug}`}
+            href={`/${locale}/projects/${p.slug}`}
             className="card__cover"
             aria-label={`Open ${p.title} case study`}
           >
@@ -50,7 +50,7 @@ const Work = () => (
               <GithubMark />
               Code
             </a>
-            <Link href={`/projects/${p.slug}`}>
+            <Link href={`/${locale}/projects/${p.slug}`}>
               <LiveIcon />
               {p.big ? 'Live demo' : 'Live'}
             </Link>

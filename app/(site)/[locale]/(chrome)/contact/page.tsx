@@ -27,12 +27,17 @@ const BackArrow = () => (
   </svg>
 );
 
-export default function ContactPage() {
+export default async function ContactPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
   return (
     <main className="contact">
       <div className="subnav-pad" />
       <section className="section wrap" style={{ paddingTop: 'clamp(28px,5vw,56px)' }}>
-        <Link className="back-link" href="/">
+        <Link className="back-link" href={`/${locale}`}>
           <BackArrow />
           <span>Home</span>
         </Link>
