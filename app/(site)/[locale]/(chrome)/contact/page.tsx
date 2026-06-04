@@ -2,6 +2,8 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import ContactForm from '@/components/contact/ContactForm';
 import { GithubMark, MailIcon, ArrowOut } from '@/components/ui/icons';
+import { getContactPage, getSiteSettings } from '@/lib/content';
+import { getDefaultLocale, makeT, pickLocale } from '@/lib/i18n';
 
 export const metadata: Metadata = {
   title: 'Contact · Cir-Giovanni IDOH',
@@ -27,12 +29,36 @@ const BackArrow = () => (
   </svg>
 );
 
-export default async function ContactPage({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
+const strip = (u: string) => u.replace(/^https?:\/\//, '').replace(/\/$/, '');
+
+export default async function ContactPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
+  const [defaultLocale, page, settings] = await Promise.all([
+    getDefaultLocale(),
+    getContactPage(),
+    getSiteSettings(),
+  ]);
+  const t = makeT(locale, defaultLocale);
+  const heading = pickLocale(page?.heading, locale, defaultLocale);
+
+  const email = settings?.email ?? 'hello@cgidoh.dev';
+  const linkedin = settings?.linkedinUrl ?? 'https://linkedin.com';
+  const github = settings?.githubUrl ?? 'https://github.com';
+
+  const formLabels = {
+    name: pickLocale(page?.nameLabel, locale, defaultLocale),
+    email: pickLocale(page?.emailLabel, locale, defaultLocale),
+    subject: pickLocale(page?.subjectLabel, locale, defaultLocale),
+    message: pickLocale(page?.messageLabel, locale, defaultLocale),
+    send: pickLocale(page?.sendLabel, locale, defaultLocale),
+    sending: pickLocale(page?.sendingLabel, locale, defaultLocale),
+    successTitle: pickLocale(page?.successTitle, locale, defaultLocale),
+    successBody: pickLocale(page?.successBody, locale, defaultLocale),
+  };
+  const subjects = (page?.subjects ?? [])
+    .map((s) => ({ value: s.value ?? '', label: pickLocale(s.label, locale, defaultLocale) ?? s.value ?? '' }))
+    .filter((s) => s.value);
+
   return (
     <main className="contact">
       <div className="subnav-pad" />
@@ -43,49 +69,55 @@ export default async function ContactPage({
         </Link>
         <div className="contact__grid" style={{ marginTop: 'var(--s-5)' }}>
           <div className="reveal">
-            <span className="eyebrow">Contact</span>
-            <h1 style={{ marginTop: 'var(--s-4)' }}>
-              Let&apos;s <em>talk.</em>
-            </h1>
+            <span className="eyebrow">{t(page?.eyebrow, 'Contact')}</span>
+            {heading ? (
+              <h1 style={{ marginTop: 'var(--s-4)' }}>{heading}</h1>
+            ) : (
+              <h1 style={{ marginTop: 'var(--s-4)' }}>
+                Let&apos;s <em>talk.</em>
+              </h1>
+            )}
             <p className="contact__lede">
-              Whether you&apos;re hiring, have a project, or just want to say hi — drop me a line. I
-              read everything and reply within a day.
+              {t(
+                page?.pitch,
+                "Whether you're hiring, have a project, or just want to say hi — drop me a line. I read everything and reply within a day.",
+              )}
             </p>
             <div className="contact__alt">
-              <a className="alt-row" href="mailto:hello@cgidoh.dev">
+              <a className="alt-row" href={`mailto:${email}`}>
                 <span className="ic">
                   <MailIcon />
                 </span>
                 <span>
                   <span className="k">Email</span>
                   <br />
-                  <span className="v">hello@cgidoh.dev</span>
+                  <span className="v">{email}</span>
                 </span>
                 <span className="arr2">
                   <ArrowOut width={18} height={18} />
                 </span>
               </a>
-              <a className="alt-row" href="https://linkedin.com" target="_blank" rel="noopener">
+              <a className="alt-row" href={linkedin} target="_blank" rel="noopener">
                 <span className="ic">
                   <LinkedInMark />
                 </span>
                 <span>
                   <span className="k">LinkedIn</span>
                   <br />
-                  <span className="v">/in/cgidoh</span>
+                  <span className="v">{strip(linkedin)}</span>
                 </span>
                 <span className="arr2">
                   <ArrowOut width={18} height={18} />
                 </span>
               </a>
-              <a className="alt-row" href="https://github.com" target="_blank" rel="noopener">
+              <a className="alt-row" href={github} target="_blank" rel="noopener">
                 <span className="ic">
                   <GithubMark />
                 </span>
                 <span>
                   <span className="k">GitHub</span>
                   <br />
-                  <span className="v">@cgidoh</span>
+                  <span className="v">{strip(github)}</span>
                 </span>
                 <span className="arr2">
                   <ArrowOut width={18} height={18} />
@@ -94,7 +126,7 @@ export default async function ContactPage({
             </div>
           </div>
           <div className="reveal" data-d="1">
-            <ContactForm />
+            <ContactForm labels={formLabels} subjects={subjects} email={email} />
           </div>
         </div>
       </section>

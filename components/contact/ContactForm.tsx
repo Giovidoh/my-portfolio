@@ -5,7 +5,19 @@ import { ArrowRight } from '@/components/ui/icons';
 import CustomSelect from '@/components/ui/CustomSelect';
 import { sendContact } from '@/app/actions/contact';
 
-const SUBJECTS = [
+type Subject = { value: string; label: string };
+type Labels = {
+  name?: string;
+  email?: string;
+  subject?: string;
+  message?: string;
+  send?: string;
+  sending?: string;
+  successTitle?: string;
+  successBody?: string;
+};
+
+const DEFAULT_SUBJECTS: Subject[] = [
   { value: 'role', label: 'A full-time role' },
   { value: 'freelance', label: 'A freelance project' },
   { value: 'collab', label: 'A collaboration' },
@@ -22,16 +34,27 @@ const AlertSvg = () => (
   </svg>
 );
 
-const ContactForm = () => {
+const ContactForm = ({
+  labels,
+  subjects,
+  email = 'hello@cgidoh.dev',
+}: {
+  labels?: Labels;
+  subjects?: Subject[];
+  email?: string;
+}) => {
+  const L = labels ?? {};
+  const subjectOptions = subjects && subjects.length ? subjects : DEFAULT_SUBJECTS;
+
   const [status, setStatus] = useState<Status>('idle');
   const [invalid, setInvalid] = useState<Invalid>({});
   const [errorKind, setErrorKind] = useState<'invalid' | 'config' | 'send' | null>(null);
 
   const validate = (fd: FormData): boolean => {
     const name = String(fd.get('name') ?? '').trim();
-    const email = String(fd.get('email') ?? '').trim();
+    const emailValue = String(fd.get('email') ?? '').trim();
     const message = String(fd.get('message') ?? '').trim();
-    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue);
     const inv: Invalid = { name: !name, email: !emailOk, message: message.length < 10 };
     setInvalid(inv);
     return !inv.name && !inv.email && !inv.message;
@@ -79,7 +102,8 @@ const ContactForm = () => {
           <path d="m8.5 12 2.5 2.5 4.5-5" />
         </svg>
         <div>
-          <strong>Message sent.</strong> Thanks for reaching out — I&apos;ll reply within a day.
+          <strong>{L.successTitle ?? 'Message sent.'}</strong>{' '}
+          {L.successBody ?? "Thanks for reaching out — I'll reply within a day."}
         </div>
       </div>
       <div className={`form-banner error${status === 'error' ? ' show' : ''}`} role="alert">
@@ -102,8 +126,7 @@ const ContactForm = () => {
           )}
           {errorKind === 'config' && (
             <>
-              <strong>The form isn&apos;t configured yet.</strong> Email me directly at
-              hello@cgidoh.dev.
+              <strong>The form isn&apos;t configured yet.</strong> Email me directly at {email}.
             </>
           )}
           {errorKind === 'send' && (
@@ -118,7 +141,7 @@ const ContactForm = () => {
       <div className="form-row">
         <div className={`field${invalid.name ? ' invalid' : ''}`}>
           <label htmlFor="name">
-            Name <span className="req">required</span>
+            {L.name ?? 'Name'} <span className="req">required</span>
           </label>
           <input type="text" id="name" name="name" placeholder="Ada Lovelace" autoComplete="name" />
           <span className="err">
@@ -128,7 +151,7 @@ const ContactForm = () => {
         </div>
         <div className={`field${invalid.email ? ' invalid' : ''}`}>
           <label htmlFor="email">
-            Email <span className="req">required</span>
+            {L.email ?? 'Email'} <span className="req">required</span>
           </label>
           <input
             type="email"
@@ -145,13 +168,13 @@ const ContactForm = () => {
       </div>
 
       <div className="field">
-        <label htmlFor="subject">Subject</label>
-        <CustomSelect name="subject" options={SUBJECTS} />
+        <label htmlFor="subject">{L.subject ?? 'Subject'}</label>
+        <CustomSelect name="subject" options={subjectOptions} />
       </div>
 
       <div className={`field${invalid.message ? ' invalid' : ''}`}>
         <label htmlFor="message">
-          Message <span className="req">required</span>
+          {L.message ?? 'Message'} <span className="req">required</span>
         </label>
         <textarea
           id="message"
@@ -165,7 +188,7 @@ const ContactForm = () => {
       </div>
 
       <button className="btn btn-primary btn-block" type="submit" aria-busy={status === 'busy'}>
-        <span>{status === 'busy' ? 'Sending…' : 'Send message'}</span>
+        <span>{status === 'busy' ? (L.sending ?? 'Sending…') : (L.send ?? 'Send message')}</span>
         {status === 'busy' ? <span className="spinner" /> : <ArrowRight className="arr" />}
       </button>
     </form>
