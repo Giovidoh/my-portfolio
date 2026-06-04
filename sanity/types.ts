@@ -512,40 +512,162 @@ export type AllSanitySchemaTypes =
   | Geopoint;
 
 // Source: sanity/lib/queries.ts
-// Variable: SKILLS_QUERY
-// Query: *[_type == "skill"] | order(order asc)
-export type SKILLS_QUERY_RESULT = Array<{
+// Variable: SITE_SETTINGS_QUERY
+// Query: *[_type == "siteSettings"][0]
+export type SITE_SETTINGS_QUERY_RESULT = {
   _id: string;
-  _type: 'skill';
+  _type: 'siteSettings';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title?: string;
-  category?: SkillCategoryReference;
-  icon?: {
+  brandName?: string;
+  logo?: {
     asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    alt?: string;
     _type: 'image';
   };
-  iconDark?: {
+  availabilityText?: InternationalizedArrayString;
+  metaTitle?: InternationalizedArrayString;
+  metaDescription?: InternationalizedArrayText;
+  ogImage?: {
     asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    alt?: string;
     _type: 'image';
   };
-  simpleIconSlug?: string;
-  url?: string;
-  order?: number;
-}>;
+  email?: string;
+  githubUrl?: string;
+  linkedinUrl?: string;
+  xUrl?: string;
+  cvFile?: {
+    asset?: SanityFileAssetReference;
+    media?: unknown;
+    _type: 'file';
+  };
+  cvLabel?: InternationalizedArrayString;
+  navItems?: Array<{
+    label?: InternationalizedArrayString;
+    target?: string;
+    _key: string;
+  }>;
+  footerTagline?: InternationalizedArrayText;
+  copyright?: InternationalizedArrayString;
+  uiDownloadCv?: InternationalizedArrayString;
+  uiViewProject?: InternationalizedArrayString;
+  uiLiveDemo?: InternationalizedArrayString;
+  uiLivePreview?: InternationalizedArrayString;
+  uiBack?: InternationalizedArrayString;
+  uiNextProject?: InternationalizedArrayString;
+  uiViewWork?: InternationalizedArrayString;
+  uiGetInTouch?: InternationalizedArrayString;
+} | null;
+
+// Source: sanity/lib/queries.ts
+// Variable: HOME_QUERY
+// Query: *[_type == "homePage"][0]
+export type HOME_QUERY_RESULT = {
+  _id: string;
+  _type: 'homePage';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  hero?: {
+    status?: InternationalizedArrayString;
+    firstName?: string;
+    lastName?: string;
+    roleLabel?: InternationalizedArrayString;
+    roleStack?: string;
+    lede?: InternationalizedArrayText;
+    badge?: InternationalizedArrayString;
+    photo?: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: 'image';
+    };
+    ctaPrimary?: {
+      label?: InternationalizedArrayString;
+      href?: string;
+    };
+    ctaSecondary?: {
+      label?: InternationalizedArrayString;
+      href?: string;
+    };
+    marquee?: Array<string>;
+  };
+  about?: {
+    eyebrow?: InternationalizedArrayString;
+    lead?: InternationalizedArrayText;
+    body?: InternationalizedArrayText;
+    whatIDo?: Array<{
+      title?: InternationalizedArrayString;
+      description?: InternationalizedArrayText;
+      _key: string;
+    }>;
+  };
+  workSection?: {
+    eyebrow?: InternationalizedArrayString;
+    heading?: InternationalizedArrayString;
+  };
+  skillsSection?: {
+    eyebrow?: InternationalizedArrayString;
+    heading?: InternationalizedArrayString;
+    allLabel?: InternationalizedArrayString;
+  };
+  experienceSection?: {
+    eyebrow?: InternationalizedArrayString;
+    heading?: InternationalizedArrayString;
+  };
+  testimonialsSection?: {
+    eyebrow?: InternationalizedArrayString;
+    heading?: InternationalizedArrayString;
+  };
+  contactCta?: {
+    eyebrow?: InternationalizedArrayString;
+    heading?: InternationalizedArrayString;
+    body?: InternationalizedArrayText;
+    ctaLabel?: InternationalizedArrayString;
+  };
+} | null;
+
+// Source: sanity/lib/queries.ts
+// Variable: CONTACT_PAGE_QUERY
+// Query: *[_type == "contactPage"][0]
+export type CONTACT_PAGE_QUERY_RESULT = {
+  _id: string;
+  _type: 'contactPage';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  eyebrow?: InternationalizedArrayString;
+  heading?: InternationalizedArrayString;
+  pitch?: InternationalizedArrayText;
+  subjects?: Array<{
+    value?: string;
+    label?: InternationalizedArrayString;
+    _key: string;
+  }>;
+  nameLabel?: InternationalizedArrayString;
+  emailLabel?: InternationalizedArrayString;
+  subjectLabel?: InternationalizedArrayString;
+  messageLabel?: InternationalizedArrayString;
+  sendLabel?: InternationalizedArrayString;
+  sendingLabel?: InternationalizedArrayString;
+  successTitle?: InternationalizedArrayString;
+  successBody?: InternationalizedArrayText;
+  errorBody?: InternationalizedArrayText;
+  methodsHeading?: InternationalizedArrayString;
+  methodsNote?: InternationalizedArrayText;
+} | null;
 
 // Source: sanity/lib/queries.ts
 // Variable: PROJECTS_QUERY
-// Query: *[_type == "project"] | order(order asc){ ..., "skills": skills[]-> }
+// Query: *[_type == "project"] | order(order asc){    ...,    "skills": skills[]->{ _id, title }  }
 export type PROJECTS_QUERY_RESULT = Array<{
   _id: string;
   _type: 'project';
@@ -602,39 +724,185 @@ export type PROJECTS_QUERY_RESULT = Array<{
   allowEmbed?: boolean;
   skills: Array<{
     _id: string;
-    _type: 'skill';
-    _createdAt: string;
-    _updatedAt: string;
-    _rev: string;
-    title?: string;
-    category?: SkillCategoryReference;
-    icon?: {
-      asset?: SanityImageAssetReference;
-      media?: unknown;
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt?: string;
-      _type: 'image';
-    };
-    iconDark?: {
-      asset?: SanityImageAssetReference;
-      media?: unknown;
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt?: string;
-      _type: 'image';
-    };
-    simpleIconSlug?: string;
-    url?: string;
-    order?: number;
+    title: string | null;
   }> | null;
+}>;
+
+// Source: sanity/lib/queries.ts
+// Variable: PROJECT_QUERY
+// Query: *[_type == "project" && slug.current == $slug][0]{    ...,    "skills": skills[]->{ _id, title }  }
+export type PROJECT_QUERY_RESULT = {
+  _id: string;
+  _type: 'project';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  order?: number;
+  featured?: boolean;
+  badge?: InternationalizedArrayString;
+  description?: InternationalizedArrayText;
+  tags?: Array<string>;
+  caseType?: InternationalizedArrayString;
+  year?: string;
+  sub?: InternationalizedArrayText;
+  facts?: {
+    role?: InternationalizedArrayString;
+    timeline?: InternationalizedArrayString;
+    stack?: string;
+    team?: InternationalizedArrayString;
+  };
+  caseStudy?: {
+    problem?: InternationalizedArrayText;
+    role?: InternationalizedArrayText;
+    solution?: InternationalizedArrayText;
+    outcome?: InternationalizedArrayText;
+    metrics?: Array<{
+      value?: string;
+      label?: InternationalizedArrayString;
+      _key: string;
+    }>;
+  };
+  mainImage?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: 'image';
+  };
+  gallery?: Array<{
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    caption?: InternationalizedArrayString;
+    _type: 'image';
+    _key: string;
+  }>;
+  githubLink?: string;
+  liveLink?: string;
+  allowEmbed?: boolean;
+  skills: Array<{
+    _id: string;
+    title: string | null;
+  }> | null;
+} | null;
+
+// Source: sanity/lib/queries.ts
+// Variable: PROJECT_SLUGS_QUERY
+// Query: *[_type == "project" && defined(slug.current)]{ "slug": slug.current }
+export type PROJECT_SLUGS_QUERY_RESULT = Array<{
+  slug: string | null;
+}>;
+
+// Source: sanity/lib/queries.ts
+// Variable: SKILLS_QUERY
+// Query: *[_type == "skill"] | order(order asc){    ...,    "category": category->{ _id, key, title }  }
+export type SKILLS_QUERY_RESULT = Array<{
+  _id: string;
+  _type: 'skill';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  category: {
+    _id: string;
+    key: string | null;
+    title: InternationalizedArrayString | null;
+  } | null;
+  icon?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: 'image';
+  };
+  iconDark?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: 'image';
+  };
+  simpleIconSlug?: string;
+  url?: string;
+  order?: number;
+}>;
+
+// Source: sanity/lib/queries.ts
+// Variable: SKILL_CATEGORIES_QUERY
+// Query: *[_type == "skillCategory"] | order(order asc)
+export type SKILL_CATEGORIES_QUERY_RESULT = Array<{
+  _id: string;
+  _type: 'skillCategory';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: InternationalizedArrayString;
+  key?: string;
+  order?: number;
+}>;
+
+// Source: sanity/lib/queries.ts
+// Variable: EXPERIENCES_QUERY
+// Query: *[_type == "experience"] | order(order asc)
+export type EXPERIENCES_QUERY_RESULT = Array<{
+  _id: string;
+  _type: 'experience';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  company?: string;
+  companyUrl?: string;
+  short?: InternationalizedArrayString;
+  role?: InternationalizedArrayString;
+  period?: InternationalizedArrayString;
+  description?: InternationalizedArrayText;
+  stack?: Array<string>;
+  order?: number;
+}>;
+
+// Source: sanity/lib/queries.ts
+// Variable: TESTIMONIALS_QUERY
+// Query: *[_type == "testimonial"] | order(order asc)
+export type TESTIMONIALS_QUERY_RESULT = Array<{
+  _id: string;
+  _type: 'testimonial';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  quote?: InternationalizedArrayText;
+  author?: string;
+  authorRole?: InternationalizedArrayString;
+  avatar?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: 'image';
+  };
+  order?: number;
 }>;
 
 // Query TypeMap
 import '@sanity/client';
 declare module '@sanity/client' {
   interface SanityQueries {
-    '*[_type == "skill"] | order(order asc)': SKILLS_QUERY_RESULT;
-    '*[_type == "project"] | order(order asc){ ..., "skills": skills[]-> }': PROJECTS_QUERY_RESULT;
+    '*[_type == "siteSettings"][0]': SITE_SETTINGS_QUERY_RESULT;
+    '*[_type == "homePage"][0]': HOME_QUERY_RESULT;
+    '*[_type == "contactPage"][0]': CONTACT_PAGE_QUERY_RESULT;
+    '*[_type == "project"] | order(order asc){\n    ...,\n    "skills": skills[]->{ _id, title }\n  }': PROJECTS_QUERY_RESULT;
+    '*[_type == "project" && slug.current == $slug][0]{\n    ...,\n    "skills": skills[]->{ _id, title }\n  }': PROJECT_QUERY_RESULT;
+    '*[_type == "project" && defined(slug.current)]{ "slug": slug.current }': PROJECT_SLUGS_QUERY_RESULT;
+    '*[_type == "skill"] | order(order asc){\n    ...,\n    "category": category->{ _id, key, title }\n  }': SKILLS_QUERY_RESULT;
+    '*[_type == "skillCategory"] | order(order asc)': SKILL_CATEGORIES_QUERY_RESULT;
+    '*[_type == "experience"] | order(order asc)': EXPERIENCES_QUERY_RESULT;
+    '*[_type == "testimonial"] | order(order asc)': TESTIMONIALS_QUERY_RESULT;
   }
 }
