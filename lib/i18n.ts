@@ -50,14 +50,29 @@ export function withLocale(locale: string, path: string): string {
  * back to the default locale and then the first available entry.
  */
 export function pickLocale<T = string>(
-  field: Array<{ _key: string; value: T }> | undefined | null,
+  field: ReadonlyArray<{ _key: string; value?: T | null }> | undefined | null,
   locale: string,
   defaultLocale: string,
 ): T | undefined {
-  if (!field?.length) return undefined;
+  // Guard against legacy/non-array values (e.g. pre-i18n string fields still in
+  // the dataset): only real internationalized arrays have `.find`.
+  if (!Array.isArray(field) || field.length === 0) return undefined;
   return (
     field.find((e) => e._key === locale)?.value ??
     field.find((e) => e._key === defaultLocale)?.value ??
-    field[0]?.value
+    field[0]?.value ??
+    undefined
   );
 }
+
+/**
+ * Builds a translate-or-fallback helper bound to a locale pair, for server
+ * components: `const t = makeT(locale, defaultLocale); t(doc?.title, 'Default')`.
+ */
+export const makeT =
+  (locale: string, defaultLocale: string) =>
+  (
+    field: ReadonlyArray<{ _key: string; value?: string | null }> | null | undefined,
+    fallback: string,
+  ): string =>
+    pickLocale<string>(field, locale, defaultLocale) ?? fallback;
