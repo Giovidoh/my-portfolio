@@ -9,12 +9,18 @@ import { MenuIcon, CloseIcon } from '@/components/ui/icons';
 import LanguageSwitcher from '@/components/layouts/LanguageSwitcher';
 import type { Language } from '@/lib/i18n';
 
-const LINKS = [
+type NavLink = { id: string; label: string };
+
+const DEFAULT_LINKS: NavLink[] = [
   { id: 'work', label: 'Work' },
   { id: 'about', label: 'About' },
   { id: 'experience', label: 'Experience' },
   { id: 'contact', label: 'Contact' },
 ];
+
+// Sections that actually exist on the home page — drives the scroll-spy
+// independently of the (configurable) nav labels.
+const SECTION_IDS = ['work', 'about', 'experience', 'contact'];
 
 const Logo = ({ href, onClick }: { href: string; onClick?: () => void }) => (
   <Link className="logo" href={href} aria-label="Cir-Giovanni IDOH — home" onClick={onClick}>
@@ -25,15 +31,35 @@ const Logo = ({ href, onClick }: { href: string; onClick?: () => void }) => (
   </Link>
 );
 
-const Nav = ({ locale, languages }: { locale: string; languages: Language[] }) => {
+const Nav = ({
+  locale,
+  languages,
+  links = DEFAULT_LINKS,
+  cvHref,
+  cvLabel = 'Download CV',
+  contactLabel = 'Contact',
+}: {
+  locale: string;
+  languages: Language[];
+  links?: NavLink[];
+  cvHref?: string;
+  cvLabel?: string;
+  contactLabel?: string;
+}) => {
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const onHome = pathname === `/${locale}`;
 
+  const cv = cvHref ?? `/${locale}/cv`;
+  const cvExternal = cv.startsWith('http');
+  const contactHref = `/${locale}/contact`;
+
   // Anchor links resolve to the localized home page when we're on a subpage.
   const sectionHref = (id: string) => (onHome ? `#${id}` : `/${locale}#${id}`);
+  const linkHref = (target: string) =>
+    target.startsWith('/') ? `/${locale}${target}` : sectionHref(target);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -43,20 +69,18 @@ const Nav = ({ locale, languages }: { locale: string; languages: Language[] }) =
   }, []);
 
   useEffect(() => {
-    // The active class only renders on the home page (onHome && …), so there is
-    // no need to reset state on subpages — leaving it avoids a sync setState in effect.
     if (!onHome) return;
     const update = () => {
       const navH =
         parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h'), 10) || 76;
       const line = navH + 140;
       let cur: string | null = null;
-      LINKS.forEach(({ id }) => {
+      SECTION_IDS.forEach((id) => {
         const el = document.getElementById(id);
         if (el && el.getBoundingClientRect().top <= line) cur = id;
       });
       if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) {
-        cur = LINKS[LINKS.length - 1].id;
+        cur = SECTION_IDS[SECTION_IDS.length - 1];
       }
       setActive(cur);
     };
@@ -76,16 +100,18 @@ const Nav = ({ locale, languages }: { locale: string; languages: Language[] }) =
     };
   }, [open]);
 
+  const cvExtraProps = cvExternal ? { target: '_blank', rel: 'noopener' } : {};
+
   return (
     <>
       <nav className={`nav${scrolled ? ' scrolled' : ''}`} aria-label="Primary">
         <div className="nav__inner">
           <Logo href={sectionHref('top')} />
           <div className="nav__links">
-            {LINKS.map((l) => (
+            {links.map((l) => (
               <Link
                 key={l.id}
-                href={sectionHref(l.id)}
+                href={linkHref(l.id)}
                 className={onHome && active === l.id ? 'active' : undefined}
               >
                 <span>{l.label}</span>
@@ -95,11 +121,11 @@ const Nav = ({ locale, languages }: { locale: string; languages: Language[] }) =
           <div className="nav__tools">
             <LanguageSwitcher languages={languages} locale={locale} />
             <ThemeToggle />
-            <ButtonLink variant="ghost" size="sm" href={`/${locale}/cv`}>
-              Download CV
+            <ButtonLink variant="ghost" size="sm" href={cv} {...cvExtraProps}>
+              {cvLabel}
             </ButtonLink>
-            <ButtonLink variant="primary" size="sm" href={`/${locale}/contact`}>
-              Contact
+            <ButtonLink variant="primary" size="sm" href={contactHref}>
+              {contactLabel}
             </ButtonLink>
             <button className="icon-btn burger" aria-label="Open menu" onClick={() => setOpen(true)}>
               <MenuIcon />
@@ -116,18 +142,18 @@ const Nav = ({ locale, languages }: { locale: string; languages: Language[] }) =
           </button>
         </div>
         <nav className="drawer__links" aria-label="Mobile">
-          {LINKS.map((l) => (
-            <Link key={l.id} href={sectionHref(l.id)} onClick={() => setOpen(false)}>
+          {links.map((l) => (
+            <Link key={l.id} href={linkHref(l.id)} onClick={() => setOpen(false)}>
               <span>{l.label}</span>
             </Link>
           ))}
         </nav>
         <div className="drawer__foot">
-          <ButtonLink variant="primary" href={`/${locale}/contact`} onClick={() => setOpen(false)}>
-            Get in touch
+          <ButtonLink variant="primary" href={contactHref} onClick={() => setOpen(false)}>
+            {contactLabel}
           </ButtonLink>
-          <ButtonLink variant="ghost" href={`/${locale}/cv`} onClick={() => setOpen(false)}>
-            Download CV
+          <ButtonLink variant="ghost" href={cv} onClick={() => setOpen(false)} {...cvExtraProps}>
+            {cvLabel}
           </ButtonLink>
         </div>
       </div>
