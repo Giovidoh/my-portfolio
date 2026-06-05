@@ -9,7 +9,8 @@ import { defineQuery } from 'next-sanity';
 export const SITE_SETTINGS_QUERY = defineQuery(`*[_type == "siteSettings"][0]{
   ...,
   "cvUrl": cvFile.asset->url,
-  "logoUrl": logo.asset->url
+  "logoUrl": logo.asset->url,
+  "ogUrl": ogImage.asset->url
 }`);
 export const HOME_QUERY = defineQuery(`*[_type == "homePage"][0]`);
 export const CONTACT_PAGE_QUERY = defineQuery(`*[_type == "contactPage"][0]`);

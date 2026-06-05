@@ -4,13 +4,29 @@ import '@/styles/globals.css';
 import { fontVars } from '@/lib/fonts';
 import ThemeProvider from '@/components/theme/ThemeProvider';
 import { SanityLive } from '@/sanity/lib/live';
-import { getLocales } from '@/lib/i18n';
+import { getDefaultLocale, getLocales, pickLocale } from '@/lib/i18n';
+import { getSiteSettings } from '@/lib/content';
 
-export const metadata: Metadata = {
-  title: 'Cir-Giovanni IDOH — Full-Stack Developer',
-  description:
-    'Cir-Giovanni IDOH — full-stack web developer building fast, accessible, design-forward products.',
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const [defaultLocale, settings] = await Promise.all([getDefaultLocale(), getSiteSettings()]);
+  const title =
+    pickLocale(settings?.metaTitle, locale, defaultLocale) ??
+    'Cir-Giovanni IDOH — Full-Stack Developer';
+  const description =
+    pickLocale(settings?.metaDescription, locale, defaultLocale) ??
+    'Cir-Giovanni IDOH — full-stack web developer building fast, accessible, design-forward products.';
+  const og = settings?.ogUrl ?? undefined;
+  return {
+    title,
+    description,
+    openGraph: { title, description, images: og ? [og] : undefined },
+  };
+}
 
 export async function generateStaticParams() {
   const locales = await getLocales();

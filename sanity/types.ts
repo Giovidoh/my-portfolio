@@ -538,7 +538,7 @@ export type AllSanitySchemaTypes =
 
 // Source: sanity/lib/queries.ts
 // Variable: SITE_SETTINGS_QUERY
-// Query: *[_type == "siteSettings"][0]{  ...,  "cvUrl": cvFile.asset->url,  "logoUrl": logo.asset->url}
+// Query: *[_type == "siteSettings"][0]{  ...,  "cvUrl": cvFile.asset->url,  "logoUrl": logo.asset->url,  "ogUrl": ogImage.asset->url}
 export type SITE_SETTINGS_QUERY_RESULT = {
   _id: string;
   _type: 'siteSettings';
@@ -605,6 +605,7 @@ export type SITE_SETTINGS_QUERY_RESULT = {
   footerElsewhere?: InternationalizedArrayString;
   cvUrl: string | null;
   logoUrl: string | null;
+  ogUrl: string | null;
 } | null;
 
 // Source: sanity/lib/queries.ts
@@ -946,7 +947,7 @@ export type TESTIMONIALS_QUERY_RESULT = Array<{
 import '@sanity/client';
 declare module '@sanity/client' {
   interface SanityQueries {
-    '*[_type == "siteSettings"][0]{\n  ...,\n  "cvUrl": cvFile.asset->url,\n  "logoUrl": logo.asset->url\n}': SITE_SETTINGS_QUERY_RESULT;
+    '*[_type == "siteSettings"][0]{\n  ...,\n  "cvUrl": cvFile.asset->url,\n  "logoUrl": logo.asset->url,\n  "ogUrl": ogImage.asset->url\n}': SITE_SETTINGS_QUERY_RESULT;
     '*[_type == "homePage"][0]': HOME_QUERY_RESULT;
     '*[_type == "contactPage"][0]': CONTACT_PAGE_QUERY_RESULT;
     '*[_type == "project"] | order(order asc){\n    ...,\n    "skills": skills[]->{ _id, title }\n  }': PROJECTS_QUERY_RESULT;

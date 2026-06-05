@@ -2,6 +2,8 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import ThemeToggle from '@/components/theme/ThemeToggle';
 import PrintButton from '@/components/cv/PrintButton';
+import { getDefaultLocale, makeT, pickLocale } from '@/lib/i18n';
+import { getHome, getSiteSettings, getExperiences, getSkills } from '@/lib/content';
 
 export const metadata: Metadata = {
   title: 'CV · Cir-Giovanni IDOH',
@@ -27,8 +29,81 @@ const css = `
 @media (max-width:600px){ .cv__job { grid-template-columns:1fr; gap:4px; } }
 `;
 
+const strip = (u: string) => u.replace(/^https?:\/\//, '').replace(/\/$/, '');
+
+const FALLBACK_JOBS = [
+  {
+    when: '2023 — Present · Paris',
+    role: 'Senior Full-Stack Developer',
+    company: 'Northwind Studio',
+    desc: 'Lead developer on a multi-tenant SaaS platform. Rebuilt the design system, cut page load by 40%, mentored two juniors.',
+  },
+  {
+    when: '2021 — 2023 · Lyon',
+    role: 'Full-Stack Developer',
+    company: 'Atelier Onze',
+    desc: 'Shipped client web apps end-to-end in a small agency — often the only engineer in the room.',
+  },
+  {
+    when: '2020 — 2021 · Remote',
+    role: 'Freelance Web Developer',
+    company: '',
+    desc: 'Marketing sites and small tools for founders and creators. Learned to scope, price and ship under real constraints.',
+  },
+];
+
+const FALLBACK_SKILLS = [
+  'React',
+  'Next.js',
+  'TypeScript',
+  'Node.js',
+  'PostgreSQL',
+  'Prisma',
+  'GraphQL',
+  'Tailwind',
+  'Docker',
+  'Vercel',
+  'Figma',
+  'Vitest',
+];
+
 export default async function CvPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
+  const [defaultLocale, home, settings, experiences, skills] = await Promise.all([
+    getDefaultLocale(),
+    getHome(),
+    getSiteSettings(),
+    getExperiences(),
+    getSkills(),
+  ]);
+  const t = makeT(locale, defaultLocale);
+
+  const name = settings?.brandName ?? 'Cir-Giovanni Idoh';
+  const role = `${t(home?.hero?.roleLabel, 'Full-Stack Web Developer')} · ${
+    home?.hero?.roleStack ?? 'React · Next.js · Node · TypeScript'
+  }`;
+  const email = settings?.email ?? 'hello@cgidoh.dev';
+  const github = settings?.githubUrl ? strip(settings.githubUrl) : 'github.com/cgidoh';
+  const location = t(settings?.location, 'Paris, France');
+  const summary = t(
+    settings?.cvSummary,
+    'Full-stack developer with 6+ years building fast, accessible web products end-to-end — from database schema to the last pixel. Equally comfortable owning architecture and obsessing over interface craft. Looking for a full-stack role on a small, ambitious team that ships often.',
+  );
+  const education = pickLocale(settings?.cvEducation, locale, defaultLocale);
+
+  const jobs =
+    experiences && experiences.length
+      ? experiences.map((e) => ({
+          when: pickLocale(e.period, locale, defaultLocale) ?? '',
+          role: pickLocale(e.role, locale, defaultLocale) ?? '',
+          company: e.company ?? '',
+          desc: pickLocale(e.description, locale, defaultLocale) ?? '',
+        }))
+      : FALLBACK_JOBS;
+
+  const skillNames =
+    skills && skills.length ? skills.map((s) => s.title ?? '').filter(Boolean) : FALLBACK_SKILLS;
+
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: css }} />
@@ -54,95 +129,46 @@ export default async function CvPage({ params }: { params: Promise<{ locale: str
       <main className="cv">
         <header className="cv__head">
           <div>
-            <h1>Cir-Giovanni Idoh</h1>
-            <div className="role">
-              Full-Stack Web Developer · React · Next.js · Node · TypeScript
-            </div>
+            <h1>{name}</h1>
+            <div className="role">{role}</div>
           </div>
           <div className="cv__contact">
-            <span>hello@cgidoh.dev</span>
-            <span>github.com/cgidoh</span>
-            <span>Paris, France</span>
+            <span>{email}</span>
+            <span>{github}</span>
+            <span>{location}</span>
           </div>
         </header>
 
         <section>
           <h2>Profile</h2>
-          <p>
-            Full-stack developer with 6+ years building fast, accessible web products end-to-end —
-            from database schema to the last pixel. Equally comfortable owning architecture and
-            obsessing over interface craft. Looking for a full-stack role on a small, ambitious team
-            that ships often.
-          </p>
+          <p>{summary}</p>
         </section>
 
         <section>
           <h2>Experience</h2>
-          <div className="cv__job">
-            <div className="when">
-              2023 — Present
-              <br />
-              Paris
+          {jobs.map((j, i) => (
+            <div className="cv__job" key={i}>
+              <div className="when">{j.when}</div>
+              <div>
+                <h3>
+                  {j.role}
+                  {j.company ? (
+                    <>
+                      {' · '}
+                      <span className="co">{j.company}</span>
+                    </>
+                  ) : null}
+                </h3>
+                <p>{j.desc}</p>
+              </div>
             </div>
-            <div>
-              <h3>
-                Senior Full-Stack Developer · <span className="co">Northwind Studio</span>
-              </h3>
-              <p>
-                Lead developer on a multi-tenant SaaS platform. Rebuilt the design system, cut page
-                load by 40%, mentored two juniors.
-              </p>
-            </div>
-          </div>
-          <div className="cv__job">
-            <div className="when">
-              2021 — 2023
-              <br />
-              Lyon
-            </div>
-            <div>
-              <h3>
-                Full-Stack Developer · <span className="co">Atelier Onze</span>
-              </h3>
-              <p>
-                Shipped client web apps end-to-end in a small agency — often the only engineer in
-                the room.
-              </p>
-            </div>
-          </div>
-          <div className="cv__job">
-            <div className="when">
-              2020 — 2021
-              <br />
-              Remote
-            </div>
-            <div>
-              <h3>Freelance Web Developer</h3>
-              <p>
-                Marketing sites and small tools for founders and creators. Learned to scope, price
-                and ship under real constraints.
-              </p>
-            </div>
-          </div>
+          ))}
         </section>
 
         <section>
           <h2>Skills</h2>
           <div className="cv__skills">
-            {[
-              'React',
-              'Next.js',
-              'TypeScript',
-              'Node.js',
-              'PostgreSQL',
-              'Prisma',
-              'GraphQL',
-              'Tailwind',
-              'Docker',
-              'Vercel',
-              'Figma',
-              'Vitest',
-            ].map((s) => (
+            {skillNames.map((s) => (
               <span className="tag" key={s}>
                 {s}
               </span>
@@ -152,10 +178,14 @@ export default async function CvPage({ params }: { params: Promise<{ locale: str
 
         <section style={{ border: 'none' }}>
           <h2>Education &amp; languages</h2>
-          <p>
-            <strong>B.Sc. Computer Science</strong> — Université de Paris, 2019. &nbsp;·&nbsp;
-            French (native), English (fluent).
-          </p>
+          {education ? (
+            <p>{education}</p>
+          ) : (
+            <p>
+              <strong>B.Sc. Computer Science</strong> — Université de Paris, 2019. &nbsp;·&nbsp;
+              French (native), English (fluent).
+            </p>
+          )}
         </section>
       </main>
     </>
