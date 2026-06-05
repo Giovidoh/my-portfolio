@@ -1,9 +1,10 @@
 import { makeT, pickLocale } from '@/lib/i18n';
+import { imageBuilder } from '@/sanity/lib/image';
 import type { HOME_QUERY_RESULT, TESTIMONIALS_QUERY_RESULT } from '@/sanity/types';
 
 type Heading = NonNullable<HOME_QUERY_RESULT>['testimonialsSection'];
 
-type Quote = { text: string; name: string; role: string; delay?: '1' | '2' };
+type Quote = { text: string; name: string; role: string; delay?: '1' | '2'; avatarUrl?: string };
 
 const FALLBACK_QUOTES: Quote[] = [
   {
@@ -43,6 +44,7 @@ const Testimonials = ({
           text: pickLocale(q.quote, locale, defaultLocale) ?? '',
           name: q.author ?? '',
           role: pickLocale(q.authorRole, locale, defaultLocale) ?? '',
+          avatarUrl: imageBuilder(q.avatar)?.width(96).height(96).fit('crop').url(),
         }))
       : FALLBACK_QUOTES;
 
@@ -60,7 +62,11 @@ const Testimonials = ({
             <div className="mark">&ldquo;</div>
             <p>{q.text}</p>
             <figcaption className="quote__who">
-              <span className="ph quote__av" />
+              {q.avatarUrl ? (
+                <img className="quote__av" src={q.avatarUrl} alt={q.name} style={{ objectFit: 'cover' }} />
+              ) : (
+                <span className="ph quote__av" />
+              )}
               <div>
                 <div className="n">{q.name}</div>
                 <div className="r">{q.role}</div>

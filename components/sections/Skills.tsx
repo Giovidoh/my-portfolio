@@ -3,7 +3,13 @@
 import { useState } from 'react';
 
 type Cat = { k: string; label: string };
-type SkillItem = { name: string; iconSlug: string; cat: string };
+type SkillItem = {
+  name: string;
+  iconSlug: string;
+  cat: string;
+  iconUrl?: string;
+  iconDarkUrl?: string;
+};
 
 const FALLBACK_CATS: Cat[] = [
   { k: 'all', label: 'All' },
@@ -69,7 +75,12 @@ const Skills = ({
         {shown.map((s) => (
           <div className="chip" key={s.name}>
             <span className="chip__ic">
-              {s.iconSlug ? (
+              {s.iconUrl ? (
+                <>
+                  <img className="lg lg-l" src={s.iconUrl} alt="" loading="lazy" />
+                  <img className="lg lg-d" src={s.iconDarkUrl ?? s.iconUrl} alt="" loading="lazy" />
+                </>
+              ) : s.iconSlug ? (
                 <>
                   <img
                     className="lg lg-l"

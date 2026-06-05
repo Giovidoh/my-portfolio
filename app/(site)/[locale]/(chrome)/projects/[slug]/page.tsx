@@ -6,6 +6,9 @@ import { ArrowOut, ArrowRight, GithubMark, LiveIcon } from '@/components/ui/icon
 import { PROJECTS, getProject as getPlaceholder, nextProject } from '@/lib/projects';
 import { getProjects, getProjectSlugs, getSiteSettings } from '@/lib/content';
 import { getDefaultLocale, makeT, pickLocale } from '@/lib/i18n';
+import { imageBuilder } from '@/sanity/lib/image';
+
+const GALLERY_TILES = ['wide', 'tall', 'half', 'half'];
 
 export async function generateStaticParams() {
   const slugs = await getProjectSlugs();
@@ -116,6 +119,10 @@ export default async function ProjectPage({
       label: pickLocale(m.label, locale, defaultLocale) ?? '',
     }))
     .filter((m) => m.value || m.label);
+
+  const galleryImages = (sanity?.gallery ?? [])
+    .map((g) => ({ url: imageBuilder(g)?.width(1400).url(), alt: g.alt ?? '' }))
+    .filter((g): g is { url: string; alt: string } => Boolean(g.url));
 
   // Next project
   const nextSanity = sanity && projects.length > 1 ? projects[(idx + 1) % projects.length] : null;
@@ -446,18 +453,39 @@ export default async function ProjectPage({
           </div>
         </div>
         <div className="gallery reveal" data-d="1">
-          <div className="ph wide">
-            <span className="ph__label">screen — main</span>
-          </div>
-          <div className="ph tall">
-            <span className="ph__label">mobile</span>
-          </div>
-          <div className="ph half">
-            <span className="ph__label">detail</span>
-          </div>
-          <div className="ph half">
-            <span className="ph__label">flow</span>
-          </div>
+          {galleryImages.length ? (
+            galleryImages.map((g, i) => (
+              <div className={`ph ${GALLERY_TILES[i % GALLERY_TILES.length]}`} key={i}>
+                <img
+                  src={g.url}
+                  alt={g.alt}
+                  loading="lazy"
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                  }}
+                />
+              </div>
+            ))
+          ) : (
+            <>
+              <div className="ph wide">
+                <span className="ph__label">screen — main</span>
+              </div>
+              <div className="ph tall">
+                <span className="ph__label">mobile</span>
+              </div>
+              <div className="ph half">
+                <span className="ph__label">detail</span>
+              </div>
+              <div className="ph half">
+                <span className="ph__label">flow</span>
+              </div>
+            </>
+          )}
         </div>
       </section>
 

@@ -6,6 +6,7 @@ import Experience from '@/components/sections/Experience';
 import Testimonials from '@/components/sections/Testimonials';
 import ContactCta from '@/components/sections/ContactCta';
 import { getDefaultLocale, pickLocale } from '@/lib/i18n';
+import { imageBuilder } from '@/sanity/lib/image';
 import {
   getHome,
   getSiteSettings,
@@ -43,6 +44,8 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       ? skills.map((s) => ({
           name: s.title ?? '',
           iconSlug: s.simpleIconSlug ?? '',
+          iconUrl: imageBuilder(s.icon)?.width(80).height(80).fit('max').url(),
+          iconDarkUrl: imageBuilder(s.iconDark)?.width(80).height(80).fit('max').url(),
           cat: s.category?.key ?? '',
         }))
       : undefined;

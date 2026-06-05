@@ -1,6 +1,7 @@
 import ButtonLink from '@/components/ui/ButtonLink';
 import { ArrowRight } from '@/components/ui/icons';
 import { makeT, withLocale } from '@/lib/i18n';
+import { imageBuilder } from '@/sanity/lib/image';
 import type { HOME_QUERY_RESULT } from '@/sanity/types';
 
 type HeroData = NonNullable<HOME_QUERY_RESULT>['hero'];
@@ -25,6 +26,7 @@ const Hero = ({
 }) => {
   const t = makeT(locale, defaultLocale);
   const marquee = data?.marquee?.length ? data.marquee : FALLBACK_MARQUEE;
+  const photoUrl = imageBuilder(data?.photo)?.width(900).height(1100).fit('crop').url();
 
   return (
     <header className="hero wrap">
@@ -65,7 +67,21 @@ const Hero = ({
         </div>
         <div className="hero__photo">
           <div className="ph">
-            <span className="ph__label">portrait — hero</span>
+            {photoUrl ? (
+              <img
+                src={photoUrl}
+                alt={data?.photo?.alt ?? ''}
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                }}
+              />
+            ) : (
+              <span className="ph__label">portrait — hero</span>
+            )}
           </div>
           <div className="yblock" />
           <div className="badge">{t(data?.badge, '6+ yrs shipping')}</div>

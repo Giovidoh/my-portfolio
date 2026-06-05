@@ -3,6 +3,7 @@ import ButtonLink from '@/components/ui/ButtonLink';
 import { ArrowOut, GithubMark, LiveIcon } from '@/components/ui/icons';
 import { PROJECTS } from '@/lib/projects';
 import { makeT, pickLocale } from '@/lib/i18n';
+import { imageBuilder } from '@/sanity/lib/image';
 import type { HOME_QUERY_RESULT, PROJECTS_QUERY_RESULT } from '@/sanity/types';
 
 type Heading = NonNullable<HOME_QUERY_RESULT>['workSection'];
@@ -16,6 +17,7 @@ type Card = {
   big?: boolean;
   delay?: '1' | '2';
   github?: string;
+  coverUrl?: string;
 };
 
 const Work = ({
@@ -44,6 +46,7 @@ const Work = ({
           tags: p.tags ?? [],
           big: p.featured ?? false,
           github: p.githubLink ?? undefined,
+          coverUrl: imageBuilder(p.mainImage)?.width(900).height(560).fit('crop').url(),
         };
       })
     : PROJECTS.map((p) => ({
@@ -81,9 +84,15 @@ const Work = ({
               className="card__cover"
               aria-label={`Open ${p.title} case study`}
             >
-              <div className="ph">
-                <span className="ph__label">{p.big ? 'project cover — 21:8' : 'project cover'}</span>
-              </div>
+              {p.coverUrl ? (
+                <img className="card__img" src={p.coverUrl} alt={p.title} loading="lazy" />
+              ) : (
+                <div className="ph">
+                  <span className="ph__label">
+                    {p.big ? 'project cover — 21:8' : 'project cover'}
+                  </span>
+                </div>
+              )}
               <span className="card__num">{p.num}</span>
               <span className="card__open">
                 <ArrowOut />
