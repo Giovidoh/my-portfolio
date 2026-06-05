@@ -1932,6 +1932,20 @@
         },
         "optional": true
       },
+      "logoMark": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "logoText": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "location": {
         "type": "objectAttribute",
         "value": {

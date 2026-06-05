@@ -79,6 +79,8 @@ export default async function CvPage({ params }: { params: Promise<{ locale: str
   const t = makeT(locale, defaultLocale);
 
   const name = settings?.brandName ?? 'Cir-Giovanni Idoh';
+  const logoMark = settings?.logoMark ?? 'CG';
+  const logoText = settings?.logoText ?? 'IDOH';
   const role = `${t(home?.hero?.roleLabel, 'Full-Stack Web Developer')} · ${
     home?.hero?.roleStack ?? 'React · Next.js · Node · TypeScript'
   }`;
@@ -110,9 +112,10 @@ export default async function CvPage({ params }: { params: Promise<{ locale: str
       <nav className="nav scrolled noprint" aria-label="Primary">
         <div className="nav__inner">
           <Link className="logo" href={`/${locale}`} aria-label="Home">
-            <span className="logo__mark">CG</span>
+            <span className="logo__mark">{logoMark}</span>
             <span>
-              IDOH<span className="accent-dot">.</span>
+              {logoText}
+              <span className="accent-dot">.</span>
             </span>
           </Link>
           <div className="nav__tools">

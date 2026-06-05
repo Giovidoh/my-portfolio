@@ -47,6 +47,8 @@ export default async function ChromeLayout({
         cvHref={cvHref}
         cvLabel={cvLabel}
         contactLabel={tt(settings?.getInTouch, 'Contact')}
+        logoMark={settings?.logoMark ?? undefined}
+        logoText={settings?.logoText ?? undefined}
       />
       {children}
       <Footer

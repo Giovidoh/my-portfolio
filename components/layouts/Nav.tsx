@@ -22,11 +22,22 @@ const DEFAULT_LINKS: NavLink[] = [
 // independently of the (configurable) nav labels.
 const SECTION_IDS = ['work', 'about', 'experience', 'contact'];
 
-const Logo = ({ href, onClick }: { href: string; onClick?: () => void }) => (
-  <Link className="logo" href={href} aria-label="Cir-Giovanni IDOH — home" onClick={onClick}>
-    <span className="logo__mark">CG</span>
+const Logo = ({
+  href,
+  mark,
+  text,
+  onClick,
+}: {
+  href: string;
+  mark: string;
+  text: string;
+  onClick?: () => void;
+}) => (
+  <Link className="logo" href={href} aria-label={`${text} — home`} onClick={onClick}>
+    <span className="logo__mark">{mark}</span>
     <span>
-      IDOH<span className="accent-dot">.</span>
+      {text}
+      <span className="accent-dot">.</span>
     </span>
   </Link>
 );
@@ -38,6 +49,8 @@ const Nav = ({
   cvHref,
   cvLabel = 'Download CV',
   contactLabel = 'Contact',
+  logoMark = 'CG',
+  logoText = 'IDOH',
 }: {
   locale: string;
   languages: Language[];
@@ -45,6 +58,8 @@ const Nav = ({
   cvHref?: string;
   cvLabel?: string;
   contactLabel?: string;
+  logoMark?: string;
+  logoText?: string;
 }) => {
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState<string | null>(null);
@@ -106,7 +121,7 @@ const Nav = ({
     <>
       <nav className={`nav${scrolled ? ' scrolled' : ''}`} aria-label="Primary">
         <div className="nav__inner">
-          <Logo href={sectionHref('top')} />
+          <Logo href={sectionHref('top')} mark={logoMark} text={logoText} />
           <div className="nav__links">
             {links.map((l) => (
               <Link
@@ -136,7 +151,12 @@ const Nav = ({
 
       <div className={`drawer${open ? ' open' : ''}`} aria-hidden={!open}>
         <div className="drawer__top">
-          <Logo href={sectionHref('top')} onClick={() => setOpen(false)} />
+          <Logo
+            href={sectionHref('top')}
+            mark={logoMark}
+            text={logoText}
+            onClick={() => setOpen(false)}
+          />
           <button className="icon-btn" aria-label="Close menu" onClick={() => setOpen(false)}>
             <CloseIcon />
           </button>

@@ -334,6 +334,8 @@ export type SiteSettings = {
   _updatedAt: string;
   _rev: string;
   brandName?: string;
+  logoMark?: string;
+  logoText?: string;
   location?: InternationalizedArrayString;
   metaTitle?: InternationalizedArrayString;
   metaDescription?: InternationalizedArrayText;
@@ -534,6 +536,8 @@ export type SITE_SETTINGS_QUERY_RESULT = {
   _updatedAt: string;
   _rev: string;
   brandName?: string;
+  logoMark?: string;
+  logoText?: string;
   location?: InternationalizedArrayString;
   metaTitle?: InternationalizedArrayString;
   metaDescription?: InternationalizedArrayText;
