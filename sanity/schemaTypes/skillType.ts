@@ -43,7 +43,6 @@ export const skillType = defineType({
       type: 'string',
       description: 'Fallback CDN icon when no image is uploaded, e.g. "nextdotjs" (cdn.simpleicons.org).',
     }),
-    defineField({ name: 'url', title: 'URL', type: 'url' }),
     defineField({ name: 'order', title: 'Order', type: 'number', initialValue: 0 }),
   ],
   orderings: [{ title: 'Order', name: 'orderAsc', by: [{ field: 'order', direction: 'asc' }] }],

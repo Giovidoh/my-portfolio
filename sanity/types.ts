@@ -90,7 +90,6 @@ export type Experience = {
   _updatedAt: string;
   _rev: string;
   company?: string;
-  companyUrl?: string;
   short?: InternationalizedArrayString;
   role?: InternationalizedArrayString;
   period?: InternationalizedArrayString;
@@ -131,7 +130,6 @@ export type Skill = {
     _type: 'image';
   };
   simpleIconSlug?: string;
-  url?: string;
   order?: number;
 };
 
@@ -253,8 +251,6 @@ export type ContactPage = {
   errorInvalid?: InternationalizedArrayText;
   errorConfig?: InternationalizedArrayText;
   errorSend?: InternationalizedArrayText;
-  methodsHeading?: InternationalizedArrayString;
-  methodsNote?: InternationalizedArrayText;
 };
 
 export type HomePage = {
@@ -338,14 +334,6 @@ export type SiteSettings = {
   _updatedAt: string;
   _rev: string;
   brandName?: string;
-  logo?: {
-    asset?: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: 'image';
-  };
-  availabilityText?: InternationalizedArrayString;
   location?: InternationalizedArrayString;
   metaTitle?: InternationalizedArrayString;
   metaDescription?: InternationalizedArrayText;
@@ -359,7 +347,6 @@ export type SiteSettings = {
   email?: string;
   githubUrl?: string;
   linkedinUrl?: string;
-  xUrl?: string;
   cvFile?: {
     asset?: SanityFileAssetReference;
     media?: unknown;
@@ -376,7 +363,6 @@ export type SiteSettings = {
   footerTagline?: InternationalizedArrayText;
   copyright?: InternationalizedArrayString;
   getInTouch?: InternationalizedArrayString;
-  viewWork?: InternationalizedArrayString;
   gotProject?: InternationalizedArrayString;
   code?: InternationalizedArrayString;
   live?: InternationalizedArrayString;
@@ -538,7 +524,7 @@ export type AllSanitySchemaTypes =
 
 // Source: sanity/lib/queries.ts
 // Variable: SITE_SETTINGS_QUERY
-// Query: *[_type == "siteSettings"][0]{  ...,  "cvUrl": cvFile.asset->url,  "logoUrl": logo.asset->url,  "ogUrl": ogImage.asset->url}
+// Query: *[_type == "siteSettings"][0]{  ...,  "cvUrl": cvFile.asset->url,  "ogUrl": ogImage.asset->url}
 export type SITE_SETTINGS_QUERY_RESULT = {
   _id: string;
   _type: 'siteSettings';
@@ -546,14 +532,6 @@ export type SITE_SETTINGS_QUERY_RESULT = {
   _updatedAt: string;
   _rev: string;
   brandName?: string;
-  logo?: {
-    asset?: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: 'image';
-  };
-  availabilityText?: InternationalizedArrayString;
   location?: InternationalizedArrayString;
   metaTitle?: InternationalizedArrayString;
   metaDescription?: InternationalizedArrayText;
@@ -567,7 +545,6 @@ export type SITE_SETTINGS_QUERY_RESULT = {
   email?: string;
   githubUrl?: string;
   linkedinUrl?: string;
-  xUrl?: string;
   cvFile?: {
     asset?: SanityFileAssetReference;
     media?: unknown;
@@ -584,7 +561,6 @@ export type SITE_SETTINGS_QUERY_RESULT = {
   footerTagline?: InternationalizedArrayText;
   copyright?: InternationalizedArrayString;
   getInTouch?: InternationalizedArrayString;
-  viewWork?: InternationalizedArrayString;
   gotProject?: InternationalizedArrayString;
   code?: InternationalizedArrayString;
   live?: InternationalizedArrayString;
@@ -604,7 +580,6 @@ export type SITE_SETTINGS_QUERY_RESULT = {
   footerNav?: InternationalizedArrayString;
   footerElsewhere?: InternationalizedArrayString;
   cvUrl: string | null;
-  logoUrl: string | null;
   ogUrl: string | null;
 } | null;
 
@@ -714,8 +689,6 @@ export type CONTACT_PAGE_QUERY_RESULT = {
   errorInvalid?: InternationalizedArrayText;
   errorConfig?: InternationalizedArrayText;
   errorSend?: InternationalizedArrayText;
-  methodsHeading?: InternationalizedArrayString;
-  methodsNote?: InternationalizedArrayText;
 } | null;
 
 // Source: sanity/lib/queries.ts
@@ -883,7 +856,6 @@ export type SKILLS_QUERY_RESULT = Array<{
     _type: 'image';
   };
   simpleIconSlug?: string;
-  url?: string;
   order?: number;
 }>;
 
@@ -911,7 +883,6 @@ export type EXPERIENCES_QUERY_RESULT = Array<{
   _updatedAt: string;
   _rev: string;
   company?: string;
-  companyUrl?: string;
   short?: InternationalizedArrayString;
   role?: InternationalizedArrayString;
   period?: InternationalizedArrayString;
@@ -947,7 +918,7 @@ export type TESTIMONIALS_QUERY_RESULT = Array<{
 import '@sanity/client';
 declare module '@sanity/client' {
   interface SanityQueries {
-    '*[_type == "siteSettings"][0]{\n  ...,\n  "cvUrl": cvFile.asset->url,\n  "logoUrl": logo.asset->url,\n  "ogUrl": ogImage.asset->url\n}': SITE_SETTINGS_QUERY_RESULT;
+    '*[_type == "siteSettings"][0]{\n  ...,\n  "cvUrl": cvFile.asset->url,\n  "ogUrl": ogImage.asset->url\n}': SITE_SETTINGS_QUERY_RESULT;
     '*[_type == "homePage"][0]': HOME_QUERY_RESULT;
     '*[_type == "contactPage"][0]': CONTACT_PAGE_QUERY_RESULT;
     '*[_type == "project"] | order(order asc){\n    ...,\n    "skills": skills[]->{ _id, title }\n  }': PROJECTS_QUERY_RESULT;

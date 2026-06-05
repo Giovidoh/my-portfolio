@@ -13,7 +13,6 @@ export const contactPageType = defineType({
   groups: [
     { name: 'intro', title: 'Intro', default: true },
     { name: 'form', title: 'Form' },
-    { name: 'methods', title: 'Other methods' },
   ],
   fields: [
     // Intro
@@ -57,10 +56,6 @@ export const contactPageType = defineType({
     i18nText('errorInvalid', 'Error banner · invalid fields', { group: 'form' }),
     i18nText('errorConfig', 'Error banner · not configured', { group: 'form' }),
     i18nText('errorSend', 'Error banner · send failed', { group: 'form' }),
-
-    // Other methods
-    i18nString('methodsHeading', 'Heading', { group: 'methods' }),
-    i18nText('methodsNote', 'Note', { group: 'methods' }),
   ],
   preview: { prepare: () => ({ title: 'Contact Page' }) },
 });

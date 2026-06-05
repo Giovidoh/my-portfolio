@@ -13,7 +13,6 @@ export const experienceType = defineType({
       type: 'string',
       validation: (rule) => rule.required(),
     }),
-    defineField({ name: 'companyUrl', title: 'Company URL', type: 'url' }),
     i18nString('short', 'Short title', {
       description: 'Compact label in the left rail, e.g. "Senior Full-Stack Dev".',
     }),

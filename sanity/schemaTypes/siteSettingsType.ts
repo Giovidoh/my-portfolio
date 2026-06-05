@@ -27,17 +27,6 @@ export const siteSettingsType = defineType({
       group: 'general',
       description: 'Wordmark shown in the navbar and footer.',
     }),
-    defineField({
-      name: 'logo',
-      title: 'Logo',
-      type: 'image',
-      group: 'general',
-      description: 'Optional. Falls back to the brand name text.',
-    }),
-    i18nString('availabilityText', 'Availability label', {
-      group: 'general',
-      description: 'e.g. "Open to full-stack roles".',
-    }),
     i18nString('location', 'Location', { group: 'general', description: 'e.g. "Paris, France".' }),
 
     // SEO
@@ -55,7 +44,6 @@ export const siteSettingsType = defineType({
     defineField({ name: 'email', title: 'Email', type: 'string', group: 'social' }),
     defineField({ name: 'githubUrl', title: 'GitHub URL', type: 'url', group: 'social' }),
     defineField({ name: 'linkedinUrl', title: 'LinkedIn URL', type: 'url', group: 'social' }),
-    defineField({ name: 'xUrl', title: 'X / Twitter URL', type: 'url', group: 'social' }),
 
     // CV
     defineField({
@@ -111,7 +99,6 @@ export const siteSettingsType = defineType({
     // UI labels (reused across pages, translatable). Each falls back to the
     // built-in English copy when left empty.
     i18nString('getInTouch', 'Label · Get in touch', { group: 'labels' }),
-    i18nString('viewWork', 'Label · View work', { group: 'labels' }),
     i18nString('gotProject', 'Label · Work CTA ("Got a project?")', { group: 'labels' }),
     i18nString('code', 'Label · Code', { group: 'labels' }),
     i18nString('live', 'Label · Live', { group: 'labels' }),

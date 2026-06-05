@@ -396,13 +396,6 @@
         },
         "optional": true
       },
-      "companyUrl": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": true
-      },
       "short": {
         "type": "objectAttribute",
         "value": {
@@ -643,13 +636,6 @@
         "optional": true
       },
       "simpleIconSlug": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": true
-      },
-      "url": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
@@ -1439,22 +1425,6 @@
           "name": "internationalizedArrayText"
         },
         "optional": true
-      },
-      "methodsHeading": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "internationalizedArrayString"
-        },
-        "optional": true
-      },
-      "methodsNote": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "internationalizedArrayText"
-        },
-        "optional": true
       }
     }
   },
@@ -1962,61 +1932,6 @@
         },
         "optional": true
       },
-      "logo": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "object",
-          "attributes": {
-            "asset": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "inline",
-                "name": "sanity.imageAsset.reference"
-              },
-              "optional": true
-            },
-            "media": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "unknown"
-              },
-              "optional": true
-            },
-            "hotspot": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "inline",
-                "name": "sanity.imageHotspot"
-              },
-              "optional": true
-            },
-            "crop": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "inline",
-                "name": "sanity.imageCrop"
-              },
-              "optional": true
-            },
-            "_type": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "string",
-                "value": "image"
-              }
-            }
-          }
-        },
-        "optional": true
-      },
-      "availabilityText": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "internationalizedArrayString"
-        },
-        "optional": true
-      },
       "location": {
         "type": "objectAttribute",
         "value": {
@@ -2103,13 +2018,6 @@
         "optional": true
       },
       "linkedinUrl": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": true
-      },
-      "xUrl": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
@@ -2226,14 +2134,6 @@
         "optional": true
       },
       "getInTouch": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "internationalizedArrayString"
-        },
-        "optional": true
-      },
-      "viewWork": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
