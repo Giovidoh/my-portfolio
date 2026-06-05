@@ -6,7 +6,7 @@ thème via `data-theme` · Lenis (smooth scroll) + Motion · light primaire + da
 Réf. design extraite : `%TEMP%\portfolio-design\my-portfolio\` (README, chats, project/).
 
 ## In Progress
-- [~] **Finitions câblage (optionnel)** : page `/cv` imprimable alimentée par Sanity (expérience/skills) ; **rendu des images** (photo hero, galerie projet, avatars, icônes skill uploadées) — champs prêts, repli `.ph` pour l'instant ; SEO `<head>` depuis `siteSettings` (metaTitle/description/ogImage)
+- [~] **Reste mineur (optionnel)** : poignée de libellés purement structurels encore en dur — titres de sections du CV (Profile/Experience/Skills/Education), marque du logo (CG/IDOH), quelques textes d'état de la page projet (« A look inside », « Not public — by request », « Open »…), crédit police du footer. Tout le **contenu + labels d'UI + SEO + CV + images** est éditable/traduisible.
 
 ## To Do
 - [ ] **Nettoyer les docs legacy** : supprimer (ou repeupler) les anciens docs `project`/`skill`/`profile` pré-refonte (champs en chaînes simples) — sinon la grille Work lit ces vieux docs (titre seul) au lieu du placeholder
@@ -25,13 +25,14 @@ Réf. design extraite : `%TEMP%\portfolio-design\my-portfolio\` (README, chats, 
 - [x] **Chantier i18n — Étape 3 (Routing `[locale]`)** : groupes de routes `(site)/[locale]` (+ sous-groupe `(chrome)` pour Nav/Footer/scroll) et `(utility)` (Studio/démo) = **2 root layouts**, `<html lang>` dynamique ; pages déplacées (`.NET File.Move` pour gérer `()[]`) ; `proxy.ts` redirige `/`→langue défaut ; tous les liens internes locale-aware ; **sélecteur de langue** (caché si <2 langues) ; locales = data Sanity (`getLanguages`) avec fallback `en` (le site ne 404 jamais faute de doc). typegen/build (`/en/*` + `/demo` + `/studio`)/lint OK.
 - [x] **Chantier i18n — Étape 2 (Modèle de contenu)** : singletons `siteSettings`/`homePage`/`contactPage` ; collections `experience`/`testimonial`/`skillCategory` ; `project`/`skill` étendus (slug, featured, case-study, galerie, `allowEmbed`, catégorie, `iconDark`) ; tous les textes traduisibles via `internationalizedArrayString/Text` ; helpers `i18n.ts`/`helpers.ts` ; `structure.ts` (singletons) ; suppression `profile`/`sectionsConfig` (code mort). **extract ✅ · typegen ✅ (28 types) · build ✅ (13 routes) · lint ✅**.
 - [x] **Chantier i18n — Étape 4 (Câblage Sanity)** : couche données (10 requêtes GROQ + fetchers `lib/content.ts`) ; home complet, page projet (case study + preview live `liveLink`/`allowEmbed`), chrome (Nav/Footer ← `siteSettings`, **bouton CV → `cvUrl`**), page contact + formulaire — tout lu depuis Sanity via `pickLocale`/`makeT` avec **fallback placeholder**. Garde `Array.isArray` contre les champs legacy. Commits `c3802a6`/`e1a45ca`/`38bcaf6`/`8f38e57`/`aca5a63`. build (SSG)/lint OK.
+- [x] **Chantier i18n — Étape 5 (Finitions 100%)** : libellés d'UI complets (boutons, eyebrows case study, footer, formulaire) éditables/traduisibles via `siteSettings`/`contactPage` ; fuite email ContactCta corrigée ; **SEO** dynamique (`generateMetadata` ← `siteSettings` metaTitle/description/ogImage) ; page **/cv** alimentée par Sanity (profil/expériences/skills/formation) ; **rendu des images** (hero, cover projet, galerie, avatars, icônes) via `imageBuilder` (urlFor gardé). Commits `4a9deff`/`0581a81`/`f46e541`/`c49ba85`. build (SSG)/lint OK à chaque palier.
 
 ## Notes / dette
 - **Action requise (toi)** : pour activer l'envoi du formulaire, mettre `RESEND_API_KEY` + `CONTACT_TO_EMAIL` dans `.env.local` (cf. `.env.example`). Sans ça → bannière « non configuré ».
 - **Câblage (étape 4) fait** : chaque section/page lit Sanity (`pickLocale`/`makeT`), **fallback sur le placeholder** si champ/collection vide. Le placeholder reste visible tant que le Studio n'est pas rempli.
-- « Download CV » → `cvFile` (`cvUrl`) si présent, sinon page imprimable `/cv`. La page `/cv` elle-même = contenu encore statique (finitions).
+- « Download CV » → `cvFile` (`cvUrl`) si présent, sinon page imprimable `/cv` (elle-même alimentée par Sanity : profil/expériences/skills/formation).
 - Preview live projet : `liveLink` embarqué si `allowEmbed`, sinon « ouvrir » (public non-embeddable) ou fallback « privé » ; placeholder → iframe `/demo`.
-- **Images** : champs prêts (photo hero, galerie, avatars, icônes) mais **pas encore rendues** (repli `.ph` / CDN simple-icons) — priorité donnée aux textes (demande initiale).
+- **Images** : rendues via `imageBuilder` (hero, cover projet, galerie, avatars, icônes skill uploadées > CDN simple-icons), repli `.ph` si aucune image. Aucune image = aucun crash.
 - **Docs legacy** : le dataset contient d'anciens docs (`project`/`skill`/`profile`) en chaînes simples → garde `Array.isArray` dans `pickLocale`. À nettoyer dans le Studio.
 - **Modèle (étape 2)** : textes traduisibles = `internationalizedArrayString/Text` (helpers `sanity/schemaTypes/i18n.ts`). Catégories de skills = data (`skillCategory`), comme les langues. Singletons via `structure.ts` (documentId fixe) + `document.newDocumentOptions` (pas de doublon).
 
