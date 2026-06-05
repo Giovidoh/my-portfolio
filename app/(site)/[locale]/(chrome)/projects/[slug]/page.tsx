@@ -23,7 +23,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const projects = await getProjects();
-  const title = projects.find((p) => p.slug?.current === slug)?.title ?? getPlaceholder(slug)?.title;
+  const title =
+    projects.find((p) => p.slug?.current === slug)?.title ?? getPlaceholder(slug)?.title;
   return { title: title ? `${title} — Case study · Cir-Giovanni IDOH` : 'Case study' };
 }
 
@@ -81,7 +82,9 @@ export default async function ProjectPage({
         sanity.year ?? undefined,
       ].filter((x): x is string => Boolean(x))
     : (placeholder?.caseMeta ?? []);
-  const sub = sanity ? (pickLocale(sanity.sub, locale, defaultLocale) ?? '') : (placeholder?.sub ?? '');
+  const sub = sanity
+    ? (pickLocale(sanity.sub, locale, defaultLocale) ?? '')
+    : (placeholder?.sub ?? '');
   const facts = sanity
     ? {
         role: t(sanity.facts?.role, '—'),
@@ -125,8 +128,8 @@ export default async function ProjectPage({
     .map((g) => ({ url: imageBuilder(g)?.width(1400).url(), alt: g.alt ?? '' }))
     .filter((g): g is { url: string; alt: string } => Boolean(g.url));
 
-  const projectSkills = (sanity?.skills ?? []).filter(
-    (s): s is { _id: string; title: string } => Boolean(s?.title),
+  const projectSkills = (sanity?.skills ?? []).filter((s): s is { _id: string; title: string } =>
+    Boolean(s?.title),
   );
 
   // Next project
@@ -248,16 +251,17 @@ export default async function ProjectPage({
                   </svg>
                   <span>{liveHost}</span>
                 </div>
-                <a className="live-frame__open" href={openUrl ?? '#'} target="_blank" rel="noopener">
+                <a
+                  className="live-frame__open"
+                  href={openUrl ?? '#'}
+                  target="_blank"
+                  rel="noopener"
+                >
                   Open
                   <LiveIcon />
                 </a>
               </div>
               <div className="live-frame__stage">
-                <div className="live-frame__hint">
-                  <span className="pip" />
-                  Live · interactive
-                </div>
                 <iframe src={embedUrl ?? ''} title={`${title} live demo`} loading="lazy" />
               </div>
             </div>
@@ -311,14 +315,21 @@ export default async function ProjectPage({
                       <path d="M8 11V8a4 4 0 0 1 8 0v3" />
                     </svg>
                   </span>
-                  <h4>{openUrl ? 'Live, but best seen full-screen' : 'No public demo for this one'}</h4>
+                  <h4>
+                    {openUrl ? 'Live, but best seen full-screen' : 'No public demo for this one'}
+                  </h4>
                   <p>
                     {openUrl
                       ? 'This site blocks embedding — open it in a new tab for the full experience.'
                       : 'This was internal client work under NDA. The write-up and gallery below capture the build — happy to walk through it live.'}
                   </p>
                   {openUrl ? (
-                    <a className="btn btn-ghost btn-sm" href={openUrl} target="_blank" rel="noopener">
+                    <a
+                      className="btn btn-ghost btn-sm"
+                      href={openUrl}
+                      target="_blank"
+                      rel="noopener"
+                    >
                       <LiveIcon />
                       Open live site
                     </a>
@@ -409,7 +420,9 @@ export default async function ProjectPage({
                   <ul>
                     <li>Architect the token data model and versioning (Postgres + Prisma).</li>
                     <li>Build the editor UI and live documentation site (Next.js, tRPC).</li>
-                    <li>Ship the theming engine that pushes tokens to consuming apps at build time.</li>
+                    <li>
+                      Ship the theming engine that pushes tokens to consuming apps at build time.
+                    </li>
                     <li>Define the contribution workflow so squads could add components safely.</li>
                   </ul>
                 </div>
