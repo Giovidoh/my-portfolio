@@ -11,6 +11,13 @@ type SkillItem = {
   iconDarkUrl?: string;
 };
 
+// Icons that don't exist on Simple Icons. Bundled locally and rendered as a
+// CSS mask in the current ink color, so they stay monochrome, coherent and
+// visible in both light and dark — exactly like the Simple Icons ones.
+const LOCAL_ICONS: Record<string, string> = {
+  foundry: '/assets/icons/foundry.svg',
+};
+
 const FALLBACK_CATS: Cat[] = [
   { k: 'all', label: 'All' },
   { k: 'front', label: 'Frontend' },
@@ -80,6 +87,15 @@ const Skills = ({
                   <img className="lg lg-l" src={s.iconUrl} alt="" loading="lazy" />
                   <img className="lg lg-d" src={s.iconDarkUrl ?? s.iconUrl} alt="" loading="lazy" />
                 </>
+              ) : LOCAL_ICONS[s.iconSlug] ? (
+                <span
+                  className="lg-mask"
+                  aria-hidden="true"
+                  style={{
+                    maskImage: `url(${LOCAL_ICONS[s.iconSlug]})`,
+                    WebkitMaskImage: `url(${LOCAL_ICONS[s.iconSlug]})`,
+                  }}
+                />
               ) : s.iconSlug ? (
                 <>
                   <img
