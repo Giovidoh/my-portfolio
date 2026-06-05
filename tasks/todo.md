@@ -10,7 +10,16 @@ Réf. design extraite : `%TEMP%\portfolio-design\my-portfolio\` (README, chats, 
 
 ## To Do
 - [ ] **Nettoyer les docs legacy** : supprimer (ou repeupler) les anciens docs `project`/`skill`/`profile` pré-refonte (champs en chaînes simples) — sinon la grille Work lit ces vieux docs (titre seul) au lieu du placeholder
-- [ ] **Bootstrap contenu** : créer les docs `language` (en défaut + fr), les singletons `siteSettings`/`homePage`/`contactPage`, puis projets/skills/catégories/expériences/témoignages, et remplir les traductions dans `/studio`
+- [ ] **Bootstrap contenu (ordre à suivre)** — remplir **EN + FR** par champ et **PUBLIER** chaque doc (un brouillon non publié est invisible côté public) :
+  - [x] 0. Langues (`en`, `fr`) — choisir la langue par défaut (`fr` actuellement ; mettre `en` si fallback anglais souhaité)
+  - [ ] 1. **Site Settings** (marque, email, social, CV PDF + label, SEO meta/OG, nav items, footer, labels UI)
+  - [ ] 2. **Skill Categories** (Frontend / Backend / Tooling…) — requis avant les skills
+  - [ ] 3. **Skills** (nom, **assigner une catégorie**, `simpleIconSlug` ou icône, ordre)
+  - [ ] 4. **Projects** (slug, featured, badge, description, tags, case study, facts, métriques, galerie, `liveLink`+`allowEmbed`, refs skills)
+  - [ ] 5. **Experience** (rôles, `order` décroissant)
+  - [ ] 6. **Testimonials**
+  - [ ] 7. **Home Page** (hero : statut/nom/rôle/lede/CTA/photo ; about + what-I-do ; titres de sections)
+  - [ ] 8. **Contact Page** (libellés form, placeholders, sujets, messages succès/erreur)
 
 ## Done
 - [x] Phases 1-4 antérieures (déblocage, migration Next 16.2 / React 19.2, qualité, dark mode + theme provider)
