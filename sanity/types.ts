@@ -358,6 +358,7 @@ export type SiteSettings = {
   navItems?: Array<{
     label?: InternationalizedArrayString;
     target?: string;
+    _type: 'navItem';
     _key: string;
   }>;
   footerTagline?: InternationalizedArrayText;
@@ -557,6 +558,7 @@ export type SITE_SETTINGS_QUERY_RESULT = {
   navItems?: Array<{
     label?: InternationalizedArrayString;
     target?: string;
+    _type: 'navItem';
     _key: string;
   }>;
   footerTagline?: InternationalizedArrayText;

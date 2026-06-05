@@ -71,6 +71,7 @@ export const siteSettingsType = defineType({
       of: [
         defineArrayMember({
           type: 'object',
+          name: 'navItem',
           fields: [
             i18nString('label', 'Label'),
             defineField({
