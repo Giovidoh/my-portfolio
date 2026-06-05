@@ -47,13 +47,23 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
 
   const formLabels = {
     name: pickLocale(page?.nameLabel, locale, defaultLocale),
+    namePlaceholder: pickLocale(page?.namePlaceholder, locale, defaultLocale),
+    nameError: pickLocale(page?.nameError, locale, defaultLocale),
     email: pickLocale(page?.emailLabel, locale, defaultLocale),
+    emailPlaceholder: pickLocale(page?.emailPlaceholder, locale, defaultLocale),
+    emailError: pickLocale(page?.emailError, locale, defaultLocale),
     subject: pickLocale(page?.subjectLabel, locale, defaultLocale),
     message: pickLocale(page?.messageLabel, locale, defaultLocale),
+    messagePlaceholder: pickLocale(page?.messagePlaceholder, locale, defaultLocale),
+    messageError: pickLocale(page?.messageError, locale, defaultLocale),
+    required: pickLocale(page?.requiredLabel, locale, defaultLocale),
     send: pickLocale(page?.sendLabel, locale, defaultLocale),
     sending: pickLocale(page?.sendingLabel, locale, defaultLocale),
     successTitle: pickLocale(page?.successTitle, locale, defaultLocale),
     successBody: pickLocale(page?.successBody, locale, defaultLocale),
+    errorInvalid: pickLocale(page?.errorInvalid, locale, defaultLocale),
+    errorConfig: pickLocale(page?.errorConfig, locale, defaultLocale),
+    errorSend: pickLocale(page?.errorSend, locale, defaultLocale),
   };
   const subjects = (page?.subjects ?? [])
     .map((s) => ({ value: s.value ?? '', label: pickLocale(s.label, locale, defaultLocale) ?? s.value ?? '' }))
@@ -65,7 +75,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
       <section className="section wrap" style={{ paddingTop: 'clamp(28px,5vw,56px)' }}>
         <Link className="back-link" href={`/${locale}`}>
           <BackArrow />
-          <span>Home</span>
+          <span>{t(page?.backLabel, 'Home')}</span>
         </Link>
         <div className="contact__grid" style={{ marginTop: 'var(--s-5)' }}>
           <div className="reveal">

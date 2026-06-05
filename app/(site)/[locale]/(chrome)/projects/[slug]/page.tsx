@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 import ButtonLink from '@/components/ui/ButtonLink';
 import { ArrowOut, ArrowRight, GithubMark, LiveIcon } from '@/components/ui/icons';
 import { PROJECTS, getProject as getPlaceholder, nextProject } from '@/lib/projects';
-import { getProjects, getProjectSlugs } from '@/lib/content';
+import { getProjects, getProjectSlugs, getSiteSettings } from '@/lib/content';
 import { getDefaultLocale, makeT, pickLocale } from '@/lib/i18n';
 
 export async function generateStaticParams() {
@@ -24,13 +24,6 @@ export async function generateMetadata({
   return { title: title ? `${title} — Case study · Cir-Giovanni IDOH` : 'Case study' };
 }
 
-const RAIL = [
-  { id: 'problem', label: '01 — Problem' },
-  { id: 'role', label: '02 — My role' },
-  { id: 'solution', label: '03 — Solution' },
-  { id: 'outcome', label: '04 — Outcome' },
-];
-
 const paras = (text: string | undefined) =>
   (text ?? '')
     .split(/\n{2,}/)
@@ -43,8 +36,32 @@ export default async function ProjectPage({
   params: Promise<{ locale: string; slug: string }>;
 }) {
   const { locale, slug } = await params;
-  const [defaultLocale, projects] = await Promise.all([getDefaultLocale(), getProjects()]);
+  const [defaultLocale, projects, settings] = await Promise.all([
+    getDefaultLocale(),
+    getProjects(),
+    getSiteSettings(),
+  ]);
   const t = makeT(locale, defaultLocale);
+  const lbl = {
+    allWork: t(settings?.allWork, 'All work'),
+    viewCode: t(settings?.viewCode, 'View code'),
+    livePreview: t(settings?.livePreview, 'Live preview'),
+    openFullscreen: t(settings?.openFullscreen, 'Open full screen'),
+    nextProject: t(settings?.nextProject, 'Next project'),
+    backToWork: t(settings?.backToWork, 'Back to all work'),
+    gallery: t(settings?.gallery, 'Gallery'),
+    requestWalkthrough: t(settings?.requestWalkthrough, 'Request a walkthrough'),
+    problem: t(settings?.caseProblem, 'The problem'),
+    role: t(settings?.caseRole, 'My role'),
+    solution: t(settings?.caseSolution, 'The solution'),
+    outcome: t(settings?.caseOutcome, 'The outcome'),
+  };
+  const rail = [
+    { id: 'problem', label: lbl.problem },
+    { id: 'role', label: lbl.role },
+    { id: 'solution', label: lbl.solution },
+    { id: 'outcome', label: lbl.outcome },
+  ];
 
   const idx = projects.findIndex((p) => p.slug?.current === slug);
   const sanity = idx >= 0 ? projects[idx] : null;
@@ -123,7 +140,7 @@ export default async function ProjectPage({
           >
             <path d="M19 12H5M11 18l-6-6 6-6" />
           </svg>
-          <span>All work</span>
+          <span>{lbl.allWork}</span>
         </Link>
         <div className="case-meta">
           {caseMeta.map((m) => (
@@ -155,11 +172,11 @@ export default async function ProjectPage({
         <div className="case-actions">
           <a className="btn btn-primary" href={githubLink} target="_blank" rel="noopener">
             <GithubMark />
-            View code
+            {lbl.viewCode}
           </a>
           <a className="btn btn-ghost" href="#live">
             <LiveIcon />
-            Live preview
+            {lbl.livePreview}
           </a>
         </div>
       </header>
@@ -168,14 +185,14 @@ export default async function ProjectPage({
       <section className="section wrap" id="live">
         <div className="section-head reveal" style={{ marginBottom: 'var(--s-5)' }}>
           <div>
-            <span className="eyebrow">{hasEmbed ? 'Live preview' : 'State · private'}</span>
+            <span className="eyebrow">{hasEmbed ? lbl.livePreview : 'State · private'}</span>
             <h2 style={{ marginTop: 'var(--s-4)', fontSize: 'clamp(28px,3.4vw,40px)' }}>
               {hasEmbed ? 'Experience it in-page' : 'Not public — by request'}
             </h2>
           </div>
           {hasEmbed && openUrl && (
             <a className="btn btn-ghost btn-sm" href={openUrl} target="_blank" rel="noopener">
-              Open full screen
+              {lbl.openFullscreen}
               <ArrowOut className="arr" />
             </a>
           )}
@@ -281,7 +298,7 @@ export default async function ProjectPage({
                     </a>
                   ) : (
                     <ButtonLink variant="ghost" size="sm" href={`/${locale}/contact`}>
-                      Request a walkthrough
+                      {lbl.requestWalkthrough}
                     </ButtonLink>
                   )}
                 </div>
@@ -295,9 +312,9 @@ export default async function ProjectPage({
       <section className="section wrap" style={{ paddingTop: 0 }}>
         <div className="case-body">
           <nav className="case-body__rail" aria-label="Case study sections">
-            {RAIL.map((r) => (
+            {rail.map((r, i) => (
               <a href={`#${r.id}`} key={r.id}>
-                {r.label}
+                {String(i + 1).padStart(2, '0')} — {r.label}
               </a>
             ))}
           </nav>
@@ -305,25 +322,25 @@ export default async function ProjectPage({
             {hasCaseStudy ? (
               <>
                 <div className="case-block reveal" id="problem">
-                  <span className="eyebrow">The problem</span>
+                  <span className="eyebrow">{lbl.problem}</span>
                   {paras(problem).map((p, i) => (
                     <p key={i}>{p}</p>
                   ))}
                 </div>
                 <div className="case-block reveal" id="role">
-                  <span className="eyebrow">My role</span>
+                  <span className="eyebrow">{lbl.role}</span>
                   {paras(role).map((p, i) => (
                     <p key={i}>{p}</p>
                   ))}
                 </div>
                 <div className="case-block reveal" id="solution">
-                  <span className="eyebrow">The solution</span>
+                  <span className="eyebrow">{lbl.solution}</span>
                   {paras(solution).map((p, i) => (
                     <p key={i}>{p}</p>
                   ))}
                 </div>
                 <div className="case-block reveal" id="outcome">
-                  <span className="eyebrow">The outcome</span>
+                  <span className="eyebrow">{lbl.outcome}</span>
                   {paras(outcome).map((p, i) => (
                     <p key={i}>{p}</p>
                   ))}
@@ -344,7 +361,7 @@ export default async function ProjectPage({
             ) : (
               <>
                 <div className="case-block reveal" id="problem">
-                  <span className="eyebrow">The problem</span>
+                  <span className="eyebrow">{lbl.problem}</span>
                   <h2>Seven products, seven slightly different buttons.</h2>
                   <p>
                     The company had grown to seven web products, each maintained by a different
@@ -358,7 +375,7 @@ export default async function ProjectPage({
                   </p>
                 </div>
                 <div className="case-block reveal" id="role">
-                  <span className="eyebrow">My role</span>
+                  <span className="eyebrow">{lbl.role}</span>
                   <h2>Lead full-stack — from schema to docs.</h2>
                   <p>
                     I owned the platform end-to-end with a designer and a second engineer. My remit:
@@ -371,7 +388,7 @@ export default async function ProjectPage({
                   </ul>
                 </div>
                 <div className="case-block reveal" id="solution">
-                  <span className="eyebrow">The solution</span>
+                  <span className="eyebrow">{lbl.solution}</span>
                   <h2>Tokens as data, docs as a product.</h2>
                   <p>
                     Every token, component and theme became a versioned database record with a clean
@@ -385,7 +402,7 @@ export default async function ProjectPage({
                   </p>
                 </div>
                 <div className="case-block reveal" id="outcome">
-                  <span className="eyebrow">The outcome</span>
+                  <span className="eyebrow">{lbl.outcome}</span>
                   <h2>One system, adopted fast.</h2>
                   <p>
                     Within two quarters, adoption crossed 90% and the next rebrand shipped in days
@@ -422,7 +439,7 @@ export default async function ProjectPage({
       <section className="section wrap" style={{ paddingTop: 0 }}>
         <div className="section-head reveal">
           <div>
-            <span className="eyebrow">Gallery</span>
+            <span className="eyebrow">{lbl.gallery}</span>
             <h2 style={{ marginTop: 'var(--s-4)', fontSize: 'clamp(28px,3.4vw,40px)' }}>
               A look inside
             </h2>
@@ -448,14 +465,14 @@ export default async function ProjectPage({
       <section className="wrap">
         <div className="next-proj">
           <div>
-            <span className="eyebrow">Next project</span>
+            <span className="eyebrow">{lbl.nextProject}</span>
             <Link href={`/${locale}/projects/${next.slug}`} style={{ marginTop: 10 }}>
               <span className="lab">{next.title}</span>
               <ArrowRight width={46} height={46} />
             </Link>
           </div>
           <ButtonLink variant="ghost" href={`/${locale}#work`}>
-            Back to all work
+            {lbl.backToWork}
           </ButtonLink>
         </div>
       </section>

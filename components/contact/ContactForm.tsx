@@ -8,13 +8,23 @@ import { sendContact } from '@/app/actions/contact';
 type Subject = { value: string; label: string };
 type Labels = {
   name?: string;
+  namePlaceholder?: string;
+  nameError?: string;
   email?: string;
+  emailPlaceholder?: string;
+  emailError?: string;
   subject?: string;
   message?: string;
+  messagePlaceholder?: string;
+  messageError?: string;
+  required?: string;
   send?: string;
   sending?: string;
   successTitle?: string;
   successBody?: string;
+  errorInvalid?: string;
+  errorConfig?: string;
+  errorSend?: string;
 };
 
 const DEFAULT_SUBJECTS: Subject[] = [
@@ -119,50 +129,47 @@ const ContactForm = ({
           <path d="M12 8v5M12 16h.01" />
         </svg>
         <div>
-          {errorKind === 'invalid' && (
-            <>
-              <strong>Please fix the fields below</strong> and try again.
-            </>
-          )}
-          {errorKind === 'config' && (
-            <>
-              <strong>The form isn&apos;t configured yet.</strong> Email me directly at {email}.
-            </>
-          )}
-          {errorKind === 'send' && (
-            <>
-              <strong>Something went wrong sending your message.</strong> Please try again or email
-              me directly.
-            </>
-          )}
+          {errorKind === 'invalid' &&
+            (L.errorInvalid ?? 'Please fix the fields below and try again.')}
+          {errorKind === 'config' &&
+            (L.errorConfig ?? `The form isn't configured yet. Email me directly at ${email}.`)}
+          {errorKind === 'send' &&
+            (L.errorSend ??
+              'Something went wrong sending your message. Please try again or email me directly.')}
         </div>
       </div>
 
       <div className="form-row">
         <div className={`field${invalid.name ? ' invalid' : ''}`}>
           <label htmlFor="name">
-            {L.name ?? 'Name'} <span className="req">required</span>
+            {L.name ?? 'Name'} <span className="req">{L.required ?? 'required'}</span>
           </label>
-          <input type="text" id="name" name="name" placeholder="Ada Lovelace" autoComplete="name" />
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder={L.namePlaceholder ?? 'Ada Lovelace'}
+            autoComplete="name"
+          />
           <span className="err">
             <AlertSvg />
-            Please enter your name.
+            {L.nameError ?? 'Please enter your name.'}
           </span>
         </div>
         <div className={`field${invalid.email ? ' invalid' : ''}`}>
           <label htmlFor="email">
-            {L.email ?? 'Email'} <span className="req">required</span>
+            {L.email ?? 'Email'} <span className="req">{L.required ?? 'required'}</span>
           </label>
           <input
             type="email"
             id="email"
             name="email"
-            placeholder="you@company.com"
+            placeholder={L.emailPlaceholder ?? 'you@company.com'}
             autoComplete="email"
           />
           <span className="err">
             <AlertSvg />
-            Enter a valid email address.
+            {L.emailError ?? 'Enter a valid email address.'}
           </span>
         </div>
       </div>
@@ -174,16 +181,16 @@ const ContactForm = ({
 
       <div className={`field${invalid.message ? ' invalid' : ''}`}>
         <label htmlFor="message">
-          {L.message ?? 'Message'} <span className="req">required</span>
+          {L.message ?? 'Message'} <span className="req">{L.required ?? 'required'}</span>
         </label>
         <textarea
           id="message"
           name="message"
-          placeholder="Tell me a little about what you have in mind…"
+          placeholder={L.messagePlaceholder ?? 'Tell me a little about what you have in mind…'}
         />
         <span className="err">
           <AlertSvg />
-          Please add at least a few words (10+ characters).
+          {L.messageError ?? 'Please add at least a few words (10+ characters).'}
         </span>
       </div>
 
