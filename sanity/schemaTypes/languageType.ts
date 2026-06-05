@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity';
+import { apiVersion } from '../env';
 
 /**
  * Languages are data, not code. Each `language` document drives both the
@@ -41,8 +42,22 @@ export const languageType = defineType({
       name: 'isDefault',
       title: 'Default language',
       type: 'boolean',
-      description: 'The fallback language. Exactly one language should be the default.',
+      description: 'The fallback language. Exactly one language may be the default.',
       initialValue: false,
+      validation: (rule) =>
+        rule.custom(async (isDefault, context) => {
+          if (!isDefault) return true;
+          const id = (context.document?._id ?? '').replace(/^drafts\./, '');
+          const others = await context
+            .getClient({ apiVersion })
+            .fetch<number>(
+              `count(*[_type == "language" && isDefault == true && !(_id in [$id, $draft])])`,
+              { id, draft: `drafts.${id}` },
+            );
+          return others > 0
+            ? 'Another language is already set as default — only one is allowed.'
+            : true;
+        }),
     }),
     defineField({
       name: 'order',

@@ -1,5 +1,5 @@
 import { cache } from 'react';
-import { client } from '@/sanity/lib/client';
+import { configClient } from '@/sanity/lib/client';
 
 export type Language = { id: string; title: string; isDefault?: boolean };
 
@@ -8,14 +8,17 @@ export const FALLBACK_LOCALE = 'en';
 const FALLBACK_LANGUAGES: Language[] = [{ id: FALLBACK_LOCALE, title: 'English', isDefault: true }];
 
 /**
- * Active languages, ordered, from Sanity. Cached per request. Degrades to a
- * single English fallback if the dataset is empty or unreachable — the locale
- * list is data, but the site never 404s for lack of it.
+ * Active languages, ordered, from Sanity — read fresh (no CDN, no Next cache) so
+ * Studio changes (activate/deactivate, reorder, default) apply on the next
+ * request. Memoized per request. Degrades to a single English fallback if the
+ * dataset is empty or unreachable, so the site never 404s for lack of it.
  */
 export const getLanguages = cache(async (): Promise<Language[]> => {
   try {
-    const langs = await client.fetch<Language[]>(
+    const langs = await configClient.fetch<Language[]>(
       `*[_type == "language" && isActive == true] | order(order asc){ id, title, isDefault }`,
+      {},
+      { cache: 'no-store' },
     );
     return langs && langs.length > 0 ? langs : FALLBACK_LANGUAGES;
   } catch {
