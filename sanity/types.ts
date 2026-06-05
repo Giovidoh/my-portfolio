@@ -292,6 +292,7 @@ export type HomePage = {
     whatIDo?: Array<{
       title?: InternationalizedArrayString;
       description?: InternationalizedArrayText;
+      _type: 'whatIDoItem';
       _key: string;
     }>;
   };
@@ -637,6 +638,7 @@ export type HOME_QUERY_RESULT = {
     whatIDo?: Array<{
       title?: InternationalizedArrayString;
       description?: InternationalizedArrayText;
+      _type: 'whatIDoItem';
       _key: string;
     }>;
   };

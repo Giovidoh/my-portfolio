@@ -102,6 +102,7 @@ export const homePageType = defineType({
           of: [
             defineArrayMember({
               type: 'object',
+              name: 'whatIDoItem',
               fields: [i18nString('title', 'Title'), i18nText('description', 'Description')],
               preview: {
                 select: { subtitle: 'title' },
