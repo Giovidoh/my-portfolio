@@ -2077,6 +2077,22 @@
         },
         "optional": true
       },
+      "cvPrint": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "internationalizedArrayString"
+        },
+        "optional": true
+      },
+      "cvBack": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "internationalizedArrayString"
+        },
+        "optional": true
+      },
       "cvSummary": {
         "type": "objectAttribute",
         "value": {

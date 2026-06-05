@@ -2,7 +2,8 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import ThemeToggle from '@/components/theme/ThemeToggle';
 import PrintButton from '@/components/cv/PrintButton';
-import { getDefaultLocale, makeT, pickLocale } from '@/lib/i18n';
+import LanguageSwitcher from '@/components/layouts/LanguageSwitcher';
+import { getDefaultLocale, getLanguages, makeT, pickLocale } from '@/lib/i18n';
 import { getHome, getSiteSettings, getExperiences, getSkills } from '@/lib/content';
 
 export const metadata: Metadata = {
@@ -69,8 +70,9 @@ const FALLBACK_SKILLS = [
 
 export default async function CvPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
-  const [defaultLocale, home, settings, experiences, skills] = await Promise.all([
+  const [defaultLocale, languages, home, settings, experiences, skills] = await Promise.all([
     getDefaultLocale(),
+    getLanguages(),
     getHome(),
     getSiteSettings(),
     getExperiences(),
@@ -119,10 +121,11 @@ export default async function CvPage({ params }: { params: Promise<{ locale: str
             </span>
           </Link>
           <div className="nav__tools">
+            <LanguageSwitcher languages={languages} locale={locale} />
             <ThemeToggle />
-            <PrintButton />
+            <PrintButton label={t(settings?.cvPrint, 'Print / Save PDF')} />
             <Link className="btn btn-ghost btn-sm" href={`/${locale}`}>
-              Back
+              {t(settings?.cvBack, 'Back')}
             </Link>
           </div>
         </div>

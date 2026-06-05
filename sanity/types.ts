@@ -355,6 +355,8 @@ export type SiteSettings = {
     _type: 'file';
   };
   cvLabel?: InternationalizedArrayString;
+  cvPrint?: InternationalizedArrayString;
+  cvBack?: InternationalizedArrayString;
   cvSummary?: InternationalizedArrayText;
   cvEducation?: InternationalizedArrayText;
   navItems?: Array<{
@@ -557,6 +559,8 @@ export type SITE_SETTINGS_QUERY_RESULT = {
     _type: 'file';
   };
   cvLabel?: InternationalizedArrayString;
+  cvPrint?: InternationalizedArrayString;
+  cvBack?: InternationalizedArrayString;
   cvSummary?: InternationalizedArrayText;
   cvEducation?: InternationalizedArrayText;
   navItems?: Array<{

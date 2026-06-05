@@ -1,8 +1,8 @@
 'use client';
 
-const PrintButton = () => (
+const PrintButton = ({ label = 'Print / Save PDF' }: { label?: string }) => (
   <button className="btn btn-primary btn-sm" type="button" onClick={() => window.print()}>
-    Print / Save PDF
+    {label}
   </button>
 );
 

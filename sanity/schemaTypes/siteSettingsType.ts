@@ -69,6 +69,8 @@ export const siteSettingsType = defineType({
       description: 'Uploaded PDF served by the "Download CV" button.',
     }),
     i18nString('cvLabel', 'CV button label', { group: 'cv', description: 'e.g. "Download CV".' }),
+    i18nString('cvPrint', 'CV · Print button', { group: 'cv', description: 'e.g. "Print / Save PDF".' }),
+    i18nString('cvBack', 'CV · Back button', { group: 'cv', description: 'e.g. "Back".' }),
     i18nText('cvSummary', 'CV · Profile summary', {
       group: 'cv',
       description: 'Short blurb at the top of the printable /cv page.',
