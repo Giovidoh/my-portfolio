@@ -130,6 +130,7 @@ export type Skill = {
     _type: 'image';
   };
   simpleIconSlug?: string;
+  showInSkills?: boolean;
   order?: number;
 };
 
@@ -840,7 +841,7 @@ export type PROJECT_SLUGS_QUERY_RESULT = Array<{
 
 // Source: sanity/lib/queries.ts
 // Variable: SKILLS_QUERY
-// Query: *[_type == "skill"] | order(order asc){    ...,    "category": category->{ _id, key, title }  }
+// Query: *[_type == "skill" && showInSkills != false] | order(order asc){    ...,    "category": category->{ _id, key, title }  }
 export type SKILLS_QUERY_RESULT = Array<{
   _id: string;
   _type: 'skill';
@@ -870,6 +871,7 @@ export type SKILLS_QUERY_RESULT = Array<{
     _type: 'image';
   };
   simpleIconSlug?: string;
+  showInSkills?: boolean;
   order?: number;
 }>;
 
@@ -938,7 +940,7 @@ declare module '@sanity/client' {
     '*[_type == "project"] | order(order asc){\n    ...,\n    "skills": skills[]->{ _id, title }\n  }': PROJECTS_QUERY_RESULT;
     '*[_type == "project" && slug.current == $slug][0]{\n    ...,\n    "skills": skills[]->{ _id, title }\n  }': PROJECT_QUERY_RESULT;
     '*[_type == "project" && defined(slug.current)]{ "slug": slug.current }': PROJECT_SLUGS_QUERY_RESULT;
-    '*[_type == "skill"] | order(order asc){\n    ...,\n    "category": category->{ _id, key, title }\n  }': SKILLS_QUERY_RESULT;
+    '*[_type == "skill" && showInSkills != false] | order(order asc){\n    ...,\n    "category": category->{ _id, key, title }\n  }': SKILLS_QUERY_RESULT;
     '*[_type == "skillCategory"] | order(order asc)': SKILL_CATEGORIES_QUERY_RESULT;
     '*[_type == "experience"] | order(order asc)': EXPERIENCES_QUERY_RESULT;
     '*[_type == "testimonial"] | order(order asc)': TESTIMONIALS_QUERY_RESULT;

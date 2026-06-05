@@ -34,7 +34,7 @@ export const PROJECT_SLUGS_QUERY = defineQuery(
 );
 
 export const SKILLS_QUERY = defineQuery(
-  `*[_type == "skill"] | order(order asc){
+  `*[_type == "skill" && showInSkills != false] | order(order asc){
     ...,
     "category": category->{ _id, key, title }
   }`,
