@@ -1250,6 +1250,14 @@
         },
         "optional": true
       },
+      "backLabel": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "internationalizedArrayString"
+        },
+        "optional": true
+      },
       "subjects": {
         "type": "objectAttribute",
         "value": {
@@ -1296,7 +1304,39 @@
         },
         "optional": true
       },
+      "namePlaceholder": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "internationalizedArrayString"
+        },
+        "optional": true
+      },
+      "nameError": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "internationalizedArrayString"
+        },
+        "optional": true
+      },
       "emailLabel": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "internationalizedArrayString"
+        },
+        "optional": true
+      },
+      "emailPlaceholder": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "internationalizedArrayString"
+        },
+        "optional": true
+      },
+      "emailError": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
@@ -1313,6 +1353,30 @@
         "optional": true
       },
       "messageLabel": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "internationalizedArrayString"
+        },
+        "optional": true
+      },
+      "messagePlaceholder": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "internationalizedArrayString"
+        },
+        "optional": true
+      },
+      "messageError": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "internationalizedArrayString"
+        },
+        "optional": true
+      },
+      "requiredLabel": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
@@ -1352,7 +1416,23 @@
         },
         "optional": true
       },
-      "errorBody": {
+      "errorInvalid": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "internationalizedArrayText"
+        },
+        "optional": true
+      },
+      "errorConfig": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "internationalizedArrayText"
+        },
+        "optional": true
+      },
+      "errorSend": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
@@ -1937,6 +2017,14 @@
         },
         "optional": true
       },
+      "location": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "internationalizedArrayString"
+        },
+        "optional": true
+      },
       "metaTitle": {
         "type": "objectAttribute",
         "value": {
@@ -2067,6 +2155,22 @@
         },
         "optional": true
       },
+      "cvSummary": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "internationalizedArrayText"
+        },
+        "optional": true
+      },
+      "cvEducation": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "internationalizedArrayText"
+        },
+        "optional": true
+      },
       "navItems": {
         "type": "objectAttribute",
         "value": {
@@ -2121,7 +2225,7 @@
         },
         "optional": true
       },
-      "uiDownloadCv": {
+      "getInTouch": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
@@ -2129,7 +2233,7 @@
         },
         "optional": true
       },
-      "uiViewProject": {
+      "viewWork": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
@@ -2137,7 +2241,7 @@
         },
         "optional": true
       },
-      "uiLiveDemo": {
+      "gotProject": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
@@ -2145,7 +2249,7 @@
         },
         "optional": true
       },
-      "uiLivePreview": {
+      "code": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
@@ -2153,7 +2257,7 @@
         },
         "optional": true
       },
-      "uiBack": {
+      "live": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
@@ -2161,7 +2265,7 @@
         },
         "optional": true
       },
-      "uiNextProject": {
+      "liveDemo": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
@@ -2169,7 +2273,7 @@
         },
         "optional": true
       },
-      "uiViewWork": {
+      "viewCode": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
@@ -2177,7 +2281,103 @@
         },
         "optional": true
       },
-      "uiGetInTouch": {
+      "livePreview": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "internationalizedArrayString"
+        },
+        "optional": true
+      },
+      "openFullscreen": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "internationalizedArrayString"
+        },
+        "optional": true
+      },
+      "allWork": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "internationalizedArrayString"
+        },
+        "optional": true
+      },
+      "backToWork": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "internationalizedArrayString"
+        },
+        "optional": true
+      },
+      "nextProject": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "internationalizedArrayString"
+        },
+        "optional": true
+      },
+      "gallery": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "internationalizedArrayString"
+        },
+        "optional": true
+      },
+      "requestWalkthrough": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "internationalizedArrayString"
+        },
+        "optional": true
+      },
+      "caseProblem": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "internationalizedArrayString"
+        },
+        "optional": true
+      },
+      "caseRole": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "internationalizedArrayString"
+        },
+        "optional": true
+      },
+      "caseSolution": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "internationalizedArrayString"
+        },
+        "optional": true
+      },
+      "caseOutcome": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "internationalizedArrayString"
+        },
+        "optional": true
+      },
+      "footerNav": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "internationalizedArrayString"
+        },
+        "optional": true
+      },
+      "footerElsewhere": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",

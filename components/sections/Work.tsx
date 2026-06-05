@@ -23,11 +23,13 @@ const Work = ({
   defaultLocale,
   heading,
   projects,
+  labels,
 }: {
   locale: string;
   defaultLocale: string;
   heading?: Heading;
   projects?: PROJECTS_QUERY_RESULT;
+  labels?: { gotProject?: string; code?: string; live?: string; liveDemo?: string };
 }) => {
   const t = makeT(locale, defaultLocale);
 
@@ -64,7 +66,7 @@ const Work = ({
           </h2>
         </div>
         <ButtonLink variant="ghost" size="sm" href="#contact">
-          Got a project? Let&apos;s talk
+          {labels?.gotProject ?? "Got a project? Let's talk"}
         </ButtonLink>
       </div>
       <div className="proj__grid">
@@ -101,11 +103,11 @@ const Work = ({
             <div className="card__links">
               <a href={p.github ?? 'https://github.com'} target="_blank" rel="noopener">
                 <GithubMark />
-                Code
+                {labels?.code ?? 'Code'}
               </a>
               <Link href={`/${locale}/projects/${p.slug}`}>
                 <LiveIcon />
-                {p.big ? 'Live demo' : 'Live'}
+                {p.big ? (labels?.liveDemo ?? 'Live demo') : (labels?.live ?? 'Live')}
               </Link>
             </div>
           </article>

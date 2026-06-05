@@ -46,7 +46,7 @@ export default async function ChromeLayout({
         links={links}
         cvHref={cvHref}
         cvLabel={cvLabel}
-        contactLabel={tt(settings?.uiGetInTouch, 'Contact')}
+        contactLabel={tt(settings?.getInTouch, 'Contact')}
       />
       {children}
       <Footer
@@ -61,6 +61,9 @@ export default async function ChromeLayout({
         linkedin={settings?.linkedinUrl ?? 'https://linkedin.com'}
         cvHref={cvHref}
         cvLabel={cvLabel}
+        links={links}
+        navHeading={tt(settings?.footerNav, 'Navigate')}
+        elsewhereHeading={tt(settings?.footerElsewhere, 'Elsewhere')}
       />
     </>
   );

@@ -9,10 +9,12 @@ const ContactCta = ({
   locale,
   defaultLocale,
   data,
+  email = 'hello@cgidoh.dev',
 }: {
   locale: string;
   defaultLocale: string;
   data?: CtaData;
+  email?: string;
 }) => {
   const t = makeT(locale, defaultLocale);
   const heading = pickLocale(data?.heading, locale, defaultLocale);
@@ -52,9 +54,9 @@ const ContactCta = ({
               color: 'var(--cta-fg)',
               borderColor: 'color-mix(in srgb, var(--cta-fg) 38%, transparent)',
             }}
-            href="mailto:hello@cgidoh.dev"
+            href={`mailto:${email}`}
           >
-            hello@cgidoh.dev
+            {email}
           </a>
         </div>
       </div>

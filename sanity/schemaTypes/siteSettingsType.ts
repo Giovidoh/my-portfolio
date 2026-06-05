@@ -38,6 +38,7 @@ export const siteSettingsType = defineType({
       group: 'general',
       description: 'e.g. "Open to full-stack roles".',
     }),
+    i18nString('location', 'Location', { group: 'general', description: 'e.g. "Paris, France".' }),
 
     // SEO
     i18nString('metaTitle', 'Meta title', { group: 'seo' }),
@@ -66,6 +67,11 @@ export const siteSettingsType = defineType({
       description: 'Uploaded PDF served by the "Download CV" button.',
     }),
     i18nString('cvLabel', 'CV button label', { group: 'cv', description: 'e.g. "Download CV".' }),
+    i18nText('cvSummary', 'CV · Profile summary', {
+      group: 'cv',
+      description: 'Short blurb at the top of the printable /cv page.',
+    }),
+    i18nText('cvEducation', 'CV · Education & languages', { group: 'cv' }),
 
     // Navigation
     defineField({
@@ -102,15 +108,28 @@ export const siteSettingsType = defineType({
       description: 'Use {year} to insert the current year.',
     }),
 
-    // UI labels (reused across pages)
-    i18nString('uiDownloadCv', 'Label · Download CV', { group: 'labels' }),
-    i18nString('uiViewProject', 'Label · View project', { group: 'labels' }),
-    i18nString('uiLiveDemo', 'Label · Live demo', { group: 'labels' }),
-    i18nString('uiLivePreview', 'Label · Live preview', { group: 'labels' }),
-    i18nString('uiBack', 'Label · Back', { group: 'labels' }),
-    i18nString('uiNextProject', 'Label · Next project', { group: 'labels' }),
-    i18nString('uiViewWork', 'Label · View work', { group: 'labels' }),
-    i18nString('uiGetInTouch', 'Label · Get in touch', { group: 'labels' }),
+    // UI labels (reused across pages, translatable). Each falls back to the
+    // built-in English copy when left empty.
+    i18nString('getInTouch', 'Label · Get in touch', { group: 'labels' }),
+    i18nString('viewWork', 'Label · View work', { group: 'labels' }),
+    i18nString('gotProject', 'Label · Work CTA ("Got a project?")', { group: 'labels' }),
+    i18nString('code', 'Label · Code', { group: 'labels' }),
+    i18nString('live', 'Label · Live', { group: 'labels' }),
+    i18nString('liveDemo', 'Label · Live demo', { group: 'labels' }),
+    i18nString('viewCode', 'Label · View code', { group: 'labels' }),
+    i18nString('livePreview', 'Label · Live preview', { group: 'labels' }),
+    i18nString('openFullscreen', 'Label · Open full screen', { group: 'labels' }),
+    i18nString('allWork', 'Label · All work', { group: 'labels' }),
+    i18nString('backToWork', 'Label · Back to all work', { group: 'labels' }),
+    i18nString('nextProject', 'Label · Next project', { group: 'labels' }),
+    i18nString('gallery', 'Label · Gallery', { group: 'labels' }),
+    i18nString('requestWalkthrough', 'Label · Request a walkthrough', { group: 'labels' }),
+    i18nString('caseProblem', 'Label · Case · The problem', { group: 'labels' }),
+    i18nString('caseRole', 'Label · Case · My role', { group: 'labels' }),
+    i18nString('caseSolution', 'Label · Case · The solution', { group: 'labels' }),
+    i18nString('caseOutcome', 'Label · Case · The outcome', { group: 'labels' }),
+    i18nString('footerNav', 'Label · Footer · Navigate', { group: 'labels' }),
+    i18nString('footerElsewhere', 'Label · Footer · Elsewhere', { group: 'labels' }),
   ],
   preview: { prepare: () => ({ title: 'Site Settings' }) },
 });

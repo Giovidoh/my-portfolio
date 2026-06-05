@@ -8,6 +8,7 @@ import ContactCta from '@/components/sections/ContactCta';
 import { getDefaultLocale, pickLocale } from '@/lib/i18n';
 import {
   getHome,
+  getSiteSettings,
   getProjects,
   getSkills,
   getSkillCategories,
@@ -17,10 +18,11 @@ import {
 
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
-  const [defaultLocale, home, projects, skills, categories, experiences, testimonials] =
+  const [defaultLocale, home, settings, projects, skills, categories, experiences, testimonials] =
     await Promise.all([
       getDefaultLocale(),
       getHome(),
+      getSiteSettings(),
       getProjects(),
       getSkills(),
       getSkillCategories(),
@@ -53,12 +55,20 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
     : undefined;
   const allLabel = pickLocale(home?.skillsSection?.allLabel, locale, defaultLocale);
 
+  const workLabels = {
+    gotProject: pickLocale(settings?.gotProject, locale, defaultLocale),
+    code: pickLocale(settings?.code, locale, defaultLocale),
+    live: pickLocale(settings?.live, locale, defaultLocale),
+    liveDemo: pickLocale(settings?.liveDemo, locale, defaultLocale),
+  };
+  const ctaEmail = settings?.email ?? 'hello@cgidoh.dev';
+
   const L = { locale, defaultLocale };
 
   return (
     <main id="top">
       <Hero {...L} data={home?.hero} />
-      <Work {...L} heading={home?.workSection} projects={projects} />
+      <Work {...L} heading={home?.workSection} projects={projects} labels={workLabels} />
       <About {...L} data={home?.about} />
       <Skills
         heading={skillsHeading}
@@ -68,7 +78,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       />
       <Experience {...L} heading={home?.experienceSection} items={experiences} />
       <Testimonials {...L} heading={home?.testimonialsSection} items={testimonials} />
-      <ContactCta {...L} data={home?.contactCta} />
+      <ContactCta {...L} data={home?.contactCta} email={ctaEmail} />
     </main>
   );
 }

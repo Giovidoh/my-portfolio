@@ -229,20 +229,30 @@ export type ContactPage = {
   eyebrow?: InternationalizedArrayString;
   heading?: InternationalizedArrayString;
   pitch?: InternationalizedArrayText;
+  backLabel?: InternationalizedArrayString;
   subjects?: Array<{
     value?: string;
     label?: InternationalizedArrayString;
     _key: string;
   }>;
   nameLabel?: InternationalizedArrayString;
+  namePlaceholder?: InternationalizedArrayString;
+  nameError?: InternationalizedArrayString;
   emailLabel?: InternationalizedArrayString;
+  emailPlaceholder?: InternationalizedArrayString;
+  emailError?: InternationalizedArrayString;
   subjectLabel?: InternationalizedArrayString;
   messageLabel?: InternationalizedArrayString;
+  messagePlaceholder?: InternationalizedArrayString;
+  messageError?: InternationalizedArrayString;
+  requiredLabel?: InternationalizedArrayString;
   sendLabel?: InternationalizedArrayString;
   sendingLabel?: InternationalizedArrayString;
   successTitle?: InternationalizedArrayString;
   successBody?: InternationalizedArrayText;
-  errorBody?: InternationalizedArrayText;
+  errorInvalid?: InternationalizedArrayText;
+  errorConfig?: InternationalizedArrayText;
+  errorSend?: InternationalizedArrayText;
   methodsHeading?: InternationalizedArrayString;
   methodsNote?: InternationalizedArrayText;
 };
@@ -336,6 +346,7 @@ export type SiteSettings = {
     _type: 'image';
   };
   availabilityText?: InternationalizedArrayString;
+  location?: InternationalizedArrayString;
   metaTitle?: InternationalizedArrayString;
   metaDescription?: InternationalizedArrayText;
   ogImage?: {
@@ -355,6 +366,8 @@ export type SiteSettings = {
     _type: 'file';
   };
   cvLabel?: InternationalizedArrayString;
+  cvSummary?: InternationalizedArrayText;
+  cvEducation?: InternationalizedArrayText;
   navItems?: Array<{
     label?: InternationalizedArrayString;
     target?: string;
@@ -362,14 +375,26 @@ export type SiteSettings = {
   }>;
   footerTagline?: InternationalizedArrayText;
   copyright?: InternationalizedArrayString;
-  uiDownloadCv?: InternationalizedArrayString;
-  uiViewProject?: InternationalizedArrayString;
-  uiLiveDemo?: InternationalizedArrayString;
-  uiLivePreview?: InternationalizedArrayString;
-  uiBack?: InternationalizedArrayString;
-  uiNextProject?: InternationalizedArrayString;
-  uiViewWork?: InternationalizedArrayString;
-  uiGetInTouch?: InternationalizedArrayString;
+  getInTouch?: InternationalizedArrayString;
+  viewWork?: InternationalizedArrayString;
+  gotProject?: InternationalizedArrayString;
+  code?: InternationalizedArrayString;
+  live?: InternationalizedArrayString;
+  liveDemo?: InternationalizedArrayString;
+  viewCode?: InternationalizedArrayString;
+  livePreview?: InternationalizedArrayString;
+  openFullscreen?: InternationalizedArrayString;
+  allWork?: InternationalizedArrayString;
+  backToWork?: InternationalizedArrayString;
+  nextProject?: InternationalizedArrayString;
+  gallery?: InternationalizedArrayString;
+  requestWalkthrough?: InternationalizedArrayString;
+  caseProblem?: InternationalizedArrayString;
+  caseRole?: InternationalizedArrayString;
+  caseSolution?: InternationalizedArrayString;
+  caseOutcome?: InternationalizedArrayString;
+  footerNav?: InternationalizedArrayString;
+  footerElsewhere?: InternationalizedArrayString;
 };
 
 export type InternationalizedArrayTextValue = {
@@ -529,6 +554,7 @@ export type SITE_SETTINGS_QUERY_RESULT = {
     _type: 'image';
   };
   availabilityText?: InternationalizedArrayString;
+  location?: InternationalizedArrayString;
   metaTitle?: InternationalizedArrayString;
   metaDescription?: InternationalizedArrayText;
   ogImage?: {
@@ -548,6 +574,8 @@ export type SITE_SETTINGS_QUERY_RESULT = {
     _type: 'file';
   };
   cvLabel?: InternationalizedArrayString;
+  cvSummary?: InternationalizedArrayText;
+  cvEducation?: InternationalizedArrayText;
   navItems?: Array<{
     label?: InternationalizedArrayString;
     target?: string;
@@ -555,14 +583,26 @@ export type SITE_SETTINGS_QUERY_RESULT = {
   }>;
   footerTagline?: InternationalizedArrayText;
   copyright?: InternationalizedArrayString;
-  uiDownloadCv?: InternationalizedArrayString;
-  uiViewProject?: InternationalizedArrayString;
-  uiLiveDemo?: InternationalizedArrayString;
-  uiLivePreview?: InternationalizedArrayString;
-  uiBack?: InternationalizedArrayString;
-  uiNextProject?: InternationalizedArrayString;
-  uiViewWork?: InternationalizedArrayString;
-  uiGetInTouch?: InternationalizedArrayString;
+  getInTouch?: InternationalizedArrayString;
+  viewWork?: InternationalizedArrayString;
+  gotProject?: InternationalizedArrayString;
+  code?: InternationalizedArrayString;
+  live?: InternationalizedArrayString;
+  liveDemo?: InternationalizedArrayString;
+  viewCode?: InternationalizedArrayString;
+  livePreview?: InternationalizedArrayString;
+  openFullscreen?: InternationalizedArrayString;
+  allWork?: InternationalizedArrayString;
+  backToWork?: InternationalizedArrayString;
+  nextProject?: InternationalizedArrayString;
+  gallery?: InternationalizedArrayString;
+  requestWalkthrough?: InternationalizedArrayString;
+  caseProblem?: InternationalizedArrayString;
+  caseRole?: InternationalizedArrayString;
+  caseSolution?: InternationalizedArrayString;
+  caseOutcome?: InternationalizedArrayString;
+  footerNav?: InternationalizedArrayString;
+  footerElsewhere?: InternationalizedArrayString;
   cvUrl: string | null;
   logoUrl: string | null;
 } | null;
@@ -649,20 +689,30 @@ export type CONTACT_PAGE_QUERY_RESULT = {
   eyebrow?: InternationalizedArrayString;
   heading?: InternationalizedArrayString;
   pitch?: InternationalizedArrayText;
+  backLabel?: InternationalizedArrayString;
   subjects?: Array<{
     value?: string;
     label?: InternationalizedArrayString;
     _key: string;
   }>;
   nameLabel?: InternationalizedArrayString;
+  namePlaceholder?: InternationalizedArrayString;
+  nameError?: InternationalizedArrayString;
   emailLabel?: InternationalizedArrayString;
+  emailPlaceholder?: InternationalizedArrayString;
+  emailError?: InternationalizedArrayString;
   subjectLabel?: InternationalizedArrayString;
   messageLabel?: InternationalizedArrayString;
+  messagePlaceholder?: InternationalizedArrayString;
+  messageError?: InternationalizedArrayString;
+  requiredLabel?: InternationalizedArrayString;
   sendLabel?: InternationalizedArrayString;
   sendingLabel?: InternationalizedArrayString;
   successTitle?: InternationalizedArrayString;
   successBody?: InternationalizedArrayText;
-  errorBody?: InternationalizedArrayText;
+  errorInvalid?: InternationalizedArrayText;
+  errorConfig?: InternationalizedArrayText;
+  errorSend?: InternationalizedArrayText;
   methodsHeading?: InternationalizedArrayString;
   methodsNote?: InternationalizedArrayText;
 } | null;

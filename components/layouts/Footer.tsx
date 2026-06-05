@@ -1,5 +1,14 @@
 import Link from 'next/link';
 
+type NavLink = { id: string; label: string };
+
+const DEFAULT_LINKS: NavLink[] = [
+  { id: 'work', label: 'Work' },
+  { id: 'about', label: 'About' },
+  { id: 'experience', label: 'Experience' },
+  { id: 'contact', label: 'Contact' },
+];
+
 const Footer = ({
   locale,
   tagline = "Let's make the web a little better.",
@@ -9,6 +18,9 @@ const Footer = ({
   linkedin = 'https://linkedin.com',
   cvHref,
   cvLabel = 'Download CV',
+  links = DEFAULT_LINKS,
+  navHeading = 'Navigate',
+  elsewhereHeading = 'Elsewhere',
 }: {
   locale: string;
   tagline?: string;
@@ -18,8 +30,13 @@ const Footer = ({
   linkedin?: string;
   cvHref?: string;
   cvLabel?: string;
+  links?: NavLink[];
+  navHeading?: string;
+  elsewhereHeading?: string;
 }) => {
   const cv = cvHref ?? `/${locale}/cv`;
+  const hrefFor = (target: string) =>
+    target.startsWith('/') ? `/${locale}${target}` : `/${locale}#${target}`;
 
   return (
     <footer className="footer wrap">
@@ -28,14 +45,15 @@ const Footer = ({
           <p className="footer__big">{tagline}</p>
         </div>
         <div className="footer__col">
-          <h5>Navigate</h5>
-          <Link href={`/${locale}#work`}>Work</Link>
-          <Link href={`/${locale}#about`}>About</Link>
-          <Link href={`/${locale}#experience`}>Experience</Link>
-          <Link href={`/${locale}/contact`}>Contact</Link>
+          <h5>{navHeading}</h5>
+          {links.map((l) => (
+            <Link key={l.id} href={hrefFor(l.id)}>
+              {l.label}
+            </Link>
+          ))}
         </div>
         <div className="footer__col">
-          <h5>Elsewhere</h5>
+          <h5>{elsewhereHeading}</h5>
           <a href={github} target="_blank" rel="noopener">
             GitHub
           </a>
