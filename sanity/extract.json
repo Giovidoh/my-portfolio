@@ -2229,6 +2229,14 @@
         },
         "optional": true
       },
+      "builtWith": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "internationalizedArrayString"
+        },
+        "optional": true
+      },
       "requestWalkthrough": {
         "type": "objectAttribute",
         "value": {

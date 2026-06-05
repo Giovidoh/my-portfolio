@@ -374,6 +374,7 @@ export type SiteSettings = {
   backToWork?: InternationalizedArrayString;
   nextProject?: InternationalizedArrayString;
   gallery?: InternationalizedArrayString;
+  builtWith?: InternationalizedArrayString;
   requestWalkthrough?: InternationalizedArrayString;
   caseProblem?: InternationalizedArrayString;
   caseRole?: InternationalizedArrayString;
@@ -572,6 +573,7 @@ export type SITE_SETTINGS_QUERY_RESULT = {
   backToWork?: InternationalizedArrayString;
   nextProject?: InternationalizedArrayString;
   gallery?: InternationalizedArrayString;
+  builtWith?: InternationalizedArrayString;
   requestWalkthrough?: InternationalizedArrayString;
   caseProblem?: InternationalizedArrayString;
   caseRole?: InternationalizedArrayString;

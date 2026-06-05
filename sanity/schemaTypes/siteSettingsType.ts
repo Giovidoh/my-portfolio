@@ -110,6 +110,7 @@ export const siteSettingsType = defineType({
     i18nString('backToWork', 'Label · Back to all work', { group: 'labels' }),
     i18nString('nextProject', 'Label · Next project', { group: 'labels' }),
     i18nString('gallery', 'Label · Gallery', { group: 'labels' }),
+    i18nString('builtWith', 'Label · Built with (project stack)', { group: 'labels' }),
     i18nString('requestWalkthrough', 'Label · Request a walkthrough', { group: 'labels' }),
     i18nString('caseProblem', 'Label · Case · The problem', { group: 'labels' }),
     i18nString('caseRole', 'Label · Case · My role', { group: 'labels' }),

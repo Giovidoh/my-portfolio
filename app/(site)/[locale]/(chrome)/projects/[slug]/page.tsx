@@ -53,6 +53,7 @@ export default async function ProjectPage({
     nextProject: t(settings?.nextProject, 'Next project'),
     backToWork: t(settings?.backToWork, 'Back to all work'),
     gallery: t(settings?.gallery, 'Gallery'),
+    builtWith: t(settings?.builtWith, 'Built with'),
     requestWalkthrough: t(settings?.requestWalkthrough, 'Request a walkthrough'),
     problem: t(settings?.caseProblem, 'The problem'),
     role: t(settings?.caseRole, 'My role'),
@@ -124,6 +125,10 @@ export default async function ProjectPage({
     .map((g) => ({ url: imageBuilder(g)?.width(1400).url(), alt: g.alt ?? '' }))
     .filter((g): g is { url: string; alt: string } => Boolean(g.url));
 
+  const projectSkills = (sanity?.skills ?? []).filter(
+    (s): s is { _id: string; title: string } => Boolean(s?.title),
+  );
+
   // Next project
   const nextSanity = sanity && projects.length > 1 ? projects[(idx + 1) % projects.length] : null;
   const fallbackNext = nextProject(slug);
@@ -176,6 +181,20 @@ export default async function ProjectPage({
             <dd>{facts.team}</dd>
           </div>
         </dl>
+        {projectSkills.length > 0 && (
+          <div style={{ marginTop: 'var(--s-5)' }}>
+            <span className="eyebrow" style={{ display: 'inline-block' }}>
+              {lbl.builtWith}
+            </span>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 10 }}>
+              {projectSkills.map((s) => (
+                <span className="tag" key={s._id}>
+                  {s.title}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
         <div className="case-actions">
           <a className="btn btn-primary" href={githubLink} target="_blank" rel="noopener">
             <GithubMark />
