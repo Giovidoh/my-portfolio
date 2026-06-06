@@ -12,10 +12,10 @@ export type ContactInput = {
 export type ContactResult = { ok: true } | { ok: false; error: 'invalid' | 'config' | 'send' };
 
 const SUBJECT_LABELS: Record<string, string> = {
-  role: 'A full-time role',
+  role: 'A job opportunity',
   freelance: 'A freelance project',
-  collab: 'A collaboration',
-  hello: 'Just saying hi',
+  collaboration: 'A collaboration',
+  other: 'Something else',
 };
 
 const isEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
