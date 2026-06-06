@@ -1272,6 +1272,13 @@
                   "name": "internationalizedArrayString"
                 },
                 "optional": true
+              },
+              "_type": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string",
+                  "value": "subjectOption"
+                }
               }
             },
             "rest": {

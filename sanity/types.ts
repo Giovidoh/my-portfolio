@@ -232,6 +232,7 @@ export type ContactPage = {
   subjects?: Array<{
     value?: string;
     label?: InternationalizedArrayString;
+    _type: 'subjectOption';
     _key: string;
   }>;
   nameLabel?: InternationalizedArrayString;
@@ -700,6 +701,7 @@ export type CONTACT_PAGE_QUERY_RESULT = {
   subjects?: Array<{
     value?: string;
     label?: InternationalizedArrayString;
+    _type: 'subjectOption';
     _key: string;
   }>;
   nameLabel?: InternationalizedArrayString;

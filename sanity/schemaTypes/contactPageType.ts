@@ -30,6 +30,7 @@ export const contactPageType = defineType({
       of: [
         defineArrayMember({
           type: 'object',
+          name: 'subjectOption',
           fields: [
             defineField({ name: 'value', title: 'Value', type: 'string', validation: (r) => r.required() }),
             i18nString('label', 'Label'),
