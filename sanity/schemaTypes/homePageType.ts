@@ -26,6 +26,7 @@ export const homePageType = defineType({
     { name: 'hero', title: 'Hero', default: true },
     { name: 'about', title: 'About' },
     { name: 'sections', title: 'Section headings' },
+    { name: 'visibility', title: 'Visibility' },
   ],
   fields: [
     // HERO
@@ -141,6 +142,39 @@ export const homePageType = defineType({
         i18nString('heading', 'Heading'),
         i18nText('body', 'Body'),
         i18nString('ctaLabel', 'Button label'),
+      ],
+    }),
+
+    // SECTION VISIBILITY
+    defineField({
+      name: 'sectionsVisibility',
+      title: 'Section visibility',
+      type: 'object',
+      group: 'visibility',
+      description: 'Toggle whole home-page sections on or off. Off = the section is removed from the page.',
+      options: { columns: 2 },
+      fields: [
+        defineField({ name: 'work', title: 'Show Work', type: 'boolean', initialValue: true }),
+        defineField({ name: 'about', title: 'Show About', type: 'boolean', initialValue: true }),
+        defineField({ name: 'skills', title: 'Show Skills', type: 'boolean', initialValue: true }),
+        defineField({
+          name: 'experience',
+          title: 'Show Experience',
+          type: 'boolean',
+          initialValue: true,
+        }),
+        defineField({
+          name: 'testimonials',
+          title: 'Show Testimonials',
+          type: 'boolean',
+          initialValue: true,
+        }),
+        defineField({
+          name: 'contact',
+          title: 'Show Contact band',
+          type: 'boolean',
+          initialValue: true,
+        }),
       ],
     }),
   ],

@@ -67,21 +67,31 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   const ctaEmail = settings?.email ?? 'hello@cgidoh.dev';
 
   const L = { locale, defaultLocale };
+  // Section visibility — undefined defaults to shown; only an explicit `false` hides.
+  const vis = home?.sectionsVisibility;
 
   return (
     <main id="top">
       <Hero {...L} data={home?.hero} />
-      <Work {...L} heading={home?.workSection} projects={projects} labels={workLabels} />
-      <About {...L} data={home?.about} />
-      <Skills
-        heading={skillsHeading}
-        allLabel={allLabel}
-        categories={skillCats}
-        skills={skillItems}
-      />
-      <Experience {...L} heading={home?.experienceSection} items={experiences} />
-      <Testimonials {...L} heading={home?.testimonialsSection} items={testimonials} />
-      <ContactCta {...L} data={home?.contactCta} email={ctaEmail} />
+      {vis?.work !== false && (
+        <Work {...L} heading={home?.workSection} projects={projects} labels={workLabels} />
+      )}
+      {vis?.about !== false && <About {...L} data={home?.about} />}
+      {vis?.skills !== false && (
+        <Skills
+          heading={skillsHeading}
+          allLabel={allLabel}
+          categories={skillCats}
+          skills={skillItems}
+        />
+      )}
+      {vis?.experience !== false && (
+        <Experience {...L} heading={home?.experienceSection} items={experiences} />
+      )}
+      {vis?.testimonials !== false && (
+        <Testimonials {...L} heading={home?.testimonialsSection} items={testimonials} />
+      )}
+      {vis?.contact !== false && <ContactCta {...L} data={home?.contactCta} email={ctaEmail} />}
     </main>
   );
 }

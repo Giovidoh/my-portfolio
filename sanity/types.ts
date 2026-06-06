@@ -320,6 +320,14 @@ export type HomePage = {
     body?: InternationalizedArrayText;
     ctaLabel?: InternationalizedArrayString;
   };
+  sectionsVisibility?: {
+    work?: boolean;
+    about?: boolean;
+    skills?: boolean;
+    experience?: boolean;
+    testimonials?: boolean;
+    contact?: boolean;
+  };
 };
 
 export type SanityFileAssetReference = {
@@ -665,6 +673,14 @@ export type HOME_QUERY_RESULT = {
     heading?: InternationalizedArrayString;
     body?: InternationalizedArrayText;
     ctaLabel?: InternationalizedArrayString;
+  };
+  sectionsVisibility?: {
+    work?: boolean;
+    about?: boolean;
+    skills?: boolean;
+    experience?: boolean;
+    testimonials?: boolean;
+    contact?: boolean;
   };
 } | null;
 
