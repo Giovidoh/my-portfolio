@@ -6,20 +6,24 @@ thème via `data-theme` · Lenis (smooth scroll) + Motion · light primaire + da
 Réf. design extraite : `%TEMP%\portfolio-design\my-portfolio\` (README, chats, project/).
 
 ## In Progress
-- [~] **Reste mineur (optionnel)** : poignée de libellés purement structurels encore en dur — titres de sections du CV (Profile/Experience/Skills/Education), marque du logo (CG/IDOH), quelques textes d'état de la page projet (« A look inside », « Not public — by request », « Open »…), crédit police du footer. Tout le **contenu + labels d'UI + SEO + CV + images** est éditable/traduisible.
+- [~] **Bootstrap contenu Studio (FR+EN, publié)** — faits : Site Settings, Skills, Experience, CV, Home Page, **Contact Page**. **Reste : Testimonials** (section MASQUÉE via le toggle Visibility jusqu'à de vrais témoignages). Projets = ⏸️ **REPORTÉS** (cf. To Do #4). Uploads côté user : photo hero, PDF du CV, image OG.
+- Nouvelles features de contrôle Studio : `showInSkills` (masquer un skill de la grille), `sectionsVisibility` (afficher/cacher chaque section home + auto-masquage des liens nav/footer/CTA hero pointant vers une section cachée).
+- [~] Reste mineur (optionnel) : quelques textes d'état de la page projet encore en dur (« A look inside », « Not public — by request », « Open »…), crédit police du footer. (Logo CG/IDOH = désormais éditable via `logoMark`/`logoText`.)
 
 ## To Do
-- [ ] **Nettoyer les docs legacy** : supprimer (ou repeupler) les anciens docs `project`/`skill`/`profile` pré-refonte (champs en chaînes simples) — sinon la grille Work lit ces vieux docs (titre seul) au lieu du placeholder
-- [ ] **Bootstrap contenu (ordre à suivre)** — remplir **EN + FR** par champ et **PUBLIER** chaque doc (un brouillon non publié est invisible côté public) :
-  - [x] 0. Langues (`en`, `fr`) — choisir la langue par défaut (`fr` actuellement ; mettre `en` si fallback anglais souhaité)
-  - [ ] 1. **Site Settings** (marque, email, social, CV PDF + label, SEO meta/OG, nav items, footer, labels UI)
-  - [ ] 2. **Skill Categories** (Frontend / Backend / Tooling…) — requis avant les skills
-  - [ ] 3. **Skills** (nom, **assigner une catégorie**, `simpleIconSlug` ou icône, ordre)
-  - [ ] 4. **Projects** (slug, featured, badge, description, tags, case study, facts, métriques, galerie, `liveLink`+`allowEmbed`, refs skills)
-  - [ ] 5. **Experience** (rôles, `order` décroissant)
-  - [ ] 6. **Testimonials**
-  - [ ] 7. **Home Page** (hero : statut/nom/rôle/lede/CTA/photo ; about + what-I-do ; titres de sections)
-  - [ ] 8. **Contact Page** (libellés form, placeholders, sujets, messages succès/erreur)
+- [~] **Nettoyer les docs legacy** : 3 skills fantômes du 02/06 (sans catégorie) supprimés + Pomogenius re-pointé sur les nouveaux skills (06/06). Reste à vérifier d'éventuels vieux docs `profile`.
+- [ ] **Bootstrap contenu (ordre à suivre)** — remplir **EN + FR** + **PUBLIER** chaque doc :
+  - [x] 0. Langues (`en`, `fr`)
+  - [x] 1. **Site Settings** (marque, logo éditable `logoMark`/`logoText`, email, social, CV label, SEO, nav, footer, ~20 labels UI) — FR/EN
+  - [x] 2. **Skill Categories** (Frontend / Backend / Database / Web3 / DevOps / Tools)
+  - [x] 3. **Skills** (17 ; icônes light/dark cohérentes, Foundry = mask local ; interrupteur `showInSkills`)
+  - [ ] 4. **Projects** — ⏸️ **REPORTÉ** (reprendre : Pomogenius + **étude de cas IA** ; case study problème→rôle→solution→résultat, galerie, refs skills)
+  - [x] 5. **Experience** (Alimha Tech Lead + Freelance) — alimente aussi les jobs du CV
+  - [~] 6. **Testimonials** — section MASQUÉE (toggle Visibility) jusqu'à de vrais témoignages
+  - [x] 7. **Home Page** (hero complet, about + ¶ IA, 5 titres de sections, bande Contact)
+  - [x] +. **CV** : Profile summary + Education & languages (FR/EN) ; topbar localisée + sélecteur de langue
+  - [x] 8. **Contact Page** (intro, formulaire, placeholders, 4 sujets, messages succès/erreur) — FR/EN
+- [ ] **Uploads côté user** (le MCP ne fait pas d'upload d'asset) : photo hero (Home → Hero → Portrait), PDF du CV (Site Settings → CV), image OG (Site Settings → SEO)
 
 ## Done
 - [x] Phases 1-4 antérieures (déblocage, migration Next 16.2 / React 19.2, qualité, dark mode + theme provider)
