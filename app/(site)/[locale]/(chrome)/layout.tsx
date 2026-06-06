@@ -3,7 +3,7 @@ import Footer from '@/components/layouts/Footer';
 import SmoothScroll from '@/components/providers/SmoothScroll';
 import ScrollReveals from '@/components/motion/ScrollReveals';
 import { getDefaultLocale, getLanguages, makeT } from '@/lib/i18n';
-import { getSiteSettings } from '@/lib/content';
+import { getSiteSettings, getHome } from '@/lib/content';
 
 const DEFAULT_LINKS = [
   { id: 'work', label: 'Work' },
@@ -20,17 +20,26 @@ export default async function ChromeLayout({
   params: Promise<{ locale: string }>;
 }>) {
   const { locale } = await params;
-  const [defaultLocale, languages, settings] = await Promise.all([
+  const [defaultLocale, languages, settings, home] = await Promise.all([
     getDefaultLocale(),
     getLanguages(),
     getSiteSettings(),
+    getHome(),
   ]);
   const tt = makeT(locale, defaultLocale);
+
+  // Drop nav/footer links that point to a hidden home-page section, so a hidden
+  // section never leaves a dead anchor behind.
+  const vis = home?.sectionsVisibility;
+  const SECTION_KEYS = ['work', 'about', 'skills', 'experience', 'testimonials', 'contact'] as const;
+  const hiddenSections = new Set<string>(SECTION_KEYS.filter((k) => vis?.[k] === false));
 
   const navFromSanity = (settings?.navItems ?? [])
     .map((n) => ({ id: n.target ?? '', label: tt(n.label, n.target ?? '') }))
     .filter((l) => l.id);
-  const links = navFromSanity.length ? navFromSanity : DEFAULT_LINKS;
+  const links = (navFromSanity.length ? navFromSanity : DEFAULT_LINKS).filter(
+    (l) => !hiddenSections.has(l.id),
+  );
 
   const cvHref = settings?.cvUrl ?? `/${locale}/cv`;
   const cvLabel = tt(settings?.cvLabel, 'Download CV');
