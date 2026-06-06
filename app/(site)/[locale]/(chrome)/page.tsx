@@ -69,10 +69,12 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   const L = { locale, defaultLocale };
   // Section visibility — undefined defaults to shown; only an explicit `false` hides.
   const vis = home?.sectionsVisibility;
+  const SECTION_KEYS = ['work', 'about', 'skills', 'experience', 'testimonials', 'contact'] as const;
+  const hiddenSections = SECTION_KEYS.filter((k) => vis?.[k] === false);
 
   return (
     <main id="top">
-      <Hero {...L} data={home?.hero} />
+      <Hero {...L} data={home?.hero} hiddenSections={hiddenSections} />
       {vis?.work !== false && (
         <Work {...L} heading={home?.workSection} projects={projects} labels={workLabels} />
       )}

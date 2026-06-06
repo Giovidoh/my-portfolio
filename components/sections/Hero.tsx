@@ -19,14 +19,22 @@ const Hero = ({
   locale,
   defaultLocale,
   data,
+  hiddenSections = [],
 }: {
   locale: string;
   defaultLocale: string;
   data?: HeroData;
+  hiddenSections?: string[];
 }) => {
   const t = makeT(locale, defaultLocale);
   const marquee = data?.marquee?.length ? data.marquee : FALLBACK_MARQUEE;
   const photoUrl = imageBuilder(data?.photo)?.width(900).height(1100).fit('crop').url();
+
+  // A CTA pointing to an anchor (#work) of a hidden section would be a dead link.
+  const isDeadAnchor = (href?: string | null) =>
+    !!href && href.startsWith('#') && hiddenSections.includes(href.slice(1));
+  const primaryHref = data?.ctaPrimary?.href ?? '/contact';
+  const secondaryHref = data?.ctaSecondary?.href ?? '#work';
 
   return (
     <header className="hero wrap">
@@ -56,13 +64,17 @@ const Hero = ({
             )}
           </p>
           <div className="hero__cta">
-            <ButtonLink variant="primary" href={withLocale(locale, data?.ctaPrimary?.href ?? '/contact')}>
-              {t(data?.ctaPrimary?.label, 'Get in touch')}
-              <ArrowRight className="arr" />
-            </ButtonLink>
-            <ButtonLink variant="ghost" href={withLocale(locale, data?.ctaSecondary?.href ?? '#work')}>
-              {t(data?.ctaSecondary?.label, 'View work')}
-            </ButtonLink>
+            {!isDeadAnchor(primaryHref) && (
+              <ButtonLink variant="primary" href={withLocale(locale, primaryHref)}>
+                {t(data?.ctaPrimary?.label, 'Get in touch')}
+                <ArrowRight className="arr" />
+              </ButtonLink>
+            )}
+            {!isDeadAnchor(secondaryHref) && (
+              <ButtonLink variant="ghost" href={withLocale(locale, secondaryHref)}>
+                {t(data?.ctaSecondary?.label, 'View work')}
+              </ButtonLink>
+            )}
           </div>
         </div>
         <div className="hero__photo">
