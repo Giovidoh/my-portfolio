@@ -346,7 +346,7 @@ export default async function ProjectPage({
       </section>
 
       {/* CASE BODY */}
-      <section className="section wrap" style={{ paddingTop: 0 }}>
+      {/* <section className="section wrap" style={{ paddingTop: 0 }}>
         <div className="case-body">
           <nav className="case-body__rail" aria-label="Case study sections">
             {rail.map((r, i) => (
@@ -472,10 +472,10 @@ export default async function ProjectPage({
             )}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* GALLERY */}
-      <section className="section wrap" style={{ paddingTop: 0 }}>
+      {/* <section className="section wrap" style={{ paddingTop: 0 }}>
         <div className="section-head reveal">
           <div>
             <span className="eyebrow">{lbl.gallery}</span>
@@ -519,10 +519,10 @@ export default async function ProjectPage({
             </>
           )}
         </div>
-      </section>
+      </section> */}
 
       {/* NEXT PROJECT */}
-      <section className="wrap">
+      {/* <section className="wrap">
         <div className="next-proj">
           <div>
             <span className="eyebrow">{lbl.nextProject}</span>
@@ -535,7 +535,7 @@ export default async function ProjectPage({
             {lbl.backToWork}
           </ButtonLink>
         </div>
-      </section>
+      </section> */}
     </main>
   );
 }
