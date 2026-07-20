@@ -6,6 +6,7 @@ import ThemeProvider from '@/components/theme/ThemeProvider';
 import { SanityLive } from '@/sanity/lib/live';
 import { getDefaultLocale, getLocales, pickLocale } from '@/lib/i18n';
 import { getSiteSettings } from '@/lib/content';
+import { Analytics } from '@vercel/analytics/next';
 
 export async function generateMetadata({
   params,
@@ -56,6 +57,7 @@ export default async function LocaleLayout({
           {children}
           <SanityLive />
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
