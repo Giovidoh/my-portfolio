@@ -7,6 +7,7 @@ import { SanityLive } from '@/sanity/lib/live';
 import { getDefaultLocale, getLocales, pickLocale } from '@/lib/i18n';
 import { getSiteSettings } from '@/lib/content';
 import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export async function generateMetadata({
   params,
@@ -58,6 +59,7 @@ export default async function LocaleLayout({
           <SanityLive />
         </ThemeProvider>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
