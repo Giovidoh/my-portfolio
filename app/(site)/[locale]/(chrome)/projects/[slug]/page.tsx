@@ -61,13 +61,6 @@ export default async function ProjectPage({
     solution: t(settings?.caseSolution, 'The solution'),
     outcome: t(settings?.caseOutcome, 'The outcome'),
   };
-  const rail = [
-    { id: 'problem', label: lbl.problem },
-    { id: 'role', label: lbl.role },
-    { id: 'solution', label: lbl.solution },
-    { id: 'outcome', label: lbl.outcome },
-  ];
-
   const idx = projects.findIndex((p) => p.slug?.current === slug);
   const sanity = idx >= 0 ? projects[idx] : null;
   const placeholder = getPlaceholder(slug);
@@ -123,6 +116,14 @@ export default async function ProjectPage({
       label: pickLocale(m.label, locale, defaultLocale) ?? '',
     }))
     .filter((m) => m.value || m.label);
+
+  // Side rail lists only the sections actually filled in the Studio.
+  const rail = [
+    { id: 'problem', label: lbl.problem, text: problem },
+    { id: 'role', label: lbl.role, text: role },
+    { id: 'solution', label: lbl.solution, text: solution },
+    { id: 'outcome', label: lbl.outcome, text: outcome },
+  ].filter((r) => Boolean(r.text));
 
   const galleryImages = (sanity?.gallery ?? [])
     .map((g) => ({ url: imageBuilder(g)?.width(1400).url(), alt: g.alt ?? '' }))
@@ -203,10 +204,17 @@ export default async function ProjectPage({
             <GithubMark />
             {lbl.viewCode}
           </a>
-          <a className="btn btn-ghost" href="#live">
-            <LiveIcon />
-            {lbl.livePreview}
-          </a>
+          {liveLink ? (
+            <a className="btn btn-ghost" href={liveLink} target="_blank" rel="noopener">
+              <LiveIcon />
+              {lbl.livePreview}
+            </a>
+          ) : (
+            <span className="btn btn-ghost" aria-disabled="true">
+              <LiveIcon />
+              {lbl.livePreview}
+            </span>
+          )}
         </div>
       </header>
 
@@ -345,37 +353,43 @@ export default async function ProjectPage({
         )}
       </section>
 
-      {/* CASE BODY */}
-      {/* <section className="section wrap" style={{ paddingTop: 0 }}>
-        <div className="case-body">
-          <nav className="case-body__rail" aria-label="Case study sections">
-            {rail.map((r, i) => (
-              <a href={`#${r.id}`} key={r.id}>
-                {String(i + 1).padStart(2, '0')} — {r.label}
-              </a>
-            ))}
-          </nav>
-          <div className="case-prose">
-            {hasCaseStudy ? (
-              <>
+      {/* CASE BODY — only the sections actually filled in the Studio are rendered */}
+      {hasCaseStudy && (
+        <section className="section wrap" style={{ paddingTop: 0 }}>
+          <div className="case-body">
+            <nav className="case-body__rail" aria-label="Case study sections">
+              {rail.map((r, i) => (
+                <a href={`#${r.id}`} key={r.id}>
+                  {String(i + 1).padStart(2, '0')} — {r.label}
+                </a>
+              ))}
+            </nav>
+            <div className="case-prose">
+              {problem && (
                 <div className="case-block reveal" id="problem">
                   <span className="eyebrow">{lbl.problem}</span>
                   {paras(problem).map((p, i) => (
                     <p key={i}>{p}</p>
                   ))}
                 </div>
+              )}
+              {role && (
                 <div className="case-block reveal" id="role">
                   <span className="eyebrow">{lbl.role}</span>
                   {paras(role).map((p, i) => (
                     <p key={i}>{p}</p>
                   ))}
                 </div>
+              )}
+              {solution && (
                 <div className="case-block reveal" id="solution">
                   <span className="eyebrow">{lbl.solution}</span>
                   {paras(solution).map((p, i) => (
                     <p key={i}>{p}</p>
                   ))}
                 </div>
+              )}
+              {outcome && (
                 <div className="case-block reveal" id="outcome">
                   <span className="eyebrow">{lbl.outcome}</span>
                   {paras(outcome).map((p, i) => (
@@ -394,99 +408,26 @@ export default async function ProjectPage({
                     </div>
                   )}
                 </div>
-              </>
-            ) : (
-              <>
-                <div className="case-block reveal" id="problem">
-                  <span className="eyebrow">{lbl.problem}</span>
-                  <h2>Seven products, seven slightly different buttons.</h2>
-                  <p>
-                    The company had grown to seven web products, each maintained by a different
-                    squad. Brand drift was everywhere — three blues that were almost the same, four
-                    button heights, inconsistent focus states. Every rebrand was a multi-month,
-                    all-hands ordeal.
-                  </p>
-                  <p>
-                    Leadership wanted one source of truth that designers and engineers could both
-                    trust — without slowing any team down.
-                  </p>
-                </div>
-                <div className="case-block reveal" id="role">
-                  <span className="eyebrow">{lbl.role}</span>
-                  <h2>Lead full-stack — from schema to docs.</h2>
-                  <p>
-                    I owned the platform end-to-end with a designer and a second engineer. My remit:
-                  </p>
-                  <ul>
-                    <li>Architect the token data model and versioning (Postgres + Prisma).</li>
-                    <li>Build the editor UI and live documentation site (Next.js, tRPC).</li>
-                    <li>
-                      Ship the theming engine that pushes tokens to consuming apps at build time.
-                    </li>
-                    <li>Define the contribution workflow so squads could add components safely.</li>
-                  </ul>
-                </div>
-                <div className="case-block reveal" id="solution">
-                  <span className="eyebrow">{lbl.solution}</span>
-                  <h2>Tokens as data, docs as a product.</h2>
-                  <p>
-                    Every token, component and theme became a versioned database record with a clean
-                    API. The docs site renders live, interactive examples straight from that data —
-                    never a screenshot, never out of date.
-                  </p>
-                  <p>
-                    Accessibility was non-negotiable: contrast is validated automatically on every
-                    token change, and a component can&apos;t ship without passing focus and keyboard
-                    checks.
-                  </p>
-                </div>
-                <div className="case-block reveal" id="outcome">
-                  <span className="eyebrow">{lbl.outcome}</span>
-                  <h2>One system, adopted fast.</h2>
-                  <p>
-                    Within two quarters, adoption crossed 90% and the next rebrand shipped in days
-                    instead of months.
-                  </p>
-                  <div className="metrics">
-                    <div className="metric">
-                      <div className="big">
-                        <em>94%</em>
-                      </div>
-                      <div className="lbl">component adoption across products</div>
-                    </div>
-                    <div className="metric">
-                      <div className="big">
-                        −40<em>%</em>
-                      </div>
-                      <div className="lbl">faster page loads after consolidation</div>
-                    </div>
-                    <div className="metric">
-                      <div className="big">
-                        3<em>d</em>
-                      </div>
-                      <div className="lbl">to ship a full rebrand, down from months</div>
-                    </div>
-                  </div>
-                </div>
-              </>
-            )}
+              )}
+            </div>
           </div>
-        </div>
-      </section> */}
+        </section>
+      )}
 
       {/* GALLERY */}
-      {/* <section className="section wrap" style={{ paddingTop: 0 }}>
-        <div className="section-head reveal">
-          <div>
-            <span className="eyebrow">{lbl.gallery}</span>
-            <h2 style={{ marginTop: 'var(--s-4)', fontSize: 'clamp(28px,3.4vw,40px)' }}>
-              A look inside
-            </h2>
+      {/* GALLERY — only when the project actually has images */}
+      {galleryImages.length > 0 && (
+        <section className="section wrap" style={{ paddingTop: 0 }}>
+          <div className="section-head reveal">
+            <div>
+              <span className="eyebrow">{lbl.gallery}</span>
+              <h2 style={{ marginTop: 'var(--s-4)', fontSize: 'clamp(28px,3.4vw,40px)' }}>
+                A look inside
+              </h2>
+            </div>
           </div>
-        </div>
-        <div className="gallery reveal" data-d="1">
-          {galleryImages.length ? (
-            galleryImages.map((g, i) => (
+          <div className="gallery reveal" data-d="1">
+            {galleryImages.map((g, i) => (
               <div className={`ph ${GALLERY_TILES[i % GALLERY_TILES.length]}`} key={i}>
                 <img
                   src={g.url}
@@ -501,41 +442,28 @@ export default async function ProjectPage({
                   }}
                 />
               </div>
-            ))
-          ) : (
-            <>
-              <div className="ph wide">
-                <span className="ph__label">screen — main</span>
-              </div>
-              <div className="ph tall">
-                <span className="ph__label">mobile</span>
-              </div>
-              <div className="ph half">
-                <span className="ph__label">detail</span>
-              </div>
-              <div className="ph half">
-                <span className="ph__label">flow</span>
-              </div>
-            </>
-          )}
-        </div>
-      </section> */}
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* NEXT PROJECT */}
-      {/* <section className="wrap">
-        <div className="next-proj">
-          <div>
-            <span className="eyebrow">{lbl.nextProject}</span>
-            <Link href={`/${locale}/projects/${next.slug}`} style={{ marginTop: 10 }}>
-              <span className="lab">{next.title}</span>
-              <ArrowRight width={46} height={46} />
-            </Link>
+      {next.slug && (
+        <section className="wrap">
+          <div className="next-proj">
+            <div>
+              <span className="eyebrow">{lbl.nextProject}</span>
+              <Link href={`/${locale}/projects/${next.slug}`} style={{ marginTop: 10 }}>
+                <span className="lab">{next.title}</span>
+                <ArrowRight width={46} height={46} />
+              </Link>
+            </div>
+            <ButtonLink variant="ghost" href={`/${locale}#work`}>
+              {lbl.backToWork}
+            </ButtonLink>
           </div>
-          <ButtonLink variant="ghost" href={`/${locale}#work`}>
-            {lbl.backToWork}
-          </ButtonLink>
-        </div>
-      </section> */}
+        </section>
+      )}
     </main>
   );
 }

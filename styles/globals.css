@@ -339,6 +339,12 @@ h4 {
   padding: 9px 15px;
   font-size: 13.5px;
 }
+/* Disabled state (e.g. case-page live button with no live link) */
+.btn[aria-disabled='true'] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
 
 /* =================================================================
    NAV
