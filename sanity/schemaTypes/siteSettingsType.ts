@@ -27,20 +27,6 @@ export const siteSettingsType = defineType({
       group: 'general',
       description: 'Full name — used as the printable CV header and in SEO.',
     }),
-    defineField({
-      name: 'logoMark',
-      title: 'Logo · badge',
-      type: 'string',
-      group: 'general',
-      description: 'Short badge shown in the navbar and CV-page logo, e.g. "CG". Defaults to "CG".',
-    }),
-    defineField({
-      name: 'logoText',
-      title: 'Logo · wordmark',
-      type: 'string',
-      group: 'general',
-      description: 'Wordmark next to the badge, e.g. "IDOH" (a dot is added automatically). Defaults to "IDOH".',
-    }),
     i18nString('location', 'Location', { group: 'general', description: 'e.g. "Paris, France".' }),
 
     // SEO

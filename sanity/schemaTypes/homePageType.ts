@@ -39,6 +39,9 @@ export const homePageType = defineType({
         i18nString('status', 'Status pill'),
         defineField({ name: 'firstName', title: 'First name', type: 'string' }),
         defineField({ name: 'lastName', title: 'Last name', type: 'string' }),
+        i18nString('alias', 'Alias line', {
+          description: 'Shown under the name, e.g. "aka ICGreborns".',
+        }),
         i18nString('roleLabel', 'Role (emphasised)'),
         defineField({
           name: 'roleStack',

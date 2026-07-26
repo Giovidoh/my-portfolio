@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import ThemeToggle from '@/components/theme/ThemeToggle';
 import PrintButton from '@/components/cv/PrintButton';
 import LanguageSwitcher from '@/components/layouts/LanguageSwitcher';
+import IcgMark from '@/components/ui/IcgMark';
 import { getDefaultLocale, getLanguages, makeT, pickLocale } from '@/lib/i18n';
 import { getHome, getSiteSettings, getExperiences, getSkills } from '@/lib/content';
 
@@ -81,8 +82,6 @@ export default async function CvPage({ params }: { params: Promise<{ locale: str
   const t = makeT(locale, defaultLocale);
 
   const name = settings?.brandName ?? 'Cir-Giovanni Idoh';
-  const logoMark = settings?.logoMark ?? 'CG';
-  const logoText = settings?.logoText ?? 'IDOH';
   const role = `${t(home?.hero?.roleLabel, 'Full-Stack Web Developer')} · ${
     home?.hero?.roleStack ?? 'React · Next.js · Node · TypeScript'
   }`;
@@ -113,12 +112,9 @@ export default async function CvPage({ params }: { params: Promise<{ locale: str
       <style dangerouslySetInnerHTML={{ __html: css }} />
       <nav className="nav scrolled noprint" aria-label="Primary">
         <div className="nav__inner">
-          <Link className="logo" href={`/${locale}`} aria-label="Home">
-            <span className="logo__mark">{logoMark}</span>
-            <span>
-              {logoText}
-              <span className="accent-dot">.</span>
-            </span>
+          <Link className="logo" href={`/${locale}`} aria-label="ICGreborns — home">
+            <IcgMark className="logo__mark" />
+            <span>reborns</span>
           </Link>
           <div className="nav__tools">
             <LanguageSwitcher languages={languages} locale={locale} />

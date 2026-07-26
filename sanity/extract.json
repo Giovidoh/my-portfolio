@@ -1504,6 +1504,14 @@
               },
               "optional": true
             },
+            "alias": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "internationalizedArrayString"
+              },
+              "optional": true
+            },
             "roleLabel": {
               "type": "objectAttribute",
               "value": {
@@ -1998,20 +2006,6 @@
         }
       },
       "brandName": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": true
-      },
-      "logoMark": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": true
-      },
-      "logoText": {
         "type": "objectAttribute",
         "value": {
           "type": "string"

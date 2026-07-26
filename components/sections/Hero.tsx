@@ -52,6 +52,7 @@ const Hero = ({
               <span>{data?.lastName ?? 'IDOH'}</span>
             </span>
           </h1>
+          <p className="hero__alias">{t(data?.alias, 'aka ICGreborns')}</p>
           <p className="hero__role">
             <b>{t(data?.roleLabel, 'Full-Stack Web Developer')}</b>
             {' — '}
