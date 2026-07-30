@@ -101,8 +101,10 @@ const Hero = ({
         </div>
       </div>
       <div className="hero__marquee" aria-hidden="true">
+        {/* 4 copies: the -50% loop needs 2 full sets, each wider than the
+            container, or the tail leaves a void before snapping back. */}
         <div className="track">
-          {[...marquee, ...marquee].map((s, i) => (
+          {[...marquee, ...marquee, ...marquee, ...marquee].map((s, i) => (
             <span key={i}>{s}</span>
           ))}
         </div>
