@@ -10,6 +10,7 @@ import {
   SKILLS_QUERY,
   SKILL_CATEGORIES_QUERY,
   EXPERIENCES_QUERY,
+  EDUCATION_QUERY,
   TESTIMONIALS_QUERY,
 } from '@/sanity/lib/queries';
 
@@ -42,3 +43,4 @@ export const getSkillCategories = async () =>
 
 export const getExperiences = async () => (await sanityFetch({ query: EXPERIENCES_QUERY })).data;
 export const getTestimonials = async () => (await sanityFetch({ query: TESTIMONIALS_QUERY })).data;
+export const getEducation = async () => (await sanityFetch({ query: EDUCATION_QUERY })).data;

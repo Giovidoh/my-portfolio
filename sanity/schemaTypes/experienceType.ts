@@ -20,7 +20,12 @@ export const experienceType = defineType({
     i18nString('period', 'Period & location', {
       description: 'e.g. "2023 — Present · Paris".',
     }),
-    i18nText('description', 'Description'),
+    i18nText('description', 'Description', {
+      description: 'Prose summary — used on the home page timeline.',
+    }),
+    i18nText('highlights', 'Highlights (CV)', {
+      description: 'One bullet per line. Rendered as the bullet list on the printable CV.',
+    }),
     defineField({
       name: 'stack',
       title: 'Stack',

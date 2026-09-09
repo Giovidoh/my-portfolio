@@ -83,6 +83,18 @@ export type InternationalizedArrayText = Array<
   } & InternationalizedArrayTextValue
 >;
 
+export type Education = {
+  _id: string;
+  _type: 'education';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  degree?: InternationalizedArrayString;
+  school?: InternationalizedArrayString;
+  period?: string;
+  order?: number;
+};
+
 export type Experience = {
   _id: string;
   _type: 'experience';
@@ -94,6 +106,7 @@ export type Experience = {
   role?: InternationalizedArrayString;
   period?: InternationalizedArrayString;
   description?: InternationalizedArrayText;
+  highlights?: InternationalizedArrayText;
   stack?: Array<string>;
   order?: number;
 };
@@ -357,6 +370,8 @@ export type SiteSettings = {
     _type: 'image';
   };
   email?: string;
+  phone?: string;
+  websiteUrl?: string;
   githubUrl?: string;
   linkedinUrl?: string;
   cvFile?: {
@@ -368,7 +383,25 @@ export type SiteSettings = {
   cvPrint?: InternationalizedArrayString;
   cvBack?: InternationalizedArrayString;
   cvSummary?: InternationalizedArrayText;
-  cvEducation?: InternationalizedArrayText;
+  cvSpokenLanguages?: InternationalizedArrayText;
+  cvSoftSkills?: InternationalizedArrayText;
+  cvProjects?: Array<{
+    title?: InternationalizedArrayString;
+    meta?: string;
+    highlights?: InternationalizedArrayText;
+    linkLabel?: InternationalizedArrayString;
+    linkUrl?: string;
+    _type: 'cvProject';
+    _key: string;
+  }>;
+  cvContactLabel?: InternationalizedArrayString;
+  cvSkillsLabel?: InternationalizedArrayString;
+  cvSpokenLanguagesLabel?: InternationalizedArrayString;
+  cvSoftSkillsLabel?: InternationalizedArrayString;
+  cvProfileLabel?: InternationalizedArrayString;
+  cvExperienceLabel?: InternationalizedArrayString;
+  cvProjectsLabel?: InternationalizedArrayString;
+  cvEducationLabel?: InternationalizedArrayString;
   navItems?: Array<{
     label?: InternationalizedArrayString;
     target?: string;
@@ -516,6 +549,7 @@ export type AllSanitySchemaTypes =
   | SanityImageHotspot
   | InternationalizedArrayString
   | InternationalizedArrayText
+  | Education
   | Experience
   | SkillCategoryReference
   | Skill
@@ -559,6 +593,8 @@ export type SITE_SETTINGS_QUERY_RESULT = {
     _type: 'image';
   };
   email?: string;
+  phone?: string;
+  websiteUrl?: string;
   githubUrl?: string;
   linkedinUrl?: string;
   cvFile?: {
@@ -570,7 +606,25 @@ export type SITE_SETTINGS_QUERY_RESULT = {
   cvPrint?: InternationalizedArrayString;
   cvBack?: InternationalizedArrayString;
   cvSummary?: InternationalizedArrayText;
-  cvEducation?: InternationalizedArrayText;
+  cvSpokenLanguages?: InternationalizedArrayText;
+  cvSoftSkills?: InternationalizedArrayText;
+  cvProjects?: Array<{
+    title?: InternationalizedArrayString;
+    meta?: string;
+    highlights?: InternationalizedArrayText;
+    linkLabel?: InternationalizedArrayString;
+    linkUrl?: string;
+    _type: 'cvProject';
+    _key: string;
+  }>;
+  cvContactLabel?: InternationalizedArrayString;
+  cvSkillsLabel?: InternationalizedArrayString;
+  cvSpokenLanguagesLabel?: InternationalizedArrayString;
+  cvSoftSkillsLabel?: InternationalizedArrayString;
+  cvProfileLabel?: InternationalizedArrayString;
+  cvExperienceLabel?: InternationalizedArrayString;
+  cvProjectsLabel?: InternationalizedArrayString;
+  cvEducationLabel?: InternationalizedArrayString;
   navItems?: Array<{
     label?: InternationalizedArrayString;
     target?: string;
@@ -919,6 +973,7 @@ export type EXPERIENCES_QUERY_RESULT = Array<{
   role?: InternationalizedArrayString;
   period?: InternationalizedArrayString;
   description?: InternationalizedArrayText;
+  highlights?: InternationalizedArrayText;
   stack?: Array<string>;
   order?: number;
 }>;
@@ -946,6 +1001,21 @@ export type TESTIMONIALS_QUERY_RESULT = Array<{
   order?: number;
 }>;
 
+// Source: sanity/lib/queries.ts
+// Variable: EDUCATION_QUERY
+// Query: *[_type == "education"] | order(order asc)
+export type EDUCATION_QUERY_RESULT = Array<{
+  _id: string;
+  _type: 'education';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  degree?: InternationalizedArrayString;
+  school?: InternationalizedArrayString;
+  period?: string;
+  order?: number;
+}>;
+
 // Query TypeMap
 import '@sanity/client';
 declare module '@sanity/client' {
@@ -960,5 +1030,6 @@ declare module '@sanity/client' {
     '*[_type == "skillCategory"] | order(order asc)': SKILL_CATEGORIES_QUERY_RESULT;
     '*[_type == "experience"] | order(order asc)': EXPERIENCES_QUERY_RESULT;
     '*[_type == "testimonial"] | order(order asc)': TESTIMONIALS_QUERY_RESULT;
+    '*[_type == "education"] | order(order asc)': EDUCATION_QUERY_RESULT;
   }
 }

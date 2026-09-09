@@ -7,6 +7,7 @@ import { projectType } from './projectType'
 import { skillType } from './skillType'
 import { skillCategoryType } from './skillCategoryType'
 import { experienceType } from './experienceType'
+import { educationType } from './educationType'
 import { testimonialType } from './testimonialType'
 import { languageType } from './languageType'
 
@@ -21,6 +22,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     skillType,
     skillCategoryType,
     experienceType,
+    educationType,
     testimonialType,
     // System
     languageType,

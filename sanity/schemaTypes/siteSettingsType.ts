@@ -42,6 +42,20 @@ export const siteSettingsType = defineType({
 
     // Social
     defineField({ name: 'email', title: 'Email', type: 'string', group: 'social' }),
+    defineField({
+      name: 'phone',
+      title: 'Phone',
+      type: 'string',
+      group: 'social',
+      description: 'Shown on the printable CV only, e.g. "+228 70 88 10 15".',
+    }),
+    defineField({
+      name: 'websiteUrl',
+      title: 'Website URL',
+      type: 'url',
+      group: 'social',
+      description: 'Public portfolio address shown on the CV, e.g. "https://icg-reborns.com".',
+    }),
     defineField({ name: 'githubUrl', title: 'GitHub URL', type: 'url', group: 'social' }),
     defineField({ name: 'linkedinUrl', title: 'LinkedIn URL', type: 'url', group: 'social' }),
 
@@ -61,7 +75,55 @@ export const siteSettingsType = defineType({
       group: 'cv',
       description: 'Short blurb at the top of the printable /cv page.',
     }),
-    i18nText('cvEducation', 'CV · Education & languages', { group: 'cv' }),
+    i18nText('cvSpokenLanguages', 'CV · Spoken languages', {
+      group: 'cv',
+      description: 'One per line, e.g. "Français — langue maternelle".',
+    }),
+    i18nText('cvSoftSkills', 'CV · Soft skills', {
+      group: 'cv',
+      description: 'One per line, e.g. "Autonomie · Rigueur".',
+    }),
+    defineField({
+      name: 'cvProjects',
+      title: 'CV · Personal projects',
+      type: 'array',
+      group: 'cv',
+      description: 'Recent personal work highlighted on the CV, after the experience block.',
+      of: [
+        defineArrayMember({
+          type: 'object',
+          name: 'cvProject',
+          fields: [
+            i18nString('title', 'Title'),
+            defineField({
+              name: 'meta',
+              title: 'Stack / meta',
+              type: 'string',
+              description: 'e.g. "Foundry · OpenZeppelin · Chainlink" (not translated).',
+            }),
+            i18nText('highlights', 'Highlights', { description: 'One bullet per line.' }),
+            i18nString('linkLabel', 'Link label', { description: 'e.g. "Code".' }),
+            defineField({ name: 'linkUrl', title: 'Link URL', type: 'url' }),
+          ],
+          preview: {
+            select: { title: 'title', subtitle: 'meta' },
+            prepare: ({ title, subtitle }) => ({
+              title: title?.[0]?.value ?? 'Project',
+              subtitle,
+            }),
+          },
+        }),
+      ],
+    }),
+    // Section headings of the printable CV (translatable, each falls back to English).
+    i18nString('cvContactLabel', 'CV · Heading · Contact', { group: 'cv' }),
+    i18nString('cvSkillsLabel', 'CV · Heading · Skills', { group: 'cv' }),
+    i18nString('cvSpokenLanguagesLabel', 'CV · Heading · Languages', { group: 'cv' }),
+    i18nString('cvSoftSkillsLabel', 'CV · Heading · Soft skills', { group: 'cv' }),
+    i18nString('cvProfileLabel', 'CV · Heading · Profile', { group: 'cv' }),
+    i18nString('cvExperienceLabel', 'CV · Heading · Experience', { group: 'cv' }),
+    i18nString('cvProjectsLabel', 'CV · Heading · Personal projects', { group: 'cv' }),
+    i18nString('cvEducationLabel', 'CV · Heading · Education', { group: 'cv' }),
 
     // Navigation
     defineField({

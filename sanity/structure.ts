@@ -24,6 +24,7 @@ export const structure: StructureResolver = (S) =>
       S.documentTypeListItem('skill').title('Skills'),
       S.documentTypeListItem('skillCategory').title('Skill Categories'),
       S.documentTypeListItem('experience').title('Experience'),
+      S.documentTypeListItem('education').title('Education'),
       S.documentTypeListItem('testimonial').title('Testimonials'),
       S.divider(),
       S.documentTypeListItem('language').title('Languages'),

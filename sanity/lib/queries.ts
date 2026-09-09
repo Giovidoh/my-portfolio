@@ -45,3 +45,5 @@ export const SKILL_CATEGORIES_QUERY = defineQuery(`*[_type == "skillCategory"] |
 export const EXPERIENCES_QUERY = defineQuery(`*[_type == "experience"] | order(order asc)`);
 
 export const TESTIMONIALS_QUERY = defineQuery(`*[_type == "testimonial"] | order(order asc)`);
+
+export const EDUCATION_QUERY = defineQuery(`*[_type == "education"] | order(order asc)`);

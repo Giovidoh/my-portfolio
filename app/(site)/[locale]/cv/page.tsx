@@ -4,108 +4,141 @@ import ThemeToggle from '@/components/theme/ThemeToggle';
 import PrintButton from '@/components/cv/PrintButton';
 import LanguageSwitcher from '@/components/layouts/LanguageSwitcher';
 import IcgMark from '@/components/ui/IcgMark';
+import { imageBuilder } from '@/sanity/lib/image';
 import { getDefaultLocale, getLanguages, makeT, pickLocale } from '@/lib/i18n';
-import { getHome, getSiteSettings, getExperiences, getSkills } from '@/lib/content';
+import {
+  getHome,
+  getSiteSettings,
+  getExperiences,
+  getSkills,
+  getSkillCategories,
+  getEducation,
+} from '@/lib/content';
 
 export const metadata: Metadata = {
   title: 'CV · Cir-Giovanni IDOH',
   robots: { index: false },
 };
 
+// Two-column résumé: a dark rail (identity, contact, skills, languages, soft
+// skills) beside the narrative column (profile, experience, projects,
+// education) — the layout of the PDF, rebuilt with the site's own tokens so it
+// stays on brand in light, dark and print.
 const css = `
-.cv { max-width:820px; margin:0 auto; padding:clamp(32px,6vw,72px) var(--gutter) 80px; }
-.cv__head { display:flex; justify-content:space-between; align-items:flex-end; gap:24px; flex-wrap:wrap; padding-bottom:var(--s-5); border-bottom:2px solid var(--ink); }
-.cv__head h1 { font-size:clamp(36px,6vw,58px); font-weight:700; letter-spacing:-.03em; }
-.cv__head .role { font-family:var(--font-mono); color:var(--muted); margin-top:6px; }
-.cv__contact { font-family:var(--font-mono); font-size:13px; color:var(--ink-2); text-align:right; display:grid; gap:4px; }
-.cv section { padding-block:var(--s-6); border-bottom:1px solid var(--line); }
-.cv h2 { font-family:var(--font-mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent-ink); background:var(--accent); width:fit-content; padding:3px 9px; border-radius:5px; margin-bottom:var(--s-5); }
-.cv p { color:var(--ink-2); max-width:64ch; }
-.cv__job { display:grid; grid-template-columns:150px 1fr; gap:24px; padding-block:14px; }
-.cv__job .when { font-family:var(--font-mono); font-size:13px; color:var(--muted); }
-.cv__job h3 { font-size:19px; }
-.cv__job .co { color:var(--accent-ink); }
-.cv__job p { font-size:15px; margin-top:6px; }
-.cv__skills { display:flex; gap:8px; flex-wrap:wrap; }
-@media print { .noprint { display:none !important; } body { background:#fff; } .cv { padding-top:24px; } }
-@media (max-width:600px){ .cv__job { grid-template-columns:1fr; gap:4px; } }
+.cv { max-width:980px; margin:0 auto; padding:clamp(24px,4vw,48px) var(--gutter) 80px; }
+.cv__sheet { display:grid; grid-template-columns:290px 1fr; background:var(--surface); border:1px solid var(--line); border-radius:var(--r-md); overflow:hidden; box-shadow:var(--shadow-md); }
+
+.cv__rail { background:var(--cta-bg); color:var(--cta-fg); padding:var(--s-7) var(--s-6); }
+.cv__rail h1 { font-size:clamp(24px,3.2vw,30px); font-weight:700; letter-spacing:-.02em; line-height:1.15; text-transform:uppercase; }
+.cv__rail .role { font-family:var(--font-mono); font-size:13px; color:var(--accent); margin-top:10px; }
+.cv__rail h2 { font-family:var(--font-mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--accent); margin:var(--s-6) 0 var(--s-3); }
+.cv__rail ul { list-style:none; display:grid; gap:6px; }
+.cv__rail li, .cv__rail a { font-size:13px; color:rgba(246,244,236,.82); line-height:1.5; }
+.cv__rail a { text-decoration:underline; text-underline-offset:2px; overflow-wrap:anywhere; }
+.cv__rail a:hover { color:var(--accent); }
+.cv__catname { font-size:12px; font-weight:600; color:var(--cta-fg); margin:var(--s-4) 0 6px; }
+.cv__catname:first-of-type { margin-top:0; }
+.cv__stack { display:flex; flex-wrap:wrap; gap:6px 12px; }
+.cv__stack span { display:inline-flex; align-items:center; gap:6px; font-size:12.5px; color:rgba(246,244,236,.86); }
+.cv__stack img { width:14px; height:14px; object-fit:contain; }
+.cv__stack .mask { width:14px; height:14px; background:rgba(246,244,236,.86); mask-size:contain; mask-repeat:no-repeat; mask-position:center; -webkit-mask-size:contain; -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; }
+
+.cv__main { padding:var(--s-7) var(--s-6); }
+.cv__main section + section { margin-top:var(--s-6); }
+.cv__main h2 { font-family:var(--font-mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink); padding-bottom:6px; border-bottom:2px solid var(--accent); margin-bottom:var(--s-4); }
+.cv__main p { color:var(--ink-2); font-size:14px; line-height:1.6; white-space:pre-line; }
+.cv__entry + .cv__entry { margin-top:var(--s-5); }
+.cv__entry h3 { font-size:15px; font-weight:600; }
+.cv__entry h3 .co { color:var(--accent-ink); background:var(--accent); border-radius:4px; padding:0 5px; }
+.cv__entry .when { font-family:var(--font-mono); font-size:12px; color:var(--muted); margin-top:2px; }
+.cv__entry ul { list-style:disc; margin:8px 0 0 18px; display:grid; gap:5px; }
+.cv__entry li { font-size:13.5px; line-height:1.55; color:var(--ink-2); }
+.cv__entry .meta { font-family:var(--font-mono); font-size:12px; color:var(--muted); }
+.cv__entry .code { font-size:12.5px; margin-top:6px; display:inline-block; text-decoration:underline; text-underline-offset:2px; }
+.cv__edu { display:grid; gap:10px; }
+.cv__edu div { font-size:13.5px; color:var(--ink-2); }
+.cv__edu strong { color:var(--ink); font-weight:600; }
+
+@media (max-width:820px){ .cv__sheet { grid-template-columns:1fr; } }
+@media print {
+  .noprint { display:none !important; }
+  .cv { padding:0; max-width:none; }
+  .cv__sheet { border:none; border-radius:0; box-shadow:none; display:grid; grid-template-columns:270px 1fr; }
+  .cv__rail { background:#16233d !important; color:#fff !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .cv__main { padding:24px 28px; }
+  .cv__entry, .cv__edu div, section { break-inside:avoid; }
+}
 `;
 
 const strip = (u: string) => u.replace(/^https?:\/\//, '').replace(/\/$/, '');
+/** Multiline Sanity text → bullet list. Blank lines are dropped. */
+const lines = (v?: string | null): string[] =>
+  (v ?? '')
+    .split('\n')
+    .map((l) => l.replace(/^[-•*]\s*/, '').trim())
+    .filter(Boolean);
 
-const FALLBACK_JOBS = [
-  {
-    when: '2023 — Present · Paris',
-    role: 'Senior Full-Stack Developer',
-    company: 'Northwind Studio',
-    desc: 'Lead developer on a multi-tenant SaaS platform. Rebuilt the design system, cut page load by 40%, mentored two juniors.',
-  },
-  {
-    when: '2021 — 2023 · Lyon',
-    role: 'Full-Stack Developer',
-    company: 'Atelier Onze',
-    desc: 'Shipped client web apps end-to-end in a small agency — often the only engineer in the room.',
-  },
-  {
-    when: '2020 — 2021 · Remote',
-    role: 'Freelance Web Developer',
-    company: '',
-    desc: 'Marketing sites and small tools for founders and creators. Learned to scope, price and ship under real constraints.',
-  },
-];
-
-const FALLBACK_SKILLS = [
-  'React',
-  'Next.js',
-  'TypeScript',
-  'Node.js',
-  'PostgreSQL',
-  'Prisma',
-  'GraphQL',
-  'Tailwind',
-  'Docker',
-  'Vercel',
-  'Figma',
-  'Vitest',
-];
+const LOCAL_ICONS: Record<string, string> = { foundry: '/assets/icons/foundry.svg' };
 
 export default async function CvPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
-  const [defaultLocale, languages, home, settings, experiences, skills] = await Promise.all([
-    getDefaultLocale(),
-    getLanguages(),
-    getHome(),
-    getSiteSettings(),
-    getExperiences(),
-    getSkills(),
-  ]);
+  const [defaultLocale, languages, home, settings, experiences, skills, categories, education] =
+    await Promise.all([
+      getDefaultLocale(),
+      getLanguages(),
+      getHome(),
+      getSiteSettings(),
+      getExperiences(),
+      getSkills(),
+      getSkillCategories(),
+      getEducation(),
+    ]);
   const t = makeT(locale, defaultLocale);
+  const p = (f: Parameters<typeof t>[0]) => pickLocale<string>(f, locale, defaultLocale);
 
-  const name = settings?.brandName ?? 'Cir-Giovanni Idoh';
-  const role = `${t(home?.hero?.roleLabel, 'Full-Stack Web Developer')} · ${
-    home?.hero?.roleStack ?? 'React · Next.js · Node · TypeScript'
-  }`;
-  const email = settings?.email ?? 'hello@cgidoh.dev';
-  const github = settings?.githubUrl ? strip(settings.githubUrl) : 'github.com/cgidoh';
-  const location = t(settings?.location, 'Paris, France');
-  const summary = t(
-    settings?.cvSummary,
-    'Full-stack developer with 6+ years building fast, accessible web products end-to-end — from database schema to the last pixel. Equally comfortable owning architecture and obsessing over interface craft. Looking for a full-stack role on a small, ambitious team that ships often.',
-  );
-  const education = pickLocale(settings?.cvEducation, locale, defaultLocale);
+  const name = settings?.brandName ?? 'Cir-Giovanni IDOH';
+  const role = t(home?.hero?.roleLabel, 'Full-Stack Web Developer');
 
-  const jobs =
-    experiences && experiences.length
-      ? experiences.map((e) => ({
-          when: pickLocale(e.period, locale, defaultLocale) ?? '',
-          role: pickLocale(e.role, locale, defaultLocale) ?? '',
-          company: e.company ?? '',
-          desc: pickLocale(e.description, locale, defaultLocale) ?? '',
-        }))
-      : FALLBACK_JOBS;
+  const contact = [
+    settings?.phone ? { text: settings.phone, href: `tel:${settings.phone.replace(/\s/g, '')}` } : null,
+    settings?.email ? { text: settings.email, href: `mailto:${settings.email}` } : null,
+    { text: t(settings?.location, 'Lomé, Togo'), href: null },
+    settings?.githubUrl ? { text: strip(settings.githubUrl), href: settings.githubUrl } : null,
+    settings?.websiteUrl ? { text: strip(settings.websiteUrl), href: settings.websiteUrl } : null,
+    settings?.linkedinUrl ? { text: strip(settings.linkedinUrl), href: settings.linkedinUrl } : null,
+  ].filter((c): c is { text: string; href: string | null } => Boolean(c?.text));
 
-  const skillNames =
-    skills && skills.length ? skills.map((s) => s.title ?? '').filter(Boolean) : FALLBACK_SKILLS;
+  // Skills grouped by category, in category order — categories with no skill
+  // are dropped so the rail never shows an empty heading.
+  const skillGroups = (categories ?? [])
+    .map((c) => ({
+      key: c.key ?? '',
+      label: p(c.title) ?? c.key ?? '',
+      items: (skills ?? []).filter((s) => s.category?.key === c.key),
+    }))
+    .filter((g) => g.items.length > 0);
+
+  const jobs = (experiences ?? []).map((e) => ({
+    id: e._id,
+    role: p(e.role) ?? '',
+    company: e.company ?? '',
+    when: p(e.period) ?? '',
+    bullets: lines(p(e.highlights)) ,
+    desc: p(e.description) ?? '',
+  }));
+
+  const cvProjects = (settings?.cvProjects ?? []).map((pr) => ({
+    key: pr._key,
+    title: p(pr.title) ?? '',
+    meta: pr.meta ?? '',
+    bullets: lines(p(pr.highlights)),
+    linkLabel: p(pr.linkLabel) ?? 'Code',
+    linkUrl: pr.linkUrl ?? '',
+  }));
+
+  const spoken = lines(t(settings?.cvSpokenLanguages, ''));
+  const soft = lines(t(settings?.cvSoftSkills, ''));
+  const summary = t(settings?.cvSummary, '');
 
   return (
     <>
@@ -129,66 +162,171 @@ export default async function CvPage({ params }: { params: Promise<{ locale: str
       <div className="subnav-pad noprint" />
 
       <main className="cv">
-        <header className="cv__head">
-          <div>
+        <article className="cv__sheet">
+          <aside className="cv__rail">
             <h1>{name}</h1>
             <div className="role">{role}</div>
+
+            <h2>{t(settings?.cvContactLabel, 'Contact')}</h2>
+            <ul>
+              {contact.map((c) => (
+                <li key={c.text}>
+                  {c.href ? (
+                    <a href={c.href} rel="noreferrer">
+                      {c.text}
+                    </a>
+                  ) : (
+                    c.text
+                  )}
+                </li>
+              ))}
+            </ul>
+
+            {skillGroups.length > 0 && (
+              <>
+                <h2>{t(settings?.cvSkillsLabel, 'Skills')}</h2>
+                {skillGroups.map((g) => (
+                  <div key={g.key}>
+                    <div className="cv__catname">{g.label}</div>
+                    <div className="cv__stack">
+                      {g.items.map((s) => {
+                        const url =
+                          imageBuilder(s.iconDark)?.width(48).height(48).fit('max').url() ??
+                          imageBuilder(s.icon)?.width(48).height(48).fit('max').url();
+                        const local = s.simpleIconSlug ? LOCAL_ICONS[s.simpleIconSlug] : undefined;
+                        return (
+                          <span key={s._id}>
+                            {url ? (
+                              <img src={url} alt="" />
+                            ) : local ? (
+                              <span
+                                className="mask"
+                                aria-hidden="true"
+                                style={{ maskImage: `url(${local})`, WebkitMaskImage: `url(${local})` }}
+                              />
+                            ) : s.simpleIconSlug ? (
+                              <img
+                                src={`https://cdn.simpleicons.org/${s.simpleIconSlug}/f6f4ec`}
+                                alt=""
+                              />
+                            ) : null}
+                            {s.title}
+                          </span>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ))}
+              </>
+            )}
+
+            {spoken.length > 0 && (
+              <>
+                <h2>{t(settings?.cvSpokenLanguagesLabel, 'Languages')}</h2>
+                <ul>
+                  {spoken.map((l) => (
+                    <li key={l}>{l}</li>
+                  ))}
+                </ul>
+              </>
+            )}
+
+            {soft.length > 0 && (
+              <>
+                <h2>{t(settings?.cvSoftSkillsLabel, 'Soft skills')}</h2>
+                <ul>
+                  {soft.map((l) => (
+                    <li key={l}>{l}</li>
+                  ))}
+                </ul>
+              </>
+            )}
+          </aside>
+
+          <div className="cv__main">
+            {summary && (
+              <section>
+                <h2>{t(settings?.cvProfileLabel, 'Profile')}</h2>
+                <p>{summary}</p>
+              </section>
+            )}
+
+            {jobs.length > 0 && (
+              <section>
+                <h2>{t(settings?.cvExperienceLabel, 'Experience')}</h2>
+                {jobs.map((j) => (
+                  <div className="cv__entry" key={j.id}>
+                    <h3>
+                      {j.role}
+                      {j.company ? (
+                        <>
+                          {' — '}
+                          <span className="co">{j.company}</span>
+                        </>
+                      ) : null}
+                    </h3>
+                    {j.when && <div className="when">{j.when}</div>}
+                    {j.bullets.length > 0 ? (
+                      <ul>
+                        {j.bullets.map((b) => (
+                          <li key={b}>{b}</li>
+                        ))}
+                      </ul>
+                    ) : (
+                      j.desc && <p style={{ marginTop: 8 }}>{j.desc}</p>
+                    )}
+                  </div>
+                ))}
+              </section>
+            )}
+
+            {cvProjects.length > 0 && (
+              <section>
+                <h2>{t(settings?.cvProjectsLabel, 'Recent personal project')}</h2>
+                {cvProjects.map((pr) => (
+                  <div className="cv__entry" key={pr.key}>
+                    <h3>
+                      {pr.title}
+                      {pr.meta ? (
+                        <>
+                          {'  '}
+                          <span className="meta">{pr.meta}</span>
+                        </>
+                      ) : null}
+                    </h3>
+                    {pr.bullets.length > 0 && (
+                      <ul>
+                        {pr.bullets.map((b) => (
+                          <li key={b}>{b}</li>
+                        ))}
+                      </ul>
+                    )}
+                    {pr.linkUrl && (
+                      <a className="code" href={pr.linkUrl} target="_blank" rel="noreferrer">
+                        {pr.linkLabel} : {strip(pr.linkUrl)}
+                      </a>
+                    )}
+                  </div>
+                ))}
+              </section>
+            )}
+
+            {(education ?? []).length > 0 && (
+              <section>
+                <h2>{t(settings?.cvEducationLabel, 'Education')}</h2>
+                <div className="cv__edu">
+                  {(education ?? []).map((e) => (
+                    <div key={e._id}>
+                      <strong>{p(e.degree)}</strong>
+                      {p(e.school) ? ` — ${p(e.school)}` : ''}
+                      {e.period ? `  ·  ${e.period}` : ''}
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
           </div>
-          <div className="cv__contact">
-            <span>{email}</span>
-            <span>{github}</span>
-            <span>{location}</span>
-          </div>
-        </header>
-
-        <section>
-          <h2>Profile</h2>
-          <p>{summary}</p>
-        </section>
-
-        <section>
-          <h2>Experience</h2>
-          {jobs.map((j, i) => (
-            <div className="cv__job" key={i}>
-              <div className="when">{j.when}</div>
-              <div>
-                <h3>
-                  {j.role}
-                  {j.company ? (
-                    <>
-                      {' · '}
-                      <span className="co">{j.company}</span>
-                    </>
-                  ) : null}
-                </h3>
-                <p>{j.desc}</p>
-              </div>
-            </div>
-          ))}
-        </section>
-
-        <section>
-          <h2>Skills</h2>
-          <div className="cv__skills">
-            {skillNames.map((s) => (
-              <span className="tag" key={s}>
-                {s}
-              </span>
-            ))}
-          </div>
-        </section>
-
-        <section style={{ border: 'none' }}>
-          <h2>Education &amp; languages</h2>
-          {education ? (
-            <p>{education}</p>
-          ) : (
-            <p>
-              <strong>B.Sc. Computer Science</strong> — Université de Paris, 2019. &nbsp;·&nbsp;
-              French (native), English (fluent).
-            </p>
-          )}
-        </section>
+        </article>
       </main>
     </>
   );
