@@ -1976,6 +1976,31 @@
         },
         "optional": true
       },
+      "certificationsSection": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "eyebrow": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "internationalizedArrayString"
+              },
+              "optional": true
+            },
+            "heading": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "internationalizedArrayString"
+              },
+              "optional": true
+            }
+          }
+        },
+        "optional": true
+      },
       "testimonialsSection": {
         "type": "objectAttribute",
         "value": {
@@ -2069,6 +2094,13 @@
               "optional": true
             },
             "experience": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "boolean"
+              },
+              "optional": true
+            },
+            "certifications": {
               "type": "objectAttribute",
               "value": {
                 "type": "boolean"
@@ -2484,14 +2516,6 @@
         },
         "optional": true
       },
-      "cvCertificationsLabel": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "internationalizedArrayString"
-        },
-        "optional": true
-      },
       "navItems": {
         "type": "objectAttribute",
         "value": {
@@ -2642,6 +2666,14 @@
         "optional": true
       },
       "gallery": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "internationalizedArrayString"
+        },
+        "optional": true
+      },
+      "viewCredential": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",

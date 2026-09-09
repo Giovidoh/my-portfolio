@@ -339,6 +339,10 @@ export type HomePage = {
     eyebrow?: InternationalizedArrayString;
     heading?: InternationalizedArrayString;
   };
+  certificationsSection?: {
+    eyebrow?: InternationalizedArrayString;
+    heading?: InternationalizedArrayString;
+  };
   testimonialsSection?: {
     eyebrow?: InternationalizedArrayString;
     heading?: InternationalizedArrayString;
@@ -354,6 +358,7 @@ export type HomePage = {
     about?: boolean;
     skills?: boolean;
     experience?: boolean;
+    certifications?: boolean;
     testimonials?: boolean;
     contact?: boolean;
   };
@@ -416,7 +421,6 @@ export type SiteSettings = {
   cvExperienceLabel?: InternationalizedArrayString;
   cvProjectsLabel?: InternationalizedArrayString;
   cvEducationLabel?: InternationalizedArrayString;
-  cvCertificationsLabel?: InternationalizedArrayString;
   navItems?: Array<{
     label?: InternationalizedArrayString;
     target?: string;
@@ -437,6 +441,7 @@ export type SiteSettings = {
   backToWork?: InternationalizedArrayString;
   nextProject?: InternationalizedArrayString;
   gallery?: InternationalizedArrayString;
+  viewCredential?: InternationalizedArrayString;
   builtWith?: InternationalizedArrayString;
   requestWalkthrough?: InternationalizedArrayString;
   caseProblem?: InternationalizedArrayString;
@@ -641,7 +646,6 @@ export type SITE_SETTINGS_QUERY_RESULT = {
   cvExperienceLabel?: InternationalizedArrayString;
   cvProjectsLabel?: InternationalizedArrayString;
   cvEducationLabel?: InternationalizedArrayString;
-  cvCertificationsLabel?: InternationalizedArrayString;
   navItems?: Array<{
     label?: InternationalizedArrayString;
     target?: string;
@@ -662,6 +666,7 @@ export type SITE_SETTINGS_QUERY_RESULT = {
   backToWork?: InternationalizedArrayString;
   nextProject?: InternationalizedArrayString;
   gallery?: InternationalizedArrayString;
+  viewCredential?: InternationalizedArrayString;
   builtWith?: InternationalizedArrayString;
   requestWalkthrough?: InternationalizedArrayString;
   caseProblem?: InternationalizedArrayString;
@@ -734,6 +739,10 @@ export type HOME_QUERY_RESULT = {
     eyebrow?: InternationalizedArrayString;
     heading?: InternationalizedArrayString;
   };
+  certificationsSection?: {
+    eyebrow?: InternationalizedArrayString;
+    heading?: InternationalizedArrayString;
+  };
   testimonialsSection?: {
     eyebrow?: InternationalizedArrayString;
     heading?: InternationalizedArrayString;
@@ -749,6 +758,7 @@ export type HOME_QUERY_RESULT = {
     about?: boolean;
     skills?: boolean;
     experience?: boolean;
+    certifications?: boolean;
     testimonials?: boolean;
     contact?: boolean;
   };

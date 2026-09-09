@@ -124,7 +124,6 @@ export const siteSettingsType = defineType({
     i18nString('cvExperienceLabel', 'CV · Heading · Experience', { group: 'cv' }),
     i18nString('cvProjectsLabel', 'CV · Heading · Personal projects', { group: 'cv' }),
     i18nString('cvEducationLabel', 'CV · Heading · Education', { group: 'cv' }),
-    i18nString('cvCertificationsLabel', 'CV · Heading · Courses & certifications', { group: 'cv' }),
 
     // Navigation
     defineField({
@@ -176,6 +175,7 @@ export const siteSettingsType = defineType({
     i18nString('backToWork', 'Label · Back to all work', { group: 'labels' }),
     i18nString('nextProject', 'Label · Next project', { group: 'labels' }),
     i18nString('gallery', 'Label · Gallery', { group: 'labels' }),
+    i18nString('viewCredential', 'Label · View credential', { group: 'labels' }),
     i18nString('builtWith', 'Label · Built with (project stack)', { group: 'labels' }),
     i18nString('requestWalkthrough', 'Label · Request a walkthrough', { group: 'labels' }),
     i18nString('caseProblem', 'Label · Case · The problem', { group: 'labels' }),

@@ -1236,6 +1236,71 @@ h4 {
 }
 
 /* =================================================================
+   COURSES & CERTIFICATIONS
+   ================================================================= */
+.certs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px, 2vw, 24px);
+}
+.cert {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: var(--s-6);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  transition:
+    transform 0.4s var(--ease),
+    box-shadow 0.4s;
+}
+.cert:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+.cert__when {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.cert__title {
+  font-family: var(--font-display);
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+.cert__issuer {
+  font-size: 15px;
+  color: var(--ink-2);
+}
+.cert__id {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--faint);
+  overflow-wrap: anywhere;
+}
+.cert__link {
+  margin-top: auto;
+  padding-top: var(--s-3);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink);
+  border-bottom: 1px solid var(--accent);
+  transition: color 0.3s;
+}
+.cert__link:hover {
+  color: var(--accent-ink);
+}
+
+/* =================================================================
    TESTIMONIALS
    ================================================================= */
 .quotes {
@@ -1405,6 +1470,9 @@ h4 {
     grid-template-columns: 1fr;
   }
   .quotes {
+    grid-template-columns: 1fr;
+  }
+  .certs {
     grid-template-columns: 1fr;
   }
 }

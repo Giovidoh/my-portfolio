@@ -3,6 +3,7 @@ import Work from '@/components/sections/Work';
 import About from '@/components/sections/About';
 import Skills from '@/components/sections/Skills';
 import Experience from '@/components/sections/Experience';
+import Certifications from '@/components/sections/Certifications';
 import Testimonials from '@/components/sections/Testimonials';
 import ContactCta from '@/components/sections/ContactCta';
 import { getDefaultLocale, pickLocale } from '@/lib/i18n';
@@ -14,22 +15,33 @@ import {
   getSkills,
   getSkillCategories,
   getExperiences,
+  getCertifications,
   getTestimonials,
 } from '@/lib/content';
 
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
-  const [defaultLocale, home, settings, projects, skills, categories, experiences, testimonials] =
-    await Promise.all([
-      getDefaultLocale(),
-      getHome(),
-      getSiteSettings(),
-      getProjects(),
-      getSkills(),
-      getSkillCategories(),
-      getExperiences(),
-      getTestimonials(),
-    ]);
+  const [
+    defaultLocale,
+    home,
+    settings,
+    projects,
+    skills,
+    categories,
+    experiences,
+    certifications,
+    testimonials,
+  ] = await Promise.all([
+    getDefaultLocale(),
+    getHome(),
+    getSiteSettings(),
+    getProjects(),
+    getSkills(),
+    getSkillCategories(),
+    getExperiences(),
+    getCertifications(),
+    getTestimonials(),
+  ]);
 
   // Skills is a client component — resolve its data to plain props server-side.
   const skillCats =
@@ -69,7 +81,15 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   const L = { locale, defaultLocale };
   // Section visibility — undefined defaults to shown; only an explicit `false` hides.
   const vis = home?.sectionsVisibility;
-  const SECTION_KEYS = ['work', 'about', 'skills', 'experience', 'testimonials', 'contact'] as const;
+  const SECTION_KEYS = [
+    'work',
+    'about',
+    'skills',
+    'experience',
+    'certifications',
+    'testimonials',
+    'contact',
+  ] as const;
   const hiddenSections = SECTION_KEYS.filter((k) => vis?.[k] === false);
 
   return (
@@ -89,6 +109,14 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       )}
       {vis?.experience !== false && (
         <Experience {...L} heading={home?.experienceSection} items={experiences} />
+      )}
+      {vis?.certifications !== false && (
+        <Certifications
+          {...L}
+          heading={home?.certificationsSection}
+          items={certifications}
+          viewLabel={pickLocale(settings?.viewCredential, locale, defaultLocale)}
+        />
       )}
       {vis?.testimonials !== false && (
         <Testimonials {...L} heading={home?.testimonialsSection} items={testimonials} />
