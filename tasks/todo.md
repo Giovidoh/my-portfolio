@@ -26,6 +26,7 @@ Réf. design extraite : `%TEMP%\portfolio-design\my-portfolio\` (README, chats, 
 - [ ] **Uploads côté user** (le MCP ne fait pas d'upload d'asset) : photo hero (Home → Hero → Portrait), PDF du CV (Site Settings → CV), image OG (Site Settings → SEO)
 
 ## Done
+- [x] **CV `/[locale]/cv` refondu au format du PDF de référence** (2026-09-09) : feuille 2 colonnes (rail sombre : contact, compétences par catégorie, langues, savoir-être / colonne principale : profil, expérience à puces, projet personnel, formation), styles print. Schéma étendu (`experience.highlights`, type `education`, `siteSettings` : `phone`, `websiteUrl`, `cvSpokenLanguages`, `cvSoftSkills`, `cvProjects`, intitulés de sections ; `cvEducation` texte libre supprimé au profit des docs `education`). Contenu FR/EN publié : Alimha scindé en Tech Lead + Développeur Frontend, 3 formations, projet Solidity. extract/typegen/build/lint OK. Commit `79fbbba`.
 - [x] Phases 1-4 antérieures (déblocage, migration Next 16.2 / React 19.2, qualité, dark mode + theme provider)
 - [x] Audit + direction design + prompt Claude Design + lecture du handoff
 - [x] **R1 — Fondation** : fonts `next/font`, tokens `globals.css`, thème `data-theme`, Lenis (`SmoothScroll`), reveals (`ScrollReveals`)
