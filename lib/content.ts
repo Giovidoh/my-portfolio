@@ -4,6 +4,7 @@ import {
   HOME_QUERY,
   SITE_SETTINGS_QUERY,
   CONTACT_PAGE_QUERY,
+  LEARNING_PAGE_QUERY,
   PROJECTS_QUERY,
   PROJECT_QUERY,
   PROJECT_SLUGS_QUERY,
@@ -12,6 +13,8 @@ import {
   EXPERIENCES_QUERY,
   EDUCATION_QUERY,
   CERTIFICATIONS_QUERY,
+  OPEN_SOURCE_QUERY,
+  VIDEO_RESOURCES_QUERY,
   TESTIMONIALS_QUERY,
 } from '@/sanity/lib/queries';
 
@@ -47,3 +50,7 @@ export const getTestimonials = async () => (await sanityFetch({ query: TESTIMONI
 export const getEducation = async () => (await sanityFetch({ query: EDUCATION_QUERY })).data;
 export const getCertifications = async () =>
   (await sanityFetch({ query: CERTIFICATIONS_QUERY })).data;
+export const getLearningPage = async () => (await sanityFetch({ query: LEARNING_PAGE_QUERY })).data;
+export const getOpenSource = async () => (await sanityFetch({ query: OPEN_SOURCE_QUERY })).data;
+export const getVideoResources = async () =>
+  (await sanityFetch({ query: VIDEO_RESOURCES_QUERY })).data;

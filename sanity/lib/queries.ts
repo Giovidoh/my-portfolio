@@ -13,6 +13,7 @@ export const SITE_SETTINGS_QUERY = defineQuery(`*[_type == "siteSettings"][0]{
 }`);
 export const HOME_QUERY = defineQuery(`*[_type == "homePage"][0]`);
 export const CONTACT_PAGE_QUERY = defineQuery(`*[_type == "contactPage"][0]`);
+export const LEARNING_PAGE_QUERY = defineQuery(`*[_type == "learningPage"][0]`);
 
 // --- Collections ---
 export const PROJECTS_QUERY = defineQuery(
@@ -49,3 +50,7 @@ export const TESTIMONIALS_QUERY = defineQuery(`*[_type == "testimonial"] | order
 export const EDUCATION_QUERY = defineQuery(`*[_type == "education"] | order(order asc)`);
 
 export const CERTIFICATIONS_QUERY = defineQuery(`*[_type == "certification"] | order(order asc)`);
+
+export const OPEN_SOURCE_QUERY = defineQuery(`*[_type == "openSource"] | order(order asc)`);
+
+export const VIDEO_RESOURCES_QUERY = defineQuery(`*[_type == "videoResource"] | order(order asc)`);

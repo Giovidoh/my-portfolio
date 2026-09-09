@@ -83,6 +83,36 @@ export type InternationalizedArrayText = Array<
   } & InternationalizedArrayTextValue
 >;
 
+export type VideoResource = {
+  _id: string;
+  _type: 'videoResource';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  author?: string;
+  platform?: string;
+  duration?: string;
+  takeaway?: InternationalizedArrayText;
+  url?: string;
+  order?: number;
+};
+
+export type OpenSource = {
+  _id: string;
+  _type: 'openSource';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  project?: string;
+  repo?: string;
+  role?: InternationalizedArrayString;
+  description?: InternationalizedArrayText;
+  stack?: Array<string>;
+  url?: string;
+  order?: number;
+};
+
 export type Certification = {
   _id: string;
   _type: 'certification';
@@ -246,6 +276,40 @@ export type Slug = {
   source?: string;
 };
 
+export type LearningPage = {
+  _id: string;
+  _type: 'learningPage';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  navLabel?: InternationalizedArrayString;
+  eyebrow?: InternationalizedArrayString;
+  heading?: InternationalizedArrayString;
+  pitch?: InternationalizedArrayText;
+  backLabel?: InternationalizedArrayString;
+  openSourceLinkLabel?: InternationalizedArrayString;
+  videosLinkLabel?: InternationalizedArrayString;
+  metaTitle?: InternationalizedArrayString;
+  metaDescription?: InternationalizedArrayText;
+  certificationsSection?: {
+    eyebrow?: InternationalizedArrayString;
+    heading?: InternationalizedArrayString;
+  };
+  openSourceSection?: {
+    eyebrow?: InternationalizedArrayString;
+    heading?: InternationalizedArrayString;
+  };
+  videosSection?: {
+    eyebrow?: InternationalizedArrayString;
+    heading?: InternationalizedArrayString;
+  };
+  sectionsVisibility?: {
+    certifications?: boolean;
+    openSource?: boolean;
+    videos?: boolean;
+  };
+};
+
 export type ContactPage = {
   _id: string;
   _type: 'contactPage';
@@ -339,10 +403,6 @@ export type HomePage = {
     eyebrow?: InternationalizedArrayString;
     heading?: InternationalizedArrayString;
   };
-  certificationsSection?: {
-    eyebrow?: InternationalizedArrayString;
-    heading?: InternationalizedArrayString;
-  };
   testimonialsSection?: {
     eyebrow?: InternationalizedArrayString;
     heading?: InternationalizedArrayString;
@@ -358,7 +418,6 @@ export type HomePage = {
     about?: boolean;
     skills?: boolean;
     experience?: boolean;
-    certifications?: boolean;
     testimonials?: boolean;
     contact?: boolean;
   };
@@ -569,6 +628,8 @@ export type AllSanitySchemaTypes =
   | SanityImageHotspot
   | InternationalizedArrayString
   | InternationalizedArrayText
+  | VideoResource
+  | OpenSource
   | Certification
   | Education
   | Experience
@@ -578,6 +639,7 @@ export type AllSanitySchemaTypes =
   | SkillReference
   | Project
   | Slug
+  | LearningPage
   | ContactPage
   | HomePage
   | SanityFileAssetReference
@@ -739,10 +801,6 @@ export type HOME_QUERY_RESULT = {
     eyebrow?: InternationalizedArrayString;
     heading?: InternationalizedArrayString;
   };
-  certificationsSection?: {
-    eyebrow?: InternationalizedArrayString;
-    heading?: InternationalizedArrayString;
-  };
   testimonialsSection?: {
     eyebrow?: InternationalizedArrayString;
     heading?: InternationalizedArrayString;
@@ -758,7 +816,6 @@ export type HOME_QUERY_RESULT = {
     about?: boolean;
     skills?: boolean;
     experience?: boolean;
-    certifications?: boolean;
     testimonials?: boolean;
     contact?: boolean;
   };
@@ -801,6 +858,43 @@ export type CONTACT_PAGE_QUERY_RESULT = {
   errorInvalid?: InternationalizedArrayText;
   errorConfig?: InternationalizedArrayText;
   errorSend?: InternationalizedArrayText;
+} | null;
+
+// Source: sanity/lib/queries.ts
+// Variable: LEARNING_PAGE_QUERY
+// Query: *[_type == "learningPage"][0]
+export type LEARNING_PAGE_QUERY_RESULT = {
+  _id: string;
+  _type: 'learningPage';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  navLabel?: InternationalizedArrayString;
+  eyebrow?: InternationalizedArrayString;
+  heading?: InternationalizedArrayString;
+  pitch?: InternationalizedArrayText;
+  backLabel?: InternationalizedArrayString;
+  openSourceLinkLabel?: InternationalizedArrayString;
+  videosLinkLabel?: InternationalizedArrayString;
+  metaTitle?: InternationalizedArrayString;
+  metaDescription?: InternationalizedArrayText;
+  certificationsSection?: {
+    eyebrow?: InternationalizedArrayString;
+    heading?: InternationalizedArrayString;
+  };
+  openSourceSection?: {
+    eyebrow?: InternationalizedArrayString;
+    heading?: InternationalizedArrayString;
+  };
+  videosSection?: {
+    eyebrow?: InternationalizedArrayString;
+    heading?: InternationalizedArrayString;
+  };
+  sectionsVisibility?: {
+    certifications?: boolean;
+    openSource?: boolean;
+    videos?: boolean;
+  };
 } | null;
 
 // Source: sanity/lib/queries.ts
@@ -1060,6 +1154,42 @@ export type CERTIFICATIONS_QUERY_RESULT = Array<{
   order?: number;
 }>;
 
+// Source: sanity/lib/queries.ts
+// Variable: OPEN_SOURCE_QUERY
+// Query: *[_type == "openSource"] | order(order asc)
+export type OPEN_SOURCE_QUERY_RESULT = Array<{
+  _id: string;
+  _type: 'openSource';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  project?: string;
+  repo?: string;
+  role?: InternationalizedArrayString;
+  description?: InternationalizedArrayText;
+  stack?: Array<string>;
+  url?: string;
+  order?: number;
+}>;
+
+// Source: sanity/lib/queries.ts
+// Variable: VIDEO_RESOURCES_QUERY
+// Query: *[_type == "videoResource"] | order(order asc)
+export type VIDEO_RESOURCES_QUERY_RESULT = Array<{
+  _id: string;
+  _type: 'videoResource';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  author?: string;
+  platform?: string;
+  duration?: string;
+  takeaway?: InternationalizedArrayText;
+  url?: string;
+  order?: number;
+}>;
+
 // Query TypeMap
 import '@sanity/client';
 declare module '@sanity/client' {
@@ -1067,6 +1197,7 @@ declare module '@sanity/client' {
     '*[_type == "siteSettings"][0]{\n  ...,\n  "cvUrl": cvFile.asset->url,\n  "ogUrl": ogImage.asset->url\n}': SITE_SETTINGS_QUERY_RESULT;
     '*[_type == "homePage"][0]': HOME_QUERY_RESULT;
     '*[_type == "contactPage"][0]': CONTACT_PAGE_QUERY_RESULT;
+    '*[_type == "learningPage"][0]': LEARNING_PAGE_QUERY_RESULT;
     '*[_type == "project"] | order(order asc){\n    ...,\n    "skills": skills[]->{ _id, title }\n  }': PROJECTS_QUERY_RESULT;
     '*[_type == "project" && slug.current == $slug][0]{\n    ...,\n    "skills": skills[]->{ _id, title }\n  }': PROJECT_QUERY_RESULT;
     '*[_type == "project" && defined(slug.current)]{ "slug": slug.current }': PROJECT_SLUGS_QUERY_RESULT;
@@ -1076,5 +1207,7 @@ declare module '@sanity/client' {
     '*[_type == "testimonial"] | order(order asc)': TESTIMONIALS_QUERY_RESULT;
     '*[_type == "education"] | order(order asc)': EDUCATION_QUERY_RESULT;
     '*[_type == "certification"] | order(order asc)': CERTIFICATIONS_QUERY_RESULT;
+    '*[_type == "openSource"] | order(order asc)': OPEN_SOURCE_QUERY_RESULT;
+    '*[_type == "videoResource"] | order(order asc)': VIDEO_RESOURCES_QUERY_RESULT;
   }
 }

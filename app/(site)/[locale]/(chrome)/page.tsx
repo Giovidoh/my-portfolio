@@ -3,7 +3,6 @@ import Work from '@/components/sections/Work';
 import About from '@/components/sections/About';
 import Skills from '@/components/sections/Skills';
 import Experience from '@/components/sections/Experience';
-import Certifications from '@/components/sections/Certifications';
 import Testimonials from '@/components/sections/Testimonials';
 import ContactCta from '@/components/sections/ContactCta';
 import { getDefaultLocale, pickLocale } from '@/lib/i18n';
@@ -15,7 +14,6 @@ import {
   getSkills,
   getSkillCategories,
   getExperiences,
-  getCertifications,
   getTestimonials,
 } from '@/lib/content';
 
@@ -29,7 +27,6 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
     skills,
     categories,
     experiences,
-    certifications,
     testimonials,
   ] = await Promise.all([
     getDefaultLocale(),
@@ -39,7 +36,6 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
     getSkills(),
     getSkillCategories(),
     getExperiences(),
-    getCertifications(),
     getTestimonials(),
   ]);
 
@@ -86,7 +82,6 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
     'about',
     'skills',
     'experience',
-    'certifications',
     'testimonials',
     'contact',
   ] as const;
@@ -109,14 +104,6 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       )}
       {vis?.experience !== false && (
         <Experience {...L} heading={home?.experienceSection} items={experiences} />
-      )}
-      {vis?.certifications !== false && (
-        <Certifications
-          {...L}
-          heading={home?.certificationsSection}
-          items={certifications}
-          viewLabel={pickLocale(settings?.viewCredential, locale, defaultLocale)}
-        />
       )}
       {vis?.testimonials !== false && (
         <Testimonials {...L} heading={home?.testimonialsSection} items={testimonials} />

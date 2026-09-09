@@ -7,6 +7,7 @@ const SINGLETONS = [
   { id: 'siteSettings', title: 'Site Settings' },
   { id: 'homePage', title: 'Home Page' },
   { id: 'contactPage', title: 'Contact Page' },
+  { id: 'learningPage', title: 'Learning Page' },
 ] as const
 
 export const structure: StructureResolver = (S) =>
@@ -26,6 +27,8 @@ export const structure: StructureResolver = (S) =>
       S.documentTypeListItem('experience').title('Experience'),
       S.documentTypeListItem('education').title('Education'),
       S.documentTypeListItem('certification').title('Certifications'),
+      S.documentTypeListItem('openSource').title('Open source'),
+      S.documentTypeListItem('videoResource').title('Video resources'),
       S.documentTypeListItem('testimonial').title('Testimonials'),
       S.divider(),
       S.documentTypeListItem('language').title('Languages'),

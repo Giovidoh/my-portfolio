@@ -133,7 +133,6 @@ export const homePageType = defineType({
       ],
     }),
     sectionHeading('experienceSection', 'Experience'),
-    sectionHeading('certificationsSection', 'Courses & certifications'),
     sectionHeading('testimonialsSection', 'Testimonials'),
     defineField({
       name: 'contactCta',
@@ -164,12 +163,6 @@ export const homePageType = defineType({
         defineField({
           name: 'experience',
           title: 'Show Experience',
-          type: 'boolean',
-          initialValue: true,
-        }),
-        defineField({
-          name: 'certifications',
-          title: 'Show Courses & certifications',
           type: 'boolean',
           initialValue: true,
         }),

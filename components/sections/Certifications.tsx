@@ -1,7 +1,7 @@
 import { makeT, pickLocale } from '@/lib/i18n';
-import type { HOME_QUERY_RESULT, CERTIFICATIONS_QUERY_RESULT } from '@/sanity/types';
+import type { LEARNING_PAGE_QUERY_RESULT, CERTIFICATIONS_QUERY_RESULT } from '@/sanity/types';
 
-type Heading = NonNullable<HOME_QUERY_RESULT>['certificationsSection'];
+type Heading = NonNullable<LEARNING_PAGE_QUERY_RESULT>['certificationsSection'];
 
 type Cert = {
   id: string;
