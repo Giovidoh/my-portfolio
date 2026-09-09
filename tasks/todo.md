@@ -16,7 +16,7 @@ Réf. design extraite : `%TEMP%\portfolio-design\my-portfolio\` (README, chats, 
   - [x] 0. Langues (`en`, `fr`)
   - [x] 1. **Site Settings** (marque, logo éditable `logoMark`/`logoText`, email, social, CV label, SEO, nav, footer, ~20 labels UI) — FR/EN
   - [x] 2. **Skill Categories** (Frontend / Backend / Database / Web3 / DevOps / Tools)
-  - [x] 3. **Skills** (17 ; icônes light/dark cohérentes, Foundry = mask local ; interrupteur `showInSkills`)
+  - [x] 3. **Skills** (20 — Angular/Java/Spring Boot ajoutés le 2026-09-09 ; icônes light/dark cohérentes, Foundry = mask local ; interrupteur `showInSkills`)
   - [ ] 4. **Projects** — ⏸️ **REPORTÉ** (reprendre : Pomogenius + **étude de cas IA** ; case study problème→rôle→solution→résultat, galerie, refs skills)
   - [x] 5. **Experience** (Alimha Tech Lead + Freelance) — alimente aussi les jobs du CV
   - [~] 6. **Testimonials** — section MASQUÉE (toggle Visibility) jusqu'à de vrais témoignages
