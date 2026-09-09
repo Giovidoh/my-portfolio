@@ -47,3 +47,5 @@ export const EXPERIENCES_QUERY = defineQuery(`*[_type == "experience"] | order(o
 export const TESTIMONIALS_QUERY = defineQuery(`*[_type == "testimonial"] | order(order asc)`);
 
 export const EDUCATION_QUERY = defineQuery(`*[_type == "education"] | order(order asc)`);
+
+export const CERTIFICATIONS_QUERY = defineQuery(`*[_type == "certification"] | order(order asc)`);

@@ -13,6 +13,7 @@ import {
   getSkills,
   getSkillCategories,
   getEducation,
+  getCertifications,
 } from '@/lib/content';
 
 export const metadata: Metadata = {
@@ -58,6 +59,7 @@ const css = `
 .cv__edu { display:grid; gap:10px; }
 .cv__edu div { font-size:13.5px; color:var(--ink-2); }
 .cv__edu strong { color:var(--ink); font-weight:600; }
+.cv__edu .cert { text-decoration:underline; text-underline-offset:2px; }
 
 @media (max-width:820px){ .cv__sheet { grid-template-columns:1fr; } }
 @media print {
@@ -82,17 +84,27 @@ const LOCAL_ICONS: Record<string, string> = { foundry: '/assets/icons/foundry.sv
 
 export default async function CvPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
-  const [defaultLocale, languages, home, settings, experiences, skills, categories, education] =
-    await Promise.all([
-      getDefaultLocale(),
-      getLanguages(),
-      getHome(),
-      getSiteSettings(),
-      getExperiences(),
-      getSkills(),
-      getSkillCategories(),
-      getEducation(),
-    ]);
+  const [
+    defaultLocale,
+    languages,
+    home,
+    settings,
+    experiences,
+    skills,
+    categories,
+    education,
+    certifications,
+  ] = await Promise.all([
+    getDefaultLocale(),
+    getLanguages(),
+    getHome(),
+    getSiteSettings(),
+    getExperiences(),
+    getSkills(),
+    getSkillCategories(),
+    getEducation(),
+    getCertifications(),
+  ]);
   const t = makeT(locale, defaultLocale);
   const p = (f: Parameters<typeof t>[0]) => pickLocale<string>(f, locale, defaultLocale);
 
@@ -320,6 +332,30 @@ export default async function CvPage({ params }: { params: Promise<{ locale: str
                       <strong>{p(e.degree)}</strong>
                       {p(e.school) ? ` — ${p(e.school)}` : ''}
                       {e.period ? `  ·  ${e.period}` : ''}
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {(certifications ?? []).length > 0 && (
+              <section>
+                <h2>{t(settings?.cvCertificationsLabel, 'Courses & certifications')}</h2>
+                <div className="cv__edu">
+                  {(certifications ?? []).map((c) => (
+                    <div key={c._id}>
+                      <strong>
+                        {c.url ? (
+                          <a className="cert" href={c.url} target="_blank" rel="noreferrer">
+                            {c.title}
+                          </a>
+                        ) : (
+                          c.title
+                        )}
+                      </strong>
+                      {c.issuer ? ` — ${c.issuer}` : ''}
+                      {p(c.issued) ? `  ·  ${p(c.issued)}` : ''}
+                      {c.credentialId ? `  ·  ${c.credentialId}` : ''}
                     </div>
                   ))}
                 </div>

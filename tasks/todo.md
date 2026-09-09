@@ -21,6 +21,7 @@ Réf. design extraite : `%TEMP%\portfolio-design\my-portfolio\` (README, chats, 
   - [x] 5. **Experience** (Alimha Tech Lead + Freelance) — alimente aussi les jobs du CV
   - [~] 6. **Testimonials** — section MASQUÉE (toggle Visibility) jusqu'à de vrais témoignages
   - [x] 7. **Home Page** (hero complet, about + ¶ IA, 5 titres de sections, bande Contact)
+  - [x] +. **Certifications** (type `certification` — 3 cours Cyfrin Updraft, section « Cours & certifications » du CV)
   - [x] +. **CV** : Profile summary + Education & languages (FR/EN) ; topbar localisée + sélecteur de langue
   - [x] 8. **Contact Page** (intro, formulaire, placeholders, 4 sujets, messages succès/erreur) — FR/EN
 - [ ] **Uploads côté user** (le MCP ne fait pas d'upload d'asset) : photo hero (Home → Hero → Portrait), PDF du CV (Site Settings → CV), image OG (Site Settings → SEO)

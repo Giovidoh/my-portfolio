@@ -83,6 +83,20 @@ export type InternationalizedArrayText = Array<
   } & InternationalizedArrayTextValue
 >;
 
+export type Certification = {
+  _id: string;
+  _type: 'certification';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  issuer?: string;
+  issued?: InternationalizedArrayString;
+  credentialId?: string;
+  url?: string;
+  order?: number;
+};
+
 export type Education = {
   _id: string;
   _type: 'education';
@@ -402,6 +416,7 @@ export type SiteSettings = {
   cvExperienceLabel?: InternationalizedArrayString;
   cvProjectsLabel?: InternationalizedArrayString;
   cvEducationLabel?: InternationalizedArrayString;
+  cvCertificationsLabel?: InternationalizedArrayString;
   navItems?: Array<{
     label?: InternationalizedArrayString;
     target?: string;
@@ -549,6 +564,7 @@ export type AllSanitySchemaTypes =
   | SanityImageHotspot
   | InternationalizedArrayString
   | InternationalizedArrayText
+  | Certification
   | Education
   | Experience
   | SkillCategoryReference
@@ -625,6 +641,7 @@ export type SITE_SETTINGS_QUERY_RESULT = {
   cvExperienceLabel?: InternationalizedArrayString;
   cvProjectsLabel?: InternationalizedArrayString;
   cvEducationLabel?: InternationalizedArrayString;
+  cvCertificationsLabel?: InternationalizedArrayString;
   navItems?: Array<{
     label?: InternationalizedArrayString;
     target?: string;
@@ -1016,6 +1033,23 @@ export type EDUCATION_QUERY_RESULT = Array<{
   order?: number;
 }>;
 
+// Source: sanity/lib/queries.ts
+// Variable: CERTIFICATIONS_QUERY
+// Query: *[_type == "certification"] | order(order asc)
+export type CERTIFICATIONS_QUERY_RESULT = Array<{
+  _id: string;
+  _type: 'certification';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  issuer?: string;
+  issued?: InternationalizedArrayString;
+  credentialId?: string;
+  url?: string;
+  order?: number;
+}>;
+
 // Query TypeMap
 import '@sanity/client';
 declare module '@sanity/client' {
@@ -1031,5 +1065,6 @@ declare module '@sanity/client' {
     '*[_type == "experience"] | order(order asc)': EXPERIENCES_QUERY_RESULT;
     '*[_type == "testimonial"] | order(order asc)': TESTIMONIALS_QUERY_RESULT;
     '*[_type == "education"] | order(order asc)': EDUCATION_QUERY_RESULT;
+    '*[_type == "certification"] | order(order asc)': CERTIFICATIONS_QUERY_RESULT;
   }
 }

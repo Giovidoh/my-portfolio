@@ -124,6 +124,7 @@ export const siteSettingsType = defineType({
     i18nString('cvExperienceLabel', 'CV · Heading · Experience', { group: 'cv' }),
     i18nString('cvProjectsLabel', 'CV · Heading · Personal projects', { group: 'cv' }),
     i18nString('cvEducationLabel', 'CV · Heading · Education', { group: 'cv' }),
+    i18nString('cvCertificationsLabel', 'CV · Heading · Courses & certifications', { group: 'cv' }),
 
     // Navigation
     defineField({
