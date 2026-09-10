@@ -1629,31 +1629,31 @@ h4 {
    before the mobile burger breakpoint. Widths measured against French,
    the longest of the two locales. */
 @media (max-width: 1180px) {
-  .nav__links {
+  .nav--site .nav__links {
     gap: 20px;
   }
 }
-/* Icon-only CV: hidden while the labelled button fits, and again once the
-   burger takes over (the drawer carries the CV link there). */
-.nav__cv-icon {
+/* These stages apply to the site nav only: it is the one with five links, four
+   tools and a drawer to fall back on. The CV page reuses .nav/.nav__tools but
+   has no drawer, so hiding its buttons would strand them. */
+.nav__cv-short {
   display: none;
 }
 @media (max-width: 1080px) {
-  /* The labelled CV button gives way to its icon — same href, same target. */
-  .nav__tools .btn-ghost {
+  /* The full CV label gives way to "CV" — same button, same href. */
+  .nav--site .nav__cv-full {
     display: none;
   }
-  .nav__cv-icon {
-    display: grid;
+  .nav--site .nav__cv-short {
+    display: inline;
   }
 }
 @media (max-width: 940px) {
-  .nav__links,
-  .nav__tools .btn,
-  .nav__cv-icon {
+  .nav--site .nav__links,
+  .nav--site .nav__tools .btn {
     display: none;
   }
-  .burger {
+  .nav--site .burger {
     display: grid;
   }
 }

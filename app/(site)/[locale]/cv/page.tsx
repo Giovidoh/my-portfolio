@@ -59,6 +59,18 @@ const css = `
 .cv__edu div { font-size:13.5px; color:var(--ink-2); }
 .cv__edu strong { color:var(--ink); font-weight:600; }
 
+.cv__print-short { display:none; }
+/* This nav has no drawer to fall back on, so nothing here is ever hidden —
+   the labels shrink instead. */
+@media (max-width:520px){
+  .cv__print-full { display:none; }
+  .cv__print-short { display:inline; }
+  .nav__tools, .nav__inner { gap:var(--s-3); }
+  /* The global 520px rule stretches .btn to full width for hero CTAs. */
+  .nav__tools .btn { width:auto; }
+}
+@media (max-width:380px){ .nav .logo span { display:none; } }
+
 @media (max-width:820px){ .cv__sheet { grid-template-columns:1fr; } }
 @media print {
   .noprint { display:none !important; }

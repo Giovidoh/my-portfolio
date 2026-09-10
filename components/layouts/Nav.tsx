@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import ThemeToggle from '@/components/theme/ThemeToggle';
 import ButtonLink from '@/components/ui/ButtonLink';
-import { MenuIcon, CloseIcon, FileTextIcon } from '@/components/ui/icons';
+import { MenuIcon, CloseIcon } from '@/components/ui/icons';
 import IcgMark from '@/components/ui/IcgMark';
 import LanguageSwitcher from '@/components/layouts/LanguageSwitcher';
 import type { Language } from '@/lib/i18n';
@@ -106,7 +106,7 @@ const Nav = ({
 
   return (
     <>
-      <nav className={`nav${scrolled ? ' scrolled' : ''}`} aria-label="Primary">
+      <nav className={`nav nav--site${scrolled ? ' scrolled' : ''}`} aria-label="Primary">
         <div className="nav__inner">
           <Logo href={sectionHref('top')} />
           <div className="nav__links">
@@ -127,20 +127,11 @@ const Nav = ({
           <div className="nav__tools">
             <LanguageSwitcher languages={languages} locale={locale} />
             <ThemeToggle />
-            <ButtonLink variant="ghost" size="sm" href={cv} {...cvExtraProps}>
-              {cvLabel}
+            <ButtonLink variant="ghost" size="sm" href={cv} aria-label={cvLabel} {...cvExtraProps}>
+              <span className="nav__cv-full">{cvLabel}</span>
+              {/* Same button, shorter label where the full one crowds the row. */}
+              <span className="nav__cv-short">CV</span>
             </ButtonLink>
-            {/* Same destination, icon only: keeps the CV reachable in the band
-                where the labelled button no longer fits. */}
-            <Link
-              className="icon-btn nav__cv-icon"
-              href={cv}
-              aria-label={cvLabel}
-              title={cvLabel}
-              {...cvExtraProps}
-            >
-              <FileTextIcon />
-            </Link>
             <ButtonLink variant="primary" size="sm" href={contactHref}>
               {contactLabel}
             </ButtonLink>
