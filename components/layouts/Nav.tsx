@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import ThemeToggle from '@/components/theme/ThemeToggle';
 import ButtonLink from '@/components/ui/ButtonLink';
-import { MenuIcon, CloseIcon } from '@/components/ui/icons';
+import { MenuIcon, CloseIcon, FileTextIcon } from '@/components/ui/icons';
 import IcgMark from '@/components/ui/IcgMark';
 import LanguageSwitcher from '@/components/layouts/LanguageSwitcher';
 import type { Language } from '@/lib/i18n';
@@ -130,6 +130,17 @@ const Nav = ({
             <ButtonLink variant="ghost" size="sm" href={cv} {...cvExtraProps}>
               {cvLabel}
             </ButtonLink>
+            {/* Same destination, icon only: keeps the CV reachable in the band
+                where the labelled button no longer fits. */}
+            <Link
+              className="icon-btn nav__cv-icon"
+              href={cv}
+              aria-label={cvLabel}
+              title={cvLabel}
+              {...cvExtraProps}
+            >
+              <FileTextIcon />
+            </Link>
             <ButtonLink variant="primary" size="sm" href={contactHref}>
               {contactLabel}
             </ButtonLink>

@@ -1633,15 +1633,24 @@ h4 {
     gap: 20px;
   }
 }
+/* Icon-only CV: hidden while the labelled button fits, and again once the
+   burger takes over (the drawer carries the CV link there). */
+.nav__cv-icon {
+  display: none;
+}
 @media (max-width: 1080px) {
-  /* The CV button survives in the drawer and in the hero CTA. */
+  /* The labelled CV button gives way to its icon — same href, same target. */
   .nav__tools .btn-ghost {
     display: none;
+  }
+  .nav__cv-icon {
+    display: grid;
   }
 }
 @media (max-width: 940px) {
   .nav__links,
-  .nav__tools .btn {
+  .nav__tools .btn,
+  .nav__cv-icon {
     display: none;
   }
   .burger {
