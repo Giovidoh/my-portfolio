@@ -59,6 +59,9 @@ const Nav = ({
   const sectionHref = (id: string) => (onHome ? `#${id}` : `/${locale}#${id}`);
   const linkHref = (target: string) =>
     target.startsWith('/') ? `/${locale}${target}` : sectionHref(target);
+  // Page links are active on their own route; anchors follow the scroll-spy.
+  const isActive = (target: string) =>
+    target.startsWith('/') ? pathname === `/${locale}${target}` : onHome && active === target;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -107,15 +110,19 @@ const Nav = ({
         <div className="nav__inner">
           <Logo href={sectionHref('top')} />
           <div className="nav__links">
-            {links.map((l) => (
-              <Link
-                key={l.id}
-                href={linkHref(l.id)}
-                className={onHome && active === l.id ? 'active' : undefined}
-              >
-                <span>{l.label}</span>
-              </Link>
-            ))}
+            {links.map((l) => {
+              const on = isActive(l.id);
+              return (
+                <Link
+                  key={l.id}
+                  href={linkHref(l.id)}
+                  className={on ? 'active' : undefined}
+                  aria-current={on ? 'page' : undefined}
+                >
+                  <span>{l.label}</span>
+                </Link>
+              );
+            })}
           </div>
           <div className="nav__tools">
             <LanguageSwitcher languages={languages} locale={locale} />
@@ -141,11 +148,20 @@ const Nav = ({
           </button>
         </div>
         <nav className="drawer__links" aria-label="Mobile">
-          {links.map((l) => (
-            <Link key={l.id} href={linkHref(l.id)} onClick={() => setOpen(false)}>
-              <span>{l.label}</span>
-            </Link>
-          ))}
+          {links.map((l) => {
+            const on = isActive(l.id);
+            return (
+              <Link
+                key={l.id}
+                href={linkHref(l.id)}
+                className={on ? 'active' : undefined}
+                aria-current={on ? 'page' : undefined}
+                onClick={() => setOpen(false)}
+              >
+                <span>{l.label}</span>
+              </Link>
+            );
+          })}
         </nav>
         <div className="drawer__foot">
           <ButtonLink variant="primary" href={contactHref} onClick={() => setOpen(false)}>
