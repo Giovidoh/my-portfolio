@@ -107,6 +107,8 @@ export default async function LearningPage({ params }: { params: Promise<{ local
           heading={page?.videosSection}
           items={videos}
           viewLabel={pickLocale(page?.videosLinkLabel, locale, defaultLocale)}
+          statusLabels={page?.videoStatusLabels}
+          otherTopicLabel={pickLocale(page?.videosOtherTopic, locale, defaultLocale)}
         />
       )}
     </main>

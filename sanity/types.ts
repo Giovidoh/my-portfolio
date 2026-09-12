@@ -83,6 +83,13 @@ export type InternationalizedArrayText = Array<
   } & InternationalizedArrayTextValue
 >;
 
+export type VideoTopicReference = {
+  _ref: string;
+  _type: 'reference';
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: 'videoTopic';
+};
+
 export type VideoResource = {
   _id: string;
   _type: 'videoResource';
@@ -90,11 +97,24 @@ export type VideoResource = {
   _updatedAt: string;
   _rev: string;
   title?: string;
+  topic?: VideoTopicReference;
   author?: string;
   platform?: string;
   duration?: string;
+  status?: 'in-progress' | 'completed' | 'planned';
   takeaway?: InternationalizedArrayText;
   url?: string;
+  order?: number;
+};
+
+export type VideoTopic = {
+  _id: string;
+  _type: 'videoTopic';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: InternationalizedArrayString;
+  note?: InternationalizedArrayString;
   order?: number;
 };
 
@@ -289,6 +309,12 @@ export type LearningPage = {
   backLabel?: InternationalizedArrayString;
   openSourceLinkLabel?: InternationalizedArrayString;
   videosLinkLabel?: InternationalizedArrayString;
+  videoStatusLabels?: {
+    inProgress?: InternationalizedArrayString;
+    completed?: InternationalizedArrayString;
+    planned?: InternationalizedArrayString;
+  };
+  videosOtherTopic?: InternationalizedArrayString;
   metaTitle?: InternationalizedArrayString;
   metaDescription?: InternationalizedArrayText;
   certificationsSection?: {
@@ -628,7 +654,9 @@ export type AllSanitySchemaTypes =
   | SanityImageHotspot
   | InternationalizedArrayString
   | InternationalizedArrayText
+  | VideoTopicReference
   | VideoResource
+  | VideoTopic
   | OpenSource
   | Certification
   | Education
@@ -876,6 +904,12 @@ export type LEARNING_PAGE_QUERY_RESULT = {
   backLabel?: InternationalizedArrayString;
   openSourceLinkLabel?: InternationalizedArrayString;
   videosLinkLabel?: InternationalizedArrayString;
+  videoStatusLabels?: {
+    inProgress?: InternationalizedArrayString;
+    completed?: InternationalizedArrayString;
+    planned?: InternationalizedArrayString;
+  };
+  videosOtherTopic?: InternationalizedArrayString;
   metaTitle?: InternationalizedArrayString;
   metaDescription?: InternationalizedArrayText;
   certificationsSection?: {
@@ -1174,7 +1208,7 @@ export type OPEN_SOURCE_QUERY_RESULT = Array<{
 
 // Source: sanity/lib/queries.ts
 // Variable: VIDEO_RESOURCES_QUERY
-// Query: *[_type == "videoResource"] | order(order asc)
+// Query: *[_type == "videoResource"] | order(topic->order asc, order asc) {    ...,    topic->{ _id, title, note, order }  }
 export type VIDEO_RESOURCES_QUERY_RESULT = Array<{
   _id: string;
   _type: 'videoResource';
@@ -1182,9 +1216,16 @@ export type VIDEO_RESOURCES_QUERY_RESULT = Array<{
   _updatedAt: string;
   _rev: string;
   title?: string;
+  topic: {
+    _id: string;
+    title: InternationalizedArrayString | null;
+    note: InternationalizedArrayString | null;
+    order: number | null;
+  } | null;
   author?: string;
   platform?: string;
   duration?: string;
+  status?: 'completed' | 'in-progress' | 'planned';
   takeaway?: InternationalizedArrayText;
   url?: string;
   order?: number;
@@ -1208,6 +1249,6 @@ declare module '@sanity/client' {
     '*[_type == "education"] | order(order asc)': EDUCATION_QUERY_RESULT;
     '*[_type == "certification"] | order(order asc)': CERTIFICATIONS_QUERY_RESULT;
     '*[_type == "openSource"] | order(order asc)': OPEN_SOURCE_QUERY_RESULT;
-    '*[_type == "videoResource"] | order(order asc)': VIDEO_RESOURCES_QUERY_RESULT;
+    '*[_type == "videoResource"] | order(topic->order asc, order asc) {\n    ...,\n    topic->{ _id, title, note, order }\n  }': VIDEO_RESOURCES_QUERY_RESULT;
   }
 }

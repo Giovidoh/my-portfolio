@@ -12,6 +12,7 @@ import { educationType } from './educationType'
 import { certificationType } from './certificationType'
 import { openSourceType } from './openSourceType'
 import { videoResourceType } from './videoResourceType'
+import { videoTopicType } from './videoTopicType'
 import { testimonialType } from './testimonialType'
 import { languageType } from './languageType'
 
@@ -31,6 +32,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     certificationType,
     openSourceType,
     videoResourceType,
+    videoTopicType,
     testimonialType,
     // System
     languageType,

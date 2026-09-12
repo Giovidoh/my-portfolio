@@ -29,6 +29,7 @@ export const structure: StructureResolver = (S) =>
       S.documentTypeListItem('certification').title('Certifications'),
       S.documentTypeListItem('openSource').title('Open source'),
       S.documentTypeListItem('videoResource').title('Video resources'),
+      S.documentTypeListItem('videoTopic').title('Video topics'),
       S.documentTypeListItem('testimonial').title('Testimonials'),
       S.divider(),
       S.documentTypeListItem('language').title('Languages'),

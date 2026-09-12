@@ -22,7 +22,8 @@ Réf. design extraite : `%TEMP%\portfolio-design\my-portfolio\` (README, chats, 
   - [~] 6. **Testimonials** — section MASQUÉE (toggle Visibility) jusqu'à de vrais témoignages
   - [x] 7. **Home Page** (hero complet, about + ¶ IA, 5 titres de sections, bande Contact)
   - [x] +. **Certifications** (type `certification` — 3 cours Cyfrin Updraft, URLs de diplôme Cyfrin renseignées)
-  - [x] +. **Open source** (type `openSource`) et **Ressources vidéo** (type `videoResource`) — collections vides, à alimenter dans le Studio
+  - [x] +. **Open source** (type `openSource`) — collection vide, à alimenter dans le Studio
+  - [x] +. **Ressources vidéo** (type `videoResource`) — groupées par sujet (nouveau type `videoTopic`) + badge de statut (En cours / Terminé / À voir). 1er sujet « Angular » + la playlist de Loiane Groner publiés (2026-09-12). **Reste : le champ « Ce que j'en retire » (takeaway) FR/EN à remplir dans le Studio.**
   - [x] +. **Learning Page** (singleton `learningPage`) — nouvelle page `/[locale]/learning`, lien de nav après Contact, 3 sections (certifications / open source / vidéos) avec titres et visibilité pilotés depuis le Studio
   - [x] +. **CV** : Profile summary + Education & languages (FR/EN) ; topbar localisée + sélecteur de langue
   - [x] 8. **Contact Page** (intro, formulaire, placeholders, 4 sujets, messages succès/erreur) — FR/EN

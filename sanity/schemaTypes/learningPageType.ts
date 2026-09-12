@@ -38,6 +38,22 @@ export const learningPageType = defineType({
     i18nString('backLabel', 'Back link', { group: 'intro', description: 'e.g. "Home".' }),
     i18nString('openSourceLinkLabel', 'Label · Open-source link', { group: 'intro' }),
     i18nString('videosLinkLabel', 'Label · Video link', { group: 'intro' }),
+    defineField({
+      name: 'videoStatusLabels',
+      title: 'Labels · Video status badges',
+      type: 'object',
+      group: 'intro',
+      options: { collapsible: true, collapsed: true },
+      fields: [
+        i18nString('inProgress', 'In progress'),
+        i18nString('completed', 'Completed'),
+        i18nString('planned', 'Planned'),
+      ],
+    }),
+    i18nString('videosOtherTopic', 'Label · Ungrouped videos', {
+      group: 'intro',
+      description: 'Heading for videos with no topic, e.g. "Other".',
+    }),
     i18nString('metaTitle', 'Meta title', { group: 'intro' }),
     i18nText('metaDescription', 'Meta description', { group: 'intro' }),
 

@@ -53,4 +53,10 @@ export const CERTIFICATIONS_QUERY = defineQuery(`*[_type == "certification"] | o
 
 export const OPEN_SOURCE_QUERY = defineQuery(`*[_type == "openSource"] | order(order asc)`);
 
-export const VIDEO_RESOURCES_QUERY = defineQuery(`*[_type == "videoResource"] | order(order asc)`);
+export const VIDEO_RESOURCES_QUERY = defineQuery(
+  `*[_type == "videoResource"] | order(topic->order asc, order asc) {
+    ...,
+    topic->{ _id, title, note, order }
+  }`,
+);
+
